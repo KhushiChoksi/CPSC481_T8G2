@@ -1,7 +1,7 @@
-'use client';
+// 'use client';
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import { FaListUl, FaHotel } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { BiHomeAlt } from "react-icons/bi";
@@ -9,9 +9,9 @@ import { GiForkKnifeSpoon } from "react-icons/gi";
 
 
 export default function Navbar() {
-    const pathname = usePathname();
+    // const pathname = usePathname();
 
-    const isActive = (path: string) => pathname === path;           // will be used to find out which one is active
+    // const isActive = (path: string) => pathname === path;           // will be used to find out which one is active
 
     const circleIcon = "flex items-center justify-center w-14 h-14 bg-light-yellow rounded-full mb-1";
     const labelText = "flex flex-col items-center text-center";
