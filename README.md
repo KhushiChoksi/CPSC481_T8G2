@@ -16,5 +16,8 @@ npm run dev
 ### react-icons are installed into this project.
 <p>
 to access the library of icons, refer to this link: https://react-icons.github.io/react-icons/
-
 </p>
+
+
+### tailwind css documentation
+<p>https://tailwindcss.com/docs/installation</p>
