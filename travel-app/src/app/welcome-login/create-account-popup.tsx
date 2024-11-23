@@ -1,10 +1,26 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
+import TravelDetailsModal from './arrival-date-popup';
 
 interface CreateAccountModalProps {
   onClose: () => void; // Function to close the modal
 }
 
 const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
+  // State to toggle TravelDetailsModal
+  const [showTravelModal, setShowTravelModal] = useState(false);
+
+  // If TravelDetailsModal is active, render it
+  if (showTravelModal) {
+    return (
+      <TravelDetailsModal
+        onClose={onClose} // Pass close function to close all modals
+        onGoBack={() => setShowTravelModal(false)} // Navigate back to this modal
+      />
+    );
+  }
+
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modal}>
@@ -39,7 +55,12 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
           <button style={styles.cancelButton} onClick={onClose}>
             Cancel
           </button>
-          <button style={styles.continueButton}>Continue</button>
+          <button
+            style={styles.continueButton}
+            onClick={() => setShowTravelModal(true)} // Show the Travel Details Modal
+          >
+            Continue
+          </button>
         </div>
       </div>
     </div>

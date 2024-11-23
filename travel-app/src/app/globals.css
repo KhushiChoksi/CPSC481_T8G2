@@ -24,3 +24,31 @@ body {
   background-attachment: fixed; 
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Custom Calendar Styles */
+.react-calendar {
+  border: none;
+  background-color: #A5B6C2; /* Match the modal background */
+  font-family: 'Subtitle, sans-serif'; /* Use the app's font */
+  font-size: 16px;
+  width: 100%;
+  color: black; /* Default text color */
+}
+
+.react-calendar__tile {
+  text-align: center;
+  padding: 10px;
+  background: none;
+  color: black; /* Black text for dates */
+  border-radius: 50%; /* Make tiles round */
+}
+
+.react-calendar__tile:hover {
+  background: rgba(0, 0, 0, 0.1); /* Light hover effect */
+}
+
+.react-calendar__tile--active {
+  background: #003554; /* Navy circle for selected date */
+  color: white; /* White text for selected date */
+  border: 1px solid black; /* Black border for selected date */
+}

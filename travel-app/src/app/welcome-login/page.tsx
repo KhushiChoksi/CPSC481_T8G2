@@ -1,6 +1,6 @@
 "use client";
 import React, {useState} from 'react';
-import CreateAccountModal from './create-account';
+import CreateAccountModal from './create-account-popup';
 
 const WelcomeScreen: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
