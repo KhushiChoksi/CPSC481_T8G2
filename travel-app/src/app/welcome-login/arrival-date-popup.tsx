@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Include default styles
-import '../globals.css'
+import 'react-calendar/dist/Calendar.css'; // Default styles
+import '../globals.css'; // Import global styles
 
 interface TravelDetailsModalProps {
   onClose: () => void;
@@ -73,19 +73,21 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
+    boxSizing: 'border-box',
   },
   modalTitle: {
     fontSize: '40px',
     fontFamily: 'Subtitle, sans-serif',
     color: '#000000',
     textAlign: 'center',
+    marginBottom: '10px', // Adjusted spacing below title
   },
   subtitle: {
     fontSize: '24px',
     fontFamily: 'Subtitle, sans-serif',
     color: '#000000',
-    marginTop: '10px', // Adjust spacing above subtitle
-    marginBottom: '20px', // Spacing below subtitle
+    marginTop: '50px', // Slightly increased to lower the subtitle
+    marginBottom: '0px', // Keeps space below subtitle consistent
   },
   underline: {
     display: 'block',
@@ -96,12 +98,18 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   calendarContainer: {
     width: '100%',
-    marginBottom: '20px',
+    flexGrow: 1, // Allows the calendar to expand naturally
+    marginTop: '-50px', // Raised calendar slightly
+    marginBottom: '20px', // Adds space below calendar for buttons
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalButtonContainer: {
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between', // Buttons stay evenly spaced
+    marginTop: '20px', // Adds space above buttons
   },
   cancelButton: {
     width: '150px',
