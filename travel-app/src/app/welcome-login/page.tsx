@@ -17,16 +17,19 @@ const WelcomeScreen: React.FC = () => {
           Welcome!<span style={styles.underline}></span>
         </h1>
 
-        {/* Email Input Section */}
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter your email:</label>
-          <input type="text" style={styles.input} />
-        </div>
+        {/* Input Section */}
+        <div style={styles.inputSection}>
+          {/* Email Input */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter your email:</label>
+            <input type="text" style={styles.input} />
+          </div>
 
-        {/* Password Input Section */}
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter your password:</label>
-          <input type="password" style={styles.input} />
+          {/* Password Input */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter your password:</label>
+            <input type="password" style={styles.input} />
+          </div>
         </div>
 
         {/* Buttons */}
@@ -60,7 +63,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: 'center',
     padding: '20px',
     boxSizing: 'border-box',
-    position: 'relative', // Ensures absolute positioning for the logo stays within this container
+    position: 'relative',
   },
   logoContainer: {
     position: 'absolute',
@@ -83,10 +86,10 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   welcomeTitle: {
     fontSize: '40px',
-    fontFamily: 'Subtitle, sans-serif', // Use your custom font
+    fontFamily: 'Subtitle, sans-serif',
     color: '#000000',
     textAlign: 'center',
-    marginTop: '90px', // Adjust to provide space below the logo
+    marginTop: '100px',
     position: 'relative',
   },
   underline: {
@@ -96,12 +99,19 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: '#000000',
     marginTop: '-10px',
   },
-  inputGroup: {
+  inputSection: {
+    marginTop: '20px',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start', // Align labels to the left
+    alignItems: 'center',
+  },
+  inputGroup: {
     width: '307px',
-    marginBottom: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginBottom: '30px', // Increased spacing between input groups
   },
   label: {
     fontSize: '18px',
@@ -118,10 +128,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: '16px',
   },
   buttonContainer: {
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    gap: '15px', // Adds space between buttons
-    marginBottom: '20px', // Adds spacing at the bottom of the screen
+    justifyContent: 'space-evenly', // Evenly distribute buttons in the bottom half
+    alignItems: 'center', // Center buttons horizontally
+    height: '50%', // Occupy the bottom half of the screen
+    marginTop: '20px',
   },
   button: {
     width: '307px',
