@@ -1,6 +1,12 @@
-import React from 'react';
+"use client";
+import React, {useState} from 'react';
+import CreateAccountModal from './create-account';
 
 const WelcomeScreen: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => setShowModal(!showModal);
+
   return (
     <div style={styles.pageContainer}>
       {/* iPhone Screen */}
@@ -36,9 +42,10 @@ const WelcomeScreen: React.FC = () => {
         <div style={styles.buttonContainer}>
           <button style={styles.button}>Login</button>
           <button style={styles.button}>Reset Password</button>
-          <button style={styles.button}>New? Create an Account!</button>
+          <button style={styles.button} onClick={toggleModal}>New? Create an Account!</button>
         </div>
       </div>
+      {/* Show Modal */}{showModal && <CreateAccountModal onClose={toggleModal} />}
     </div>
   );
 };
@@ -126,6 +133,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: '1px solid #000000',
     padding: '0 10px',
     fontSize: '16px',
+    color: '#000000',
+    backgroundColor: '#FFFFFF',
   },
   buttonContainer: {
     width: '100%',
