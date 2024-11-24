@@ -19,7 +19,6 @@ const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({ onCancel, onCom
         subtitle="Please check your email for password reset instructions."
         buttonText="Continue"
         onGetStarted={onComplete} // Return to login on "Continue"
-        buttonStyle={{ width: '307px', height: '50px' }} // Make "Continue" button long
       />
     );
   }
