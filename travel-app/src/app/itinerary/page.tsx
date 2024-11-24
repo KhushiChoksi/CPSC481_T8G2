@@ -5,6 +5,7 @@ export default function ItineraryPage() {
       <div>
         <p>Itinerary testing</p>
         <Navbar/>
+        
       </div>
     );
   }
