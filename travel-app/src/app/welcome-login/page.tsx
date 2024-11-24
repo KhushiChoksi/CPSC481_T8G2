@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
-import ResetPasswordPopup from '../components/reset-password-popup';
-import CreateAccountModal from './create-account-popup'; // Ensure the path to your component is correct
+import React, { useState } from "react";
+import ResetPasswordPopup from "../components/ResetPasswordPopup";
+import CreateAccountModal from "./CreateAccountPopup";
+import Logo from "../components/Logo"; // Import the reusable Logo component
 
 const WelcomeScreen: React.FC = () => {
   const [showResetPopup, setShowResetPopup] = useState(false); // For Reset Password Popup
@@ -14,9 +15,7 @@ const WelcomeScreen: React.FC = () => {
       <div style={styles.iphoneScreen}>
         {/* Top Left Logo */}
         <div style={styles.logoContainer}>
-          <div style={styles.logo}>
-            <span style={styles.logoText}>TB</span>
-          </div>
+          <Logo /> {/* Use the reusable Logo component */}
         </div>
 
         {/* Welcome Header */}
@@ -66,108 +65,95 @@ const WelcomeScreen: React.FC = () => {
 
 const styles: { [key: string]: React.CSSProperties } = {
   pageContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh', // Full viewport height
-    backgroundColor: '#f0f0f0', // Light gray background outside the iPhone screen
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    backgroundColor: "#f0f0f0",
   },
   iphoneScreen: {
-    width: '402px',
-    height: '874px',
-    background: 'linear-gradient(0deg, #65BFFF 0%, #FFFFFF 100%)',
-    border: '1px solid #000', // Optional: To visually distinguish the screen
-    borderRadius: '20px', // Adds rounded corners to simulate a phone screen
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '20px',
-    boxSizing: 'border-box',
-    position: 'relative',
+    width: "402px",
+    height: "874px",
+    background: "linear-gradient(0deg, #65BFFF 0%, #FFFFFF 100%)",
+    border: "1px solid #000",
+    borderRadius: "20px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "20px",
+    boxSizing: "border-box",
+    position: "relative",
   },
   logoContainer: {
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-  },
-  logo: {
-    width: '65px',
-    height: '65px',
-    backgroundColor: '#FFD426',
-    borderRadius: '50%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoText: {
-    fontFamily: '"Caveat", cursive',
-    fontSize: '24px',
-    color: '#000000',
+    position: "absolute",
+    top: "20px",
+    left: "20px",
+    zIndex: 0,
   },
   welcomeTitle: {
-    fontSize: '40px',
-    fontFamily: 'Subtitle, sans-serif',
-    color: '#000000',
-    textAlign: 'center',
-    marginTop: '100px',
-    position: 'relative',
+    fontSize: "40px",
+    fontFamily: "Subtitle, sans-serif",
+    color: "#000000",
+    textAlign: "center",
+    marginTop: "100px",
+    position: "relative",
   },
   underline: {
-    display: 'block',
-    height: '3px',
-    width: '100%',
-    backgroundColor: '#000000',
-    marginTop: '-10px',
+    display: "block",
+    height: "3px",
+    width: "100%",
+    backgroundColor: "#000000",
+    marginTop: "-10px",
   },
   inputSection: {
-    marginTop: '20px',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    marginTop: "20px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   inputGroup: {
-    width: '307px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginBottom: '30px', // Space between input groups
+    width: "307px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    marginBottom: "30px",
   },
   label: {
-    fontSize: '18px',
-    fontFamily: 'Subtitle, sans-serif',
-    color: '#000000',
-    marginBottom: '5px',
+    fontSize: "18px",
+    fontFamily: "Subtitle, sans-serif",
+    color: "#000000",
+    marginBottom: "5px",
   },
   input: {
-    width: '100%',
-    height: '40px',
-    borderRadius: '8px',
-    border: '1px solid #000000',
-    padding: '0 10px',
-    fontSize: '16px',
-    color: '#000000',
-    backgroundColor: '#FFFFFF',
+    width: "100%",
+    height: "40px",
+    borderRadius: "8px",
+    border: "1px solid #000000",
+    padding: "0 10px",
+    fontSize: "16px",
+    color: "#000000",
+    backgroundColor: "#FFFFFF",
   },
   buttonContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    height: '50%',
-    marginTop: '20px',
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: "50%",
+    marginTop: "20px",
   },
   button: {
-    width: '307px',
-    height: '50px',
-    backgroundColor: '#003554',
-    color: '#FFFFFF',
-    border: '1px solid #000000',
-    borderRadius: '5px',
-    fontSize: '16px',
-    cursor: 'pointer',
+    width: "307px",
+    height: "50px",
+    backgroundColor: "#003554",
+    color: "#FFFFFF",
+    border: "1px solid #000000",
+    borderRadius: "5px",
+    fontSize: "16px",
+    cursor: "pointer",
   },
 };
 

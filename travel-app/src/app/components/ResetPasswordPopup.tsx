@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import SuccessPopup from './success-popup'; // Reuse the SuccessPopup for confirmation
+import SuccessPopup from './SuccessPopup'; // Reuse the SuccessPopup for confirmation
 
 interface ResetPasswordPopupProps {
   onCancel: () => void; // Close the popup

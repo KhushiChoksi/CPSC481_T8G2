@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-import TravelDetailsModal from '../components/arrival-date-popup';
-import DepartureDetailsModal from '../components/departure-date-popup';
-import SuccessPopup from '../components/success-popup';
-import CancelAccountPopup from './cancel-create-account-popup'; // Ensure the path is correct
+import TravelDetailsModal from '../components/ArrivalDatePopup';
+import DepartureDetailsModal from '../components/DepartureDatePopup';
+import SuccessPopup from '../components/SuccessPopup';
+import CancelAccountPopup from './CancelCreateAccountPopup'; // Ensure the path is correct
 
 interface CreateAccountModalProps {
   onClose: () => void; // Function to close the entire modal
