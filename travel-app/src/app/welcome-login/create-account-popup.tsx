@@ -1,26 +1,37 @@
 "use client";
 
 import React, { useState } from 'react';
-import TravelDetailsModal from './arrival-date-popup';
+import TravelDetailsModal from '../components/arrival-date-popup';
+import DepartureDetailsModal from '../components/departure-date-popup';
 
 interface CreateAccountModalProps {
   onClose: () => void; // Function to close the modal
 }
 
 const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
-  // State to toggle TravelDetailsModal
-  const [showTravelModal, setShowTravelModal] = useState(false);
+  const [currentStep, setCurrentStep] = useState<'account' | 'arrival' | 'departure'>('account');
 
-  // If TravelDetailsModal is active, render it
-  if (showTravelModal) {
+  // Render based on the current step
+  if (currentStep === 'arrival') {
     return (
       <TravelDetailsModal
-        onClose={onClose} // Pass close function to close all modals
-        onGoBack={() => setShowTravelModal(false)} // Navigate back to this modal
+        onClose={() => setCurrentStep('departure')} // Move to departure screen
+        onGoBack={() => setCurrentStep('account')} // Go back to account creation
       />
     );
   }
 
+  if (currentStep === 'departure') {
+    return (
+      <DepartureDetailsModal
+        onClose={() => console.log('Success: All steps complete!')} // Handle final step
+        onSkip={() => console.log('Skipped departure date!')} // Handle skip logic
+        onGoBack={() => setCurrentStep('arrival')} // Go back to arrival screen
+      />
+    );
+  }
+
+  // Default: Render the account creation modal
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modal}>
@@ -57,7 +68,7 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
           </button>
           <button
             style={styles.continueButton}
-            onClick={() => setShowTravelModal(true)} // Show the Travel Details Modal
+            onClick={() => setCurrentStep('arrival')} // Move to arrival screen
           >
             Continue
           </button>
