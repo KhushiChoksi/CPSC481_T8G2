@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+// npm install react-calendar *** need to add to instructions for library. on version 18.3 no warnings or issues with downloading/installing this
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Default styles
 import '../globals.css'; // Import global styles
