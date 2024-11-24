@@ -3,35 +3,63 @@
 import React, { useState } from 'react';
 import TravelDetailsModal from '../components/arrival-date-popup';
 import DepartureDetailsModal from '../components/departure-date-popup';
+import SuccessPopup from '../components/success-popup';
+import CancelAccountPopup from './cancel-create-account-popup'; // Ensure the path is correct
 
 interface CreateAccountModalProps {
-  onClose: () => void; // Function to close the modal
+  onClose: () => void; // Function to close the entire modal
 }
 
 const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
-  const [currentStep, setCurrentStep] = useState<'account' | 'arrival' | 'departure'>('account');
+  // State for tracking the current step
+  const [currentStep, setCurrentStep] = useState<'account' | 'arrival' | 'departure' | 'success' | 'cancel'>(
+    'account'
+  );
 
-  // Render based on the current step
+  // Render the Arrival Date Modal
   if (currentStep === 'arrival') {
     return (
       <TravelDetailsModal
-        onClose={() => setCurrentStep('departure')} // Move to departure screen
-        onGoBack={() => setCurrentStep('account')} // Go back to account creation
+        onClose={() => setCurrentStep('departure')} // Transition to Departure Date Modal
+        onGoBack={() => setCurrentStep('account')} // Navigate back to Create Account Modal
       />
     );
   }
 
+  // Render the Departure Date Modal
   if (currentStep === 'departure') {
     return (
       <DepartureDetailsModal
-        onClose={() => console.log('Success: All steps complete!')} // Handle final step
-        onSkip={() => console.log('Skipped departure date!')} // Handle skip logic
-        onGoBack={() => setCurrentStep('arrival')} // Go back to arrival screen
+        onClose={() => setCurrentStep('success')} // Transition to Success Popup
+        onSkip={() => setCurrentStep('success')} // Skip to Success Popup
+        onGoBack={() => setCurrentStep('arrival')} // Navigate back to Arrival Date Modal
       />
     );
   }
 
-  // Default: Render the account creation modal
+  // Render the Success Popup
+  if (currentStep === 'success') {
+    return (
+      <SuccessPopup
+        title="Success!"
+        subtitle="Your account was successfully created."
+        buttonText="Get Started"
+        onGetStarted={onClose} // Close all modals and return to Login Screen
+      />
+    );
+  }
+
+  // Render the Cancel Account Popup
+  if (currentStep === 'cancel') {
+    return (
+      <CancelAccountPopup
+        onConfirm={onClose} // Confirm cancellation and close all modals
+        onCancel={() => setCurrentStep('account')} // Return to Create Account screen
+      />
+    );
+  }
+
+  // Default: Render the Create Account Modal
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modal}>
@@ -63,12 +91,12 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
 
         {/* Buttons */}
         <div style={styles.modalButtonContainer}>
-          <button style={styles.cancelButton} onClick={onClose}>
+          <button style={styles.cancelButton} onClick={() => setCurrentStep('cancel')}>
             Cancel
           </button>
           <button
             style={styles.continueButton}
-            onClick={() => setCurrentStep('arrival')} // Move to arrival screen
+            onClick={() => setCurrentStep('arrival')} // Transition to Arrival Date Modal
           >
             Continue
           </button>

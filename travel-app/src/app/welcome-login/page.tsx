@@ -1,15 +1,16 @@
 "use client";
-import React, {useState} from 'react';
-import CreateAccountModal from './create-account-popup';
+
+import React, { useState } from 'react';
+import ResetPasswordPopup from '../components/reset-password-popup';
+import CreateAccountModal from './create-account-popup'; // Ensure the path to your component is correct
 
 const WelcomeScreen: React.FC = () => {
-  const [showModal, setShowModal] = useState(false);
-
-  const toggleModal = () => setShowModal(!showModal);
+  const [showResetPopup, setShowResetPopup] = useState(false); // For Reset Password Popup
+  const [showCreateAccountPopup, setShowCreateAccountPopup] = useState(false); // For Create Account Popup
 
   return (
     <div style={styles.pageContainer}>
-      {/* iPhone Screen */}
+      {/* Main Login Screen */}
       <div style={styles.iphoneScreen}>
         {/* Top Left Logo */}
         <div style={styles.logoContainer}>
@@ -25,13 +26,10 @@ const WelcomeScreen: React.FC = () => {
 
         {/* Input Section */}
         <div style={styles.inputSection}>
-          {/* Email Input */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Please enter your email:</label>
             <input type="text" style={styles.input} />
           </div>
-
-          {/* Password Input */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Please enter your password:</label>
             <input type="password" style={styles.input} />
@@ -41,11 +39,27 @@ const WelcomeScreen: React.FC = () => {
         {/* Buttons */}
         <div style={styles.buttonContainer}>
           <button style={styles.button}>Login</button>
-          <button style={styles.button}>Reset Password</button>
-          <button style={styles.button} onClick={toggleModal}>New? Create an Account!</button>
+          <button style={styles.button} onClick={() => setShowResetPopup(true)}>
+            Reset Password
+          </button>
+          <button style={styles.button} onClick={() => setShowCreateAccountPopup(true)}>
+            New? Create an Account!
+          </button>
         </div>
       </div>
-      {/* Show Modal */}{showModal && <CreateAccountModal onClose={toggleModal} />}
+
+      {/* Reset Password Popup */}
+      {showResetPopup && (
+        <ResetPasswordPopup
+          onCancel={() => setShowResetPopup(false)} // Close Reset Password Popup
+          onComplete={() => setShowResetPopup(false)} // Close and return to login screen
+        />
+      )}
+
+      {/* Create Account Popup */}
+      {showCreateAccountPopup && (
+        <CreateAccountModal onClose={() => setShowCreateAccountPopup(false)} />
+      )}
     </div>
   );
 };
@@ -118,7 +132,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    marginBottom: '30px', // Increased spacing between input groups
+    marginBottom: '30px', // Space between input groups
   },
   label: {
     fontSize: '18px',
@@ -140,9 +154,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly', // Evenly distribute buttons in the bottom half
-    alignItems: 'center', // Center buttons horizontally
-    height: '50%', // Occupy the bottom half of the screen
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    height: '50%',
     marginTop: '20px',
   },
   button: {
