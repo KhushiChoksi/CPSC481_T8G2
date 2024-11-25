@@ -5,7 +5,7 @@ export default function SeachBar() {
         <div style={{ 
           display: 'flex',
           justifyContent: 'center',
-          marginTop: '20px',
+          marginTop: '90px',
   
         }}>
           <input

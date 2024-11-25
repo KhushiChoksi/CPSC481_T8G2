@@ -1,7 +1,50 @@
-export default function Navbar() {
+"use client";
+import { FaUserCircle } from "react-icons/fa";
+
+
+export default function Topbar() {
     return (
-        <div>
-            <p>Topbar. This will have the logo, update trips, and profile button.</p>
-        </div>
-    );
+        <div
+        style={{
+            position: 'fixed', 
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '60px', 
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 20px',            
+            color: 'white',
+            zIndex: 1000, 
+      }}
+    >
+      
+      <div>
+        <p>Logo</p>
+      </div>
+
+      
+      <div style={{ marginLeft: 'auto', position: 'relative' }}>
+        <button
+          style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            
+            border: 'none',
+            cursor: 'pointer',
+          }}
+          onClick={() => alert('Profile button clicked!')}
+        >
+        
+        <FaUserCircle style={{ fontSize: '24px', color: '#252F40' }} />
+        </button>
+
+        
+        
+      </div>
+    </div>
+  );
 }
+    
