@@ -1,5 +1,6 @@
 "use client";
 import { FaUserCircle } from "react-icons/fa";
+import Logo from "./Logo";
 
 
 export default function Topbar() {
@@ -21,7 +22,7 @@ export default function Topbar() {
     >
       
       <div>
-        <p>Logo</p>
+        <Logo/>
       </div>
 
       
