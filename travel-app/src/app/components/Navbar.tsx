@@ -8,17 +8,14 @@ import { BiHomeAlt } from "react-icons/bi";
 import { GiForkKnifeSpoon } from "react-icons/gi";
 
 
-
-
 export default function Navbar() {
     const pathname = usePathname();
-
     const isActive = (path: string) => pathname === path;           // will be used to find out which one is active     
 
     const circleIcon = "flex items-center justify-center w-14 h-14 bg-light-yellow rounded-full mb-1";
     const labelText = "flex flex-col items-center text-center";
-    const activeText = "flex flex-col items-center text-center font-bold";
     const activeIcon = "flex items-center justify-center w-14 h-14 bg-hl-orange rounded-full mb-1 font-bold";
+    const activeText = "flex flex-col items-center text-center font-bold";
 
     return (
         <div className="fixed bottom-0 left-0 w-full bg-darkblue text-white text-xs rounded-3xl">
