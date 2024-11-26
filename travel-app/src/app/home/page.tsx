@@ -1,11 +1,13 @@
 import Navbar from "../components/Navbar";
 import Image from "next/image";
+import Topbar from "../components/Topbar";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gradient-to-b from-blue-200 to-blue-300 text-darkblue">
+    <div className="flex flex-col items-center min-h-screen text-darkblue">
+      <Topbar/>
       {/* Welcome Section */}
-      <main className="flex flex-col items-start w-full px-4 py-6 pt-10">
+      <main className="mt-10 flex flex-col items-start w-full px-4 py-6 pt-10">
         <h1 className="text-2xl font-bold text-black mb-2">Welcome, [user name]!</h1> 
 
         {/* Date Section */}
