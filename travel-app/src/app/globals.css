@@ -5,8 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --bg-lightblue: #E4EFF6; 
-  --bg-darkblue: #65BFFF;
+  --bg-lightblue: #e4eff6;
+  --bg-darkblue: #65bfff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,9 +19,9 @@
 body {
   color: var(--foreground);
   background-image: linear-gradient(var(--bg-lightblue), var(--bg-darkblue));
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-family: Arial, Helvetica, sans-serif;
 }
 
