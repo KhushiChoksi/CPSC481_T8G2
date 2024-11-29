@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import ResetPasswordPopup from "../app/components/ResetPasswordPopup";
 import CreateAccountModal from "../app/welcome-login/CreateAccountPopup";
 import Logo from "../app/components/Logo";
@@ -45,11 +46,13 @@ const WelcomeScreen: React.FC = () => {
 
         {/* Buttons */}
         <div className="w-full flex flex-col space-y-16 py-10">
-          <button
-            className="w-full h-12 bg-darkblue text-white rounded-md border border-black text-base md:text-lg"
-          >
-            Login
-          </button>
+          <Link href="/home">
+            <button
+              className="w-full h-12 bg-darkblue text-white rounded-md border border-black text-base md:text-lg"
+            >
+              Login
+            </button>
+          </Link>
           <button
             className="w-full h-12 bg-darkblue text-white rounded-md border border-black text-base md:text-lg"
             onClick={() => setShowResetPopup(true)}

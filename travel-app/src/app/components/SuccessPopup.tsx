@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 interface SuccessPopupProps {
   title: string; // Title text for the popup
@@ -28,9 +29,11 @@ const SuccessPopup: React.FC<SuccessPopupProps> = ({
         <h2 style={styles.subtitle}>{subtitle}</h2>
 
         {/* Button */}
-        <button style={styles.longButton} onClick={onGetStarted}>
-          {buttonText}
-        </button>
+        <Link href="/home" style={styles.longButton}>
+          <button style={styles.longButton} onClick={onGetStarted}>
+            {buttonText}
+          </button>
+        </Link>
       </div>
     </div>
   );
