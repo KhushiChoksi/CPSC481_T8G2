@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import SuccessPopup from "./SuccessPopup"; // Reuse the SuccessPopup for confirmation
+import { useRouter } from "next/navigation";
 
 interface ResetPasswordPopupProps {
   onCancel: () => void; // Close the popup
@@ -13,6 +14,7 @@ const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
   onComplete,
 }) => {
   const [step, setStep] = useState<"inputEmail" | "emailSent">("inputEmail");
+  const router = useRouter();
 
   // Email Sent Step
   if (step === "emailSent") {
@@ -21,7 +23,10 @@ const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
         title="Reset Password"
         subtitle="Please check your email for password reset instructions."
         buttonText="Continue"
-        onGetStarted={onComplete} // Return to login on "Continue"
+        onGetStarted={() => {
+          onComplete(); // Close the popup
+          router.push("/"); // Navigate back to the login screen
+        }}
       />
     );
   }

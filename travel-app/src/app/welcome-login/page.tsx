@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import ResetPasswordPopup from "../components/ResetPasswordPopup";
 import CreateAccountModal from "./CreateAccountPopup";
 import Logo from "../components/Logo"; // Import the reusable Logo component
+import { useRouter } from 'next/navigation';
 
 const WelcomeScreen: React.FC = () => {
   const [showResetPopup, setShowResetPopup] = useState(false); // For Reset Password Popup
   const [showCreateAccountPopup, setShowCreateAccountPopup] = useState(false); // For Create Account Popup
+  const router = useRouter();
 
   return (
     <div className="flex flex-col items-center min-h-screen text-darkblue py-1">
@@ -43,6 +45,8 @@ const WelcomeScreen: React.FC = () => {
         <div className="w-[307px] flex flex-col items-center">
           <button
             className="w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
+            // **Add onClick handler to navigate to '/home'**
+            onClick={() => router.push('/home')}
           >
             Login
           </button>

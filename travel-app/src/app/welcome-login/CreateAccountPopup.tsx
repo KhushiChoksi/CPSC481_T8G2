@@ -5,12 +5,14 @@ import TravelDetailsModal from "../components/ArrivalDatePopup";
 import DepartureDetailsModal from "../components/DepartureDatePopup";
 import SuccessPopup from "../components/SuccessPopup";
 import CancelAccountPopup from "./CancelCreateAccountPopup"; // Ensure the path is correct
+import { useRouter } from "next/navigation";
 
 interface CreateAccountModalProps {
   onClose: () => void; // Function to close the entire modal
 }
 
 const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
+  const router = useRouter();
   // State for tracking the current step
   const [currentStep, setCurrentStep] = useState<
     "account" | "arrival" | "departure" | "success" | "cancel"
@@ -44,7 +46,7 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
         title="Success!"
         subtitle="Your account was successfully created."
         buttonText="Get Started"
-        onGetStarted={onClose} // Close all modals and return to Login Screen
+        onGetStarted={() => router.push("/home")} // Navigate to home on "Get Started"
       />
     );
   }
