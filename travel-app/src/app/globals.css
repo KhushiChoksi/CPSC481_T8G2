@@ -5,8 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --bg-lightblue: #E4EFF6; 
-  --bg-darkblue: #65BFFF;
+  --bg-lightblue: #e4eff6;
+  --bg-darkblue: #65bfff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +19,56 @@
 body {
   color: var(--foreground);
   background-image: linear-gradient(var(--bg-lightblue), var(--bg-darkblue));
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom Calendar Styles */
+.react-calendar {
+  border: none;
+  background-color: #A5B6C2; /* Match the modal background */
+  font-family: 'Subtitle, sans-serif';
+  font-size: 18px; /* Larger font size for better readability */
+  width: 100%; /* Full width inside the container */
+  color: black; /* Default text color */
+  height: 360px; /* Fixed height to accommodate 6 weeks */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Evenly distribute weeks */
+}
+
+.react-calendar__month-view__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+  grid-template-rows: repeat(6, 1fr); /* Always 6 rows for consistent height */
+  gap: 5px; /* Adjust spacing between tiles */
+}
+
+.react-calendar__tile {
+  text-align: center;
+  padding: 15px; /* Adjust padding for balanced spacing */
+  background: none;
+  color: black; /* Black text for dates */
+  border-radius: 50%; /* Make tiles round */
+}
+
+.react-calendar__tile:hover {
+  background: rgba(0, 0, 0, 0.1); /* Light hover effect */
+}
+
+/* Consistent styling for selected tiles */
+.react-calendar__tile--active,
+.react-calendar__tile--focused {
+  background: #003554 !important; /* Navy blue for selected date */
+  color: white !important; /* White text for selected date */
+  border: 1px solid black; /* Black border */
+  border-radius: 50%; /* Ensures the shape is a perfect circle */
+  width: 40px; /* Fixed width for the tile */
+  height: 40px; /* Fixed height for the tile */
+  display: flex; /* Center the content */
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  margin: auto; /* Center within the grid */
 }
