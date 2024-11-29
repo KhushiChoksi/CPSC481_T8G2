@@ -20,4 +20,8 @@ const TripButton = ({ iconColor = 'text-white', tripName = "Trip 1" }) => {
   );
 };
 
+<<<<<<< HEAD
 export default TripButton;
+=======
+export default TripButton;
+>>>>>>> origin/main
