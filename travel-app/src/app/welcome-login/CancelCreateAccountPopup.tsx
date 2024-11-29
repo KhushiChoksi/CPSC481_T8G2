@@ -1,13 +1,16 @@
 "use client";
 
-import React from 'react';
+import React from "react";
 
 interface CancelAccountPopupProps {
   onConfirm: () => void; // Callback for confirming account cancellation
   onCancel: () => void; // Callback for going back to account creation
 }
 
-const CancelAccountPopup: React.FC<CancelAccountPopupProps> = ({ onConfirm, onCancel }) => {
+const CancelAccountPopup: React.FC<CancelAccountPopupProps> = ({
+  onConfirm,
+  onCancel,
+}) => {
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modal}>
@@ -37,77 +40,80 @@ const CancelAccountPopup: React.FC<CancelAccountPopupProps> = ({ onConfirm, onCa
 
 const styles: { [key: string]: React.CSSProperties } = {
   modalOverlay: {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100vw", // Full width of the viewport
+    height: "100vh", // Full height of the viewport
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    boxSizing: "border-box",
   },
   modal: {
-    width: '386px',
-    height: '796px',
-    backgroundColor: '#A5B6C2',
-    borderRadius: '20px',
-    border: '1px solid #000000',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    boxSizing: 'border-box',
+    width: "96vw", // Responsive width
+    height: "91vh", // Responsive height
+    backgroundColor: "#A5B6C2",
+    borderRadius: "20px",
+    border: "1px solid #000000",
+    padding: "20px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    overflowY: "auto", // Add scrolling for overflow content
+    boxSizing: "border-box",
   },
   modalTitle: {
-    fontSize: '40px',
-    fontFamily: 'Subtitle, sans-serif',
-    color: '#000000',
-    textAlign: 'center',
-    marginBottom: '10px',
+    fontSize: "2.5rem",
+    fontFamily: "Subtitle, sans-serif",
+    color: "#000000",
+    textAlign: "center",
+    position: "relative",
   },
   underline: {
-    display: 'block',
-    height: '3px',
-    width: '100%',
-    backgroundColor: '#000000',
-    marginTop: '-10px',
+    display: "block",
+    height: "3px",
+    width: "100%",
+    backgroundColor: "#000000",
+    margin: "0 auto",
+    marginTop: "-10px",
   },
   subtitle: {
-    fontSize: '24px',
-    fontFamily: 'Subtitle, sans-serif',
-    color: '#000000',
-    textAlign: 'center',
-    marginTop: '20px', // Spacing below the title
-    marginBottom: '40px', // Space above buttons
+    fontSize: "1.5rem",
+    fontFamily: "Subtitle, sans-serif",
+    color: "#000000",
+    textAlign: "center",
+    marginTop: "10px", // Space below the title
+    marginBottom: "100px", // Space above the buttons
   },
   modalButtonContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '20px', // Space between buttons
+    width: "100%",
+    display: "flex",
+    flexDirection: "column", // Keeps buttons stacked vertically
+    alignItems: "center",
+    gap: "3rem", // Adds consistent vertical spacing between buttons
   },
   longCancelButton: {
-    width: '307px',
-    height: '50px',
-    backgroundColor: '#FFFFFF',
-    color: '#003554',
-    border: '1px solid #000000',
-    borderRadius: '5px',
-    fontSize: '16px',
-    cursor: 'pointer',
+    width: "100%",
+    height: "3.1rem", 
+    backgroundColor: "#FFFFFF",
+    color: "#003554",
+    border: "1px solid #000000",
+    borderRadius: "5px",
+    fontSize: "1rem",
+    cursor: "pointer",
   },
   longConfirmButton: {
-    width: '307px',
-    height: '50px',
-    backgroundColor: '#003554',
-    color: '#FFFFFF',
-    border: '1px solid #000000',
-    borderRadius: '5px',
-    fontSize: '16px',
-    cursor: 'pointer',
+    width: "100%",
+    height: "3.1rem",
+    backgroundColor: "#003554",
+    color: "#FFFFFF",
+    border: "1px solid #000000",
+    borderRadius: "5px",
+    fontSize: "1rem",
+    cursor: "pointer",
   },
 };
 

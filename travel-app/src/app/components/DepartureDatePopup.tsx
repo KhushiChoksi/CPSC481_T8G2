@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
-// npm install react-calendar *** need to add to instructions for library. on version 18.3 no warnings or issues with downloading/installing this
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Default styles
-import '../globals.css'; // Import global styles
+import React, { useState } from "react";
+// npm install react-calendar *** need to add to instructions for library. On version 18.3, no warnings or issues with downloading/installing this
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css"; // Default styles
+import "../globals.css"; // Import global styles
 
 interface DepartureDetailsModalProps {
   onClose: () => void;
@@ -37,8 +37,8 @@ const DepartureDetailsModal: React.FC<DepartureDetailsModalProps> = ({
             value={selectedDate}
             tileClassName={({ date }) =>
               selectedDate && date.toDateString() === selectedDate.toDateString()
-                ? 'selected-date'
-                : ''
+                ? "selected-date"
+                : ""
             }
           />
         </div>
@@ -59,7 +59,7 @@ const DepartureDetailsModal: React.FC<DepartureDetailsModalProps> = ({
               Go Back
             </button>
           )}
-          <button style={styles.continueButton} onClick={onClose}>
+          <button style={styles.confirmButton} onClick={onClose}>
             Confirm Date
           </button>
         </div>
@@ -70,100 +70,103 @@ const DepartureDetailsModal: React.FC<DepartureDetailsModalProps> = ({
 
 const styles: { [key: string]: React.CSSProperties } = {
   modalOverlay: {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100vw", // Full width of the viewport
+    height: "100vh", // Full height of the viewport
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    boxSizing: "border-box",
   },
   modal: {
-    width: '386px',
-    height: '796px',
-    backgroundColor: '#A5B6C2',
-    borderRadius: '20px',
-    border: '1px solid #000000',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    boxSizing: 'border-box',
+    width: "96vw", // Responsive width
+    height: "91vh", // Responsive height
+    backgroundColor: "#A5B6C2",
+    borderRadius: "20px",
+    border: "1px solid #000000",
+    padding: "20px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    overflowY: "auto", // Add scrolling for overflow content
+    boxSizing: "border-box",
   },
   modalTitle: {
-    fontSize: '40px',
-    fontFamily: 'Subtitle, sans-serif',
-    color: '#000000',
-    textAlign: 'center',
-    marginBottom: '10px',
-  },
-  subtitle: {
-    fontSize: '24px',
-    fontFamily: 'Subtitle, sans-serif',
-    color: '#000000',
-    marginTop: '50px',
-    marginBottom: '10px',
+    fontSize: "2.5rem", // Adjust for responsiveness
+    fontFamily: "Subtitle, sans-serif",
+    color: "#000000",
+    textAlign: "center",
+    marginBottom: "1rem",
   },
   underline: {
-    display: 'block',
-    height: '3px',
-    width: '100%',
-    backgroundColor: '#000000',
-    marginTop: '-10px',
+    display: "block",
+    height: "3px",
+    width: "100%",
+    backgroundColor: "#000000",
+    marginTop: "-10px",
+  },
+  subtitle: {
+    fontSize: "1.5rem",
+    fontFamily: "Subtitle, sans-serif",
+    color: "#000000",
+    textAlign: "center",
+    marginBottom: "2rem", // Space below subtitle
   },
   calendarContainer: {
-    width: '100%',
+    width: "100%",
     flexGrow: 1,
-    marginTop: '-20px',
-    marginBottom: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginBottom: "2rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   skipButtonContainer: {
-    width: '100%', // Full width for proper alignment
-    display: 'flex',
-    justifyContent: 'center', // Center the Skip button
-    marginBottom: '10px', // Space between Skip and other buttons
+    width: "100%",
+    display: "flex",
+    justifyContent: "center", // Center the Skip button
+    marginBottom: "1rem", // Space between Skip and other buttons
   },
   skipButton: {
-    width: '345px',
-    height: '50px',
-    backgroundColor: '#FFFFFF',
-    color: '#003554',
-    border: '1px solid #000000',
-    borderRadius: '5px',
-    fontSize: '16px',
-    cursor: 'pointer',
+    width: "100%",
+    height: "3.1rem",
+    backgroundColor: "#FFFFFF",
+    color: "#003554",
+    border: "1px solid #000000",
+    borderRadius: "5px",
+    fontSize: "1rem",
+    cursor: "pointer",
   },
   modalButtonContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between', // Ensure buttons stay side by side
-    alignItems: 'center',
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between", // Keep Go Back and Confirm buttons side by side
+    gap: "1rem",
   },
   cancelButton: {
-    width: '150px',
-    height: '50px',
-    backgroundColor: '#FFFFFF',
-    color: '#003554',
-    border: '1px solid #000000',
-    borderRadius: '5px',
-    fontSize: '16px',
-    cursor: 'pointer',
+    flex: "1",
+    maxWidth: "44%", // Ensures buttons resize on smaller screens
+    height: "3.1rem",
+    backgroundColor: "#FFFFFF",
+    color: "#003554",
+    border: "1px solid #000000",
+    borderRadius: "5px",
+    fontSize: "1rem",
+    cursor: "pointer",
   },
-  continueButton: {
-    width: '150px',
-    height: '50px',
-    backgroundColor: '#003554',
-    color: '#FFFFFF',
-    border: '1px solid #000000',
-    borderRadius: '5px',
-    fontSize: '16px',
-    cursor: 'pointer',
+  confirmButton: {
+    flex: "1",
+    maxWidth: "44%",
+    height: "3.1rem",
+    backgroundColor: "#003554",
+    color: "#FFFFFF",
+    border: "1px solid #000000",
+    borderRadius: "5px",
+    fontSize: "1rem",
+    cursor: "pointer",
   },
 };
 
