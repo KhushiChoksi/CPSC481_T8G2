@@ -6,8 +6,8 @@ import TripButton from "./TripButton";
 import Logo from "./Logo";
 
 
-export default function Topbar() {
-    return (
+const Topbar = ({ tripTextColor = 'text-white', currentTrip = "Trip 1", profilePersonColor = 'text-white', profileBgColor = 'bg-black' }) => {
+  return (
         <div
             style={{
                 position: 'fixed',
@@ -24,7 +24,7 @@ export default function Topbar() {
 
       <Logo/>
 
-      <TripButton iconColor='text-white' tripName="Trip 1"/>
+      <TripButton iconColor={tripTextColor} tripName={currentTrip}/>
 
       <div
         style={{
@@ -43,10 +43,11 @@ export default function Topbar() {
             }}
             onClick={() => alert('Profile button clicked!')}>
                 
-            <CircleWithIcon circleColor='bg-black' iconColor='text-white' />
+            <CircleWithIcon circleColor={profileBgColor} iconColor={profilePersonColor} />
         </button>
       </div>
     </div>
   );
-}
+};
     
+export default Topbar;
