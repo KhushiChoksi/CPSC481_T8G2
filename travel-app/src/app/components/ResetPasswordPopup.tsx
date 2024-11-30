@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 
 interface ResetPasswordPopupProps {
   onCancel: () => void; // Close the popup
-  onComplete: () => void; // Callback to return to login after the flow
+  onComplete: () => void; // Callback after reset flow
+  redirectTo: string; // Determines where to navigate after success
 }
 
 const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
   onCancel,
   onComplete,
+  redirectTo,
 }) => {
   const [step, setStep] = useState<"inputEmail" | "emailSent">("inputEmail");
   const router = useRouter();
@@ -25,7 +27,7 @@ const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
         buttonText="Continue"
         onGetStarted={() => {
           onComplete(); // Close the popup
-          router.push("/"); // Navigate back to the login screen
+          router.push(redirectTo); // Navigate to the specified screen
         }}
       />
     );

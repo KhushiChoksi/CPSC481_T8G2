@@ -1,13 +1,14 @@
 "use client";
 
+import React from "react";
 import CircleWithIcon from "./UserProfile";
 import TripButton from "./TripButton";
-
 import Logo from "./Logo";
-
+import { useRouter } from "next/navigation";
 
 const Topbar = ({ tripTextColor = 'text-white', currentTrip = "Trip 1", profilePersonColor = 'text-white', profileBgColor = 'bg-black' }) => {
-  return (
+  const router = useRouter();
+    return (
         <div
             style={{
                 position: 'fixed',
@@ -41,7 +42,7 @@ const Topbar = ({ tripTextColor = 'text-white', currentTrip = "Trip 1", profileP
             alignItems: 'center',
             justifyContent: 'center',
             }}
-            onClick={() => alert('Profile button clicked!')}>
+            onClick={() => router.push("/account-settings")}>
                 
             <CircleWithIcon circleColor={profileBgColor} iconColor={profilePersonColor} />
         </button>
