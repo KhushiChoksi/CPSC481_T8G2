@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-//import SuccessPopup from "./SuccessPopup"; 
+//import SuccessPopup from "./SuccessPopup"; // Reuse for confirmation
 
 interface UpdateEmailPopupProps {
   onCancel: () => void;
@@ -61,10 +61,12 @@ const UpdateEmailPopup: React.FC<UpdateEmailPopupProps> = ({
           />
         </div>
 
-        {/* Error Message */}
-        {errorMessage && (
-          <div style={styles.errorMessage}>{errorMessage}</div>
-        )}
+        {/* Reserved Error Message Space */}
+        <div style={styles.errorContainer}>
+          {errorMessage && (
+            <div style={styles.errorMessage}>{errorMessage}</div>
+          )}
+        </div>
 
         {/* Buttons */}
         <div style={styles.modalButtonContainer}>
@@ -111,7 +113,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontFamily: "Subtitle, sans-serif",
     color: "#000000",
     textAlign: "center",
-    marginBottom: "1rem",
+   // marginBottom: "1rem",
+    position: "relative",
   },
   underline: {
     display: "block",
@@ -139,16 +142,23 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "0 0.5rem",
     fontSize: "1rem",
   },
+  errorContainer: {
+    width: "100%",
+    height: "2rem", // Reserve space for error message
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "1rem",
+  },
   errorMessage: {
     color: "red",
     fontSize: "1rem",
-    marginBottom: "1rem",
     textAlign: "center",
   },
   modalButtonContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: "1rem",
+    gap: "3rem",
     width: "100%",
   },
   longCancelButton: {

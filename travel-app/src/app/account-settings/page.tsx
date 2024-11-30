@@ -40,13 +40,13 @@ const AccountSettings: React.FC = () => {
         {/* Content Section */}
         <div className="w-full max-w-md flex flex-col items-start mb-8 pt-10">
           {/* Current Email Address */}
-          <div className="w-full mb-6 flex flex-col items-start mt-10">
+          <div className="w-full mb-6 flex flex-col items-start mt-10 px-4">
             <label className="block text-lg text-black mb-2">
               Current email address: {currentEmail}
             </label>
             <button
               type="button"
-              className="w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
+              className="max-w-lg w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
               onClick={() => setShowUpdateEmailPopup(true)}
             >
               Update Email Address
@@ -54,13 +54,13 @@ const AccountSettings: React.FC = () => {
           </div>
 
           {/* Security Section */}
-          <div className="w-full mb-6 flex flex-col items-start">
+          <div className="w-full mb-6 flex flex-col items-start px-4">
             <label className="block text-lg text-black mb-2">
               Security
             </label>
             <button
               type="button"
-              className="w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
+              className="max-w-lg w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
               onClick={() => {
                 // Handle update password action
                 alert("Update Password functionality to be added.");
@@ -71,13 +71,13 @@ const AccountSettings: React.FC = () => {
           </div>
 
           {/* Sign Out Section */}
-          <div className="w-full mb-6 flex flex-col items-start">
+          <div className="w-full mb-6 flex flex-col items-start px-4">
             <label className="block text-lg text-black mb-2">
               Sign Out
             </label>
             <button
               type="button"
-              className="w-full h-[50px] bg-white text-[#003554] rounded-lg border border-black text-lg"
+              className="max-w-lg w-full h-[50px] bg-white text-[#003554] rounded-lg border border-black text-lg"
               onClick={() => router.push("/")}
             >
               Sign Out
