@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Topbar from "../components/Topbar";
 import { FaArrowLeft } from "react-icons/fa";
-import UpdateEmailPopup from "../components/UpdateEmailPopup"; // Import the new popup component
+import UpdateEmailPopup from "../components/UpdateEmailPopup"; 
+import UpdatePasswordPopup from "../components/UpdatePasswordPopup"; // Import the new popup
 import { useRouter } from "next/navigation";
 
 const AccountSettings: React.FC = () => {
   const router = useRouter();
   const [showUpdateEmailPopup, setShowUpdateEmailPopup] = useState(false);
+  const [showUpdatePasswordPopup, setShowUpdatePasswordPopup] = useState(false); // Track password popup
 
   // Placeholder for the current user's email address
   const currentEmail = "example@ucalgary.ca";
@@ -61,10 +63,7 @@ const AccountSettings: React.FC = () => {
             <button
               type="button"
               className="max-w-lg w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
-              onClick={() => {
-                // Handle update password action
-                alert("Update Password functionality to be added.");
-              }}
+              onClick={() => setShowUpdatePasswordPopup(true)} // Show password popup
             >
               Update Password
             </button>
@@ -94,6 +93,14 @@ const AccountSettings: React.FC = () => {
         <UpdateEmailPopup
           onCancel={() => setShowUpdateEmailPopup(false)}
           onComplete={() => setShowUpdateEmailPopup(false)}
+        />
+      )}
+
+      {/* Update Password Popup */}
+      {showUpdatePasswordPopup && (
+        <UpdatePasswordPopup
+          onCancel={() => setShowUpdatePasswordPopup(false)} // Close password popup
+          onComplete={() => setShowUpdatePasswordPopup(false)} // Close after update
         />
       )}
     </div>
