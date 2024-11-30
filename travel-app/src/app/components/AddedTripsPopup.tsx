@@ -20,69 +20,84 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
   ];
 
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modal}>
-        {/* Title */}
-        <h1 style={styles.modalTitle}>
-          Added Trips<span style={styles.underline}></span>
-        </h1>
+    <>
+      {/* Background Blur Overlay */}
+      <div style={styles.blurOverlay}></div>
 
-        {/* Trips List */}
-        <div style={styles.radioGroup}>
-          {trips.map((trip) => (
-            <label
-              key={trip.name}
-              style={{
-                ...styles.radioItem,
-                fontWeight: selectedTrip === trip.name ? "bold" : "normal",
-              }}
+      {/* Modal */}
+      <div style={styles.modalOverlay}>
+        <div style={styles.modal}>
+          {/* Title */}
+          <h1 style={styles.modalTitle}>
+            Added Trips<span style={styles.underline}></span>
+          </h1>
+
+          {/* Trips List */}
+          <div style={styles.radioGroup}>
+            {trips.map((trip) => (
+              <label
+                key={trip.name}
+                style={{
+                  ...styles.radioItem,
+                  fontWeight: selectedTrip === trip.name ? "bold" : "normal",
+                }}
+              >
+                <input
+                  type="radio"
+                  name="trip"
+                  value={trip.name}
+                  checked={selectedTrip === trip.name}
+                  onChange={() => onTripChange(trip.name)} // Update the active trip
+                  style={styles.radioInput}
+                />
+                <div>
+                  <span>{trip.name}</span>
+                  <br />
+                  <span style={{ fontWeight: "normal" }}>{trip.dates}</span>
+                </div>
+              </label>
+            ))}
+          </div>
+
+          {/* Buttons */}
+          <div style={styles.buttonContainer}>
+            <button style={styles.backButton} onClick={onClose}>
+              Back
+            </button>
+            <button
+              style={styles.manageButton}
+              onClick={() => alert("Manage clicked!")}
             >
-              <input
-                type="radio"
-                name="trip"
-                value={trip.name}
-                checked={selectedTrip === trip.name}
-                onChange={() => onTripChange(trip.name)} // Update the active trip
-                style={styles.radioInput}
-              />
-              <div>
-                <span>{trip.name}</span>
-                <br />
-                <span style={{ fontWeight: "normal" }}>{trip.dates}</span>
-              </div>
-            </label>
-          ))}
-        </div>
-
-        {/* Buttons */}
-        <div style={styles.buttonContainer}>
-          <button style={styles.backButton} onClick={onClose}>
-            Back
-          </button>
-          <button
-            style={styles.manageButton}
-            onClick={() => alert("Manage clicked!")}
-          >
-            Manage
-          </button>
+              Manage
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
-  modalOverlay: {
+  blurOverlay: {
     position: "fixed",
     top: 0,
     left: 0,
     width: "100vw",
     height: "100vh",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dim background
+    backdropFilter: "blur(5px)", // Apply blur effect
+    zIndex: 998, // Ensure blur stays below modal and TripButton
+  },
+  modalOverlay: {
+    position: "fixed",
+    top: "63px", // Align modal below the TripButton
+    left: 0,
+    width: "100vw",
+    height: "calc(100vh - 63px)", // Adjust height to account for TripButton
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
+    alignItems: "flex-start", // Align modal at the top of its area
+    zIndex: 1001, // Ensure modal sits above the blur overlay
   },
   modal: {
     width: "96vw",

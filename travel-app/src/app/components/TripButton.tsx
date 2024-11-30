@@ -15,11 +15,26 @@ const TripButton: React.FC = () => {
       {/* Trip Button */}
       <div
         className="flex items-center bg-black py-4 px-12 rounded-full cursor-pointer h-[56px]"
-        onClick={() => setShowPopup(true)} // Toggle popup
+        style={{ zIndex: 1001 }} // Ensure TripButton is above the blur
+        onClick={() => setShowPopup(!showPopup)} // Toggle popup
       >
-        <FaPlaneDeparture className="text-white text-[20px] -ml-6 mr-6" />
-        <span className="text-white text-[20px] mr-2">{selectedTrip}</span>
-        <IoIosArrowDown className="text-white text-[14px] ml-6 -mr-7" />
+        <FaPlaneDeparture
+          className={`text-[20px] -ml-6 mr-6 ${
+            showPopup ? "text-hl-orange" : "text-white"
+          }`}
+        />
+        <span
+          className={`text-[20px] mr-2 ${
+            showPopup ? "text-hl-orange" : "text-white"
+          }`}
+        >
+          {selectedTrip}
+        </span>
+        <IoIosArrowDown
+          className={`text-[14px] ml-6 -mr-7 ${
+            showPopup ? "text-hl-orange" : "text-white"
+          }`}
+        />
       </div>
 
       {/* Added Trips Popup */}
