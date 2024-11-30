@@ -25,7 +25,7 @@ const DayView = () => {
     {
       title: 'Kinjo Sushi',
       start: '2024-11-30T12:00:00',
-      end: '2024-11-30T13:00:00',
+      end: '2024-11-30T12:30:00',
     },
   ];
 
@@ -41,9 +41,13 @@ const DayView = () => {
         plugins={[timeGridPlugin, bootstrapPlugin]}
         initialView="timeGridDay"
         events={events}
-        eventColor='white'
+        eventColor='lightblue'
         eventTextColor='black'
         eventBorderColor='black'
+        // eventMinHeight={80}
+
+        slotDuration="00:30:00"
+
         height='600px'
         allDaySlot = {false}
         headerToolbar={{

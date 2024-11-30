@@ -23,7 +23,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* Custom Calendar Styles */
@@ -113,4 +113,33 @@ body {
   color: black !important;
 }
 
+.fc-timegrid-slot {
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px dashed rgba(11, 11, 11, 0);
+}
+
+.fc-timegrid-slot-lane {                          /* major lines (hourly) */
+  border-top: 1px dashed rgba(0, 0, 0, 0.4);
+}
+
+.fc-timegrid-slot-lane.fc-timegrid-slot-minor {   /* minor lines (sub-hourly) */
+  border-top: 1px dashed rgba(0, 0, 0, 0);
+}
+
+.fc-timegrid-slot-label {                         /* time column */
+  background-color: rgb(255, 255, 255, 0);
+  border: 1.5px solid rgba(0, 0, 0, 0.7);
+}
+
+/* https://stackoverflow.com/questions/7258655/can-the-default-timeslot-height-be-set-in-fullcalendar */
+.fc .fc-timegrid-slot {
+  height: 65px !important;
+  line-height: 0.2em !important;
+  border-bottom: 0 !important;
+}
+/* .fc .fc-timegrid-slot.fc-scrollgrid-shrink {
+  height: 1.5em !important;
+  line-height: 1.5em !important;
+  border-bottom: 0 !important;
+} */
 
