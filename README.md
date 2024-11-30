@@ -47,6 +47,8 @@ npm install --save \
   @fullcalendar/bootstrap
 
 npm install --save bootstrap@4 @fortawesome/fontawesome-free
+
+npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction
 </p>
 
 

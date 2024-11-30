@@ -1,10 +1,20 @@
+'use client';
+
+import React, { useState } from 'react';
+
 import Navbar from "../components/Navbar";
 import Topbar from "../components/Topbar";
 import DayView from "./components/DayView";
 import Link from "next/link";
 
 export default function ItineraryPage() {
-  const buttonStyle = "bg-white text-darkblue p-2 h-8 rounded-lg border border-solid border-black w-full h-full"; // Added w-full for uniform width
+  const [isEditing, setIsEditing] = useState(false);
+
+  const buttonStyle = "bg-white text-darkblue p-2 h-8 rounded-lg border border-solid border-black w-full h-full";
+
+  const handleEditToggle = () => {
+    setIsEditing((prev: any) => !prev);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -15,13 +25,21 @@ export default function ItineraryPage() {
           {/* Calendar */}
           <div className="flex justify-center w-full max-w-[300px]">
             <div className="flex justify-center items-center w-[300px] h-[630px]">
-              <DayView />
+              <DayView isEditing={isEditing}/>
             </div>
           </div>
 
           {/* Buttons Section */}
           <div className="mt-0.5 flex flex-row justify-center space-x-8 w-full">
-            <button className={buttonStyle}>Edit</button>
+
+            {/* Edit button */}
+            <button
+              className={`${buttonStyle} ${isEditing ? 'bg-[#003554] text-white' : 'bg-[white]'}`}
+              onClick={handleEditToggle}
+            >
+              {isEditing ? 'Stop Editing' : 'Edit'}
+            </button>
+
             <div className="flex flex-col space-y-4 w-full">
               <Link href="/explore"><button className={buttonStyle}>Add events</button></Link>
               <Link href="/restaurants"><button className={buttonStyle}>Add restaurants</button></Link>
