@@ -49,6 +49,6 @@ const Topbar = ({ tripTextColor = 'text-white', currentTrip = "Trip 1", profileP
       </div>
     </div>
   );
-}
+};
     
 export default Topbar;
