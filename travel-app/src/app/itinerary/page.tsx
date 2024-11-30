@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import Topbar from "../components/Topbar";
 import DayView from "./components/DayView";
+import Link from "next/link";
 
 export default function ItineraryPage() {
   const buttonStyle = "bg-white text-darkblue p-2 h-8 rounded-lg border border-solid border-black w-full h-full"; // Added w-full for uniform width
@@ -22,11 +23,11 @@ export default function ItineraryPage() {
           <div className="mt-0.5 flex flex-row justify-center space-x-8 w-full">
             <button className={buttonStyle}>Edit</button>
             <div className="flex flex-col space-y-4 w-full">
-              <button className={buttonStyle}>Add events</button>
-              <button className={buttonStyle}>Add restaurants</button>
+              <Link href="/explore"><button className={buttonStyle}>Add events</button></Link>
+              <Link href="/restaurants"><button className={buttonStyle}>Add restaurants</button></Link>
             </div>
           </div>
-          
+
         </main>
       </div>
       <Navbar />
