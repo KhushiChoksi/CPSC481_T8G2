@@ -12,20 +12,19 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 
-import styles from './DayView.module.css'
-
-
 const DayView = () => {
   const events = [
     {
       title: 'Calgary Tower',
       start: '2024-11-30T09:00:00',
       end: '2024-11-30T10:00:00',
+      address: '101 9 Ave SW, Calgary, AB T2P 1J9',
     },
     {
       title: 'Kinjo Sushi',
       start: '2024-11-30T12:00:00',
       end: '2024-11-30T12:30:00',
+      address: '300 8 Ave SW, Calgary, AB T2P 1C6',
     },
   ];
 
@@ -41,10 +40,12 @@ const DayView = () => {
         plugins={[timeGridPlugin, bootstrapPlugin]}
         initialView="timeGridDay"
         events={events}
-        eventColor='lightblue'
+        eventContent={renderEventContent}
+
+        eventColor='#FDFFD1'
         eventTextColor='black'
         eventBorderColor='black'
-        // eventMinHeight={80}
+        eventTimeFormat={{ hour: '2-digit', minute: '2-digit', hour12: true }}      // show time with AM and PM
 
         slotDuration="00:30:00"
 
@@ -55,8 +56,6 @@ const DayView = () => {
           center: 'title',
           right: ''
         }}
-        eventTimeFormat={{ hour: '2-digit', minute: '2-digit', hour12: true }}      // show time with AM and PM
-        dayCellClassNames={styles.customDayCell}
 
         customButtons={{
           calendarIcon: {
@@ -74,5 +73,21 @@ const DayView = () => {
     </div>
   );
 };
+
+function renderEventContent(eventInfo: { event: any; }) {
+  const { event } = eventInfo; // access event data
+  const address = event.extendedProps.address; // get address from event
+  const startTime = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });   // get start time
+  const endTime = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });       // get end time
+
+  return (
+    <div>
+      <strong>{event.title}</strong> 
+      <div className='italic'>{startTime} - {endTime}</div>
+      <div>{address && <p>{address}</p>}</div> {/* Address, only show if available */}
+    </div>
+  );
+}
+
 
 export default DayView;
