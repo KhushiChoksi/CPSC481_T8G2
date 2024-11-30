@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import ManageTripsPopup from "./ManageTripsPopup"; // Import the ManageTripsPopup
 
 interface AddedTripsPopupProps {
   onClose: () => void; // Callback to close the popup
@@ -13,6 +14,8 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
   selectedTrip,
   onTripChange,
 }) => {
+  const [showManageTrips, setShowManageTrips] = useState(false);
+
   const trips = [
     { name: "Trip 1", dates: "2024/09/02 - 2024/09/16" },
     { name: "Trip 2", dates: "2024/10/20 - 2024/11/20" },
@@ -25,54 +28,68 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
       <div style={styles.blurOverlay}></div>
 
       {/* Modal */}
-      <div style={styles.modalOverlay}>
-        <div style={styles.modal}>
-          {/* Title */}
-          <h1 style={styles.modalTitle}>
-            Added Trips<span style={styles.underline}></span>
-          </h1>
+      {!showManageTrips && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            {/* Title */}
+            <h1 style={styles.modalTitle}>
+              Added Trips<span style={styles.underline}></span>
+            </h1>
 
-          {/* Trips List */}
-          <div style={styles.radioGroup}>
-            {trips.map((trip) => (
-              <label
-                key={trip.name}
-                style={{
-                  ...styles.radioItem,
-                  fontWeight: selectedTrip === trip.name ? "bold" : "normal",
-                }}
-              >
-                <input
-                  type="radio"
-                  name="trip"
-                  value={trip.name}
-                  checked={selectedTrip === trip.name}
-                  onChange={() => onTripChange(trip.name)} // Update the active trip
-                  style={styles.radioInput}
-                />
-                <div>
-                  <span>{trip.name}</span>
-                  <br />
-                  <span style={{ fontWeight: "normal" }}>{trip.dates}</span>
-                </div>
-              </label>
-            ))}
-          </div>
+            {/* Trips List */}
+            <div style={styles.tripList}>
+              {trips.map((trip) => (
+                <label
+                  key={trip.name}
+                  style={{
+                    ...styles.tripItem,
+                    fontWeight: selectedTrip === trip.name ? "bold" : "normal",
+                  }}
+                >
+                  <input
+                    type="radio"
+                    name="trip"
+                    value={trip.name}
+                    checked={selectedTrip === trip.name}
+                    onChange={() => onTripChange(trip.name)}
+                    style={styles.radioInput}
+                  />
+                  <div style={styles.tripDetails}>
+                    <span>{trip.name}</span>
+                    <br />
+                    <span style={{ fontWeight: "normal" }}>{trip.dates}</span>
+                  </div>
+                </label>
+              ))}
+            </div>
 
-          {/* Buttons */}
-          <div style={styles.buttonContainer}>
-            <button style={styles.backButton} onClick={onClose}>
-              Back
-            </button>
-            <button
-              style={styles.manageButton}
-              onClick={() => alert("Manage clicked!")}
-            >
-              Manage
-            </button>
+            {/* Bottom Section */}
+            <div style={styles.bottomSection}>
+              <div style={styles.buttonContainer}>
+                <button style={styles.backButton} onClick={onClose}>
+                  Back
+                </button>
+                <button
+                  style={styles.manageButton}
+                  onClick={() => setShowManageTrips(true)}
+                >
+                  Manage
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* ManageTripsPopup */}
+      {showManageTrips && (
+        <ManageTripsPopup
+          onClose={() => setShowManageTrips(false)}
+          onAddTrip={() => alert("Add Trip clicked!")}
+          onEditTrip={(trip) => alert(`Edit Trip: ${trip}`)}
+          onRemoveTrip={(trip) => alert(`Remove Trip: ${trip}`)}
+        />
+      )}
     </>
   );
 };
@@ -90,14 +107,14 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalOverlay: {
     position: "fixed",
-    top: "63px", // Align modal below the TripButton
+    top: "63px",
     left: 0,
     width: "100vw",
-    height: "calc(100vh - 63px)", // Adjust height to account for TripButton
+    height: "calc(100vh - 63px)",
     display: "flex",
     justifyContent: "center",
-    alignItems: "flex-start", // Align modal at the top of its area
-    zIndex: 1001, // Ensure modal sits above the blur overlay
+    alignItems: "flex-start",
+    zIndex: 1001,
   },
   modal: {
     width: "96vw",
@@ -128,16 +145,19 @@ const styles: { [key: string]: React.CSSProperties } = {
     margin: "0 auto",
     marginTop: "-10px",
   },
-  radioGroup: {
+  tripList: {
     width: "100%",
+    flex: 1, // Ensure it takes up remaining space
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
+    overflowY: "auto",
+    marginTop: "6rem",
   },
-  radioItem: {
+  tripItem: {
     display: "flex",
     alignItems: "center",
-    gap: "1rem",
+    justifyContent: "space-between",
     padding: "1rem",
     borderRadius: "8px",
     backgroundColor: "#FFFFFF",
@@ -145,7 +165,17 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: "pointer",
   },
   radioInput: {
-    marginRight: "1rem",
+    marginRight: "1.69rem",
+  },
+  tripDetails: {
+    flex: 1,
+    textAlign: "left",
+  },
+  bottomSection: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
   },
   buttonContainer: {
     width: "100%",
@@ -154,7 +184,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     gap: "1rem",
   },
   backButton: {
-    flex: "1",
+    flex: 1,
     maxWidth: "44%",
     height: "3.1rem",
     backgroundColor: "#FFFFFF",
@@ -165,7 +195,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: "pointer",
   },
   manageButton: {
-    flex: "1",
+    flex: 1,
     maxWidth: "44%",
     height: "3.1rem",
     backgroundColor: "#003554",
