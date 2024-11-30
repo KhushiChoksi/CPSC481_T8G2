@@ -7,6 +7,7 @@
   --foreground: #171717;
   --bg-lightblue: #e4eff6;
   --bg-darkblue: #65bfff;
+  --darkblue: #003554;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -72,3 +73,44 @@ body {
   align-items: center; /* Vertically center */
   margin: auto; /* Center within the grid */
 }
+
+
+
+
+
+
+/* STYLING FOR ITINERARY CALENDAR */
+.fc {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 25px; 
+  background-color: rgb(255, 255, 255, 0.75);
+  width: 400px;
+}
+
+.fc-header-toolbar .fc-calendarIcon-button {
+  font-size: 25px;
+  color: black;
+  background-color: rgb(221, 221, 221);
+  padding: 5px;
+  min-height: 45px;
+  min-width: 45px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.fc-header-toolbar .fc-toolbar-title {
+  font-size: 25px;
+  font-style: italic;
+  color: black; 
+}
+
+.fc-timegrid-slot-label {
+  color: black; 
+}
+
+.fc-col-header-cell-cushion {
+  color: black !important;
+}
+
+
