@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Topbar from "../components/Topbar";
-import { FaArrowLeft } from "react-icons/fa";
 import UpdateEmailPopup from "../components/UpdateEmailPopup"; 
 import UpdatePasswordPopup from "../components/UpdatePasswordPopup"; 
+import BackButton from "../components/BackButton";
 import { useRouter } from "next/navigation";
 
 const AccountSettings: React.FC = () => {
@@ -29,15 +29,7 @@ const AccountSettings: React.FC = () => {
         {/* Header with Back Arrow and Title */}
         <div className="flex flex-col items-start w-full max-w-md">
           <div className="flex items-center mb-2">
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="mr-2"
-              aria-label="Go back"
-              title="Go back"
-            >
-              <FaArrowLeft className="text-black h-6 w-6" />
-            </button>
+            <BackButton ariaLabel="Go back" />
             <h1 className="text-2xl font-bold text-black">
               Account Settings
             </h1>
