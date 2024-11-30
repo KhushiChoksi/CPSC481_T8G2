@@ -3,7 +3,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Calendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
@@ -12,7 +12,11 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 
+import DateSelection from './DateSelection';
+
 const DayView = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const events = [
     {
       title: 'Calgary Tower',
@@ -34,6 +38,14 @@ const DayView = () => {
         justifyContent: 'center', 
         maxWidth: '500px',
       }}>
+
+      {isModalOpen && (
+        <DateSelection
+          onClose={() => setIsModalOpen(false)} // Close the modal
+          onGoBack={() => setIsModalOpen(false)} // Go back action, close the modal
+        />
+      )}
+
       <Calendar
         themeSystem='bootstrap'
 
@@ -61,9 +73,9 @@ const DayView = () => {
           calendarIcon: {
             text: ' ',
             bootstrapFontAwesome: "fa-calendar-plus",         // calendar icon with plus
-            click: function() {
-              alert('clicked the calendar button!');          // filler code for modal pop-up
-            }
+            click: function () {
+              setIsModalOpen(true); // Open the modal
+            },
           },
         }}
 

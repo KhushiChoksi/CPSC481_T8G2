@@ -6,14 +6,14 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../../globals.css";
 
-interface TravelDetailsModalProps {
+interface DateSelectionModalProps {
   onClose: () => void;
   onGoBack: () => void;
   showSkip?: boolean; // Optional prop to show the "Skip" button
   onSkip?: () => void;
 }
 
-const TravelDetailsModal: React.FC<TravelDetailsModalProps> = ({
+const DateSelection: React.FC<DateSelectionModalProps> = ({
   onClose,
   onGoBack,
   showSkip = false,
@@ -26,11 +26,11 @@ const TravelDetailsModal: React.FC<TravelDetailsModalProps> = ({
       <div style={styles.modal}>
         {/* Title */}
         <h1 style={styles.modalTitle}>
-          Travel Details<span style={styles.underline}></span>
+          Date Selection<span style={styles.underline}></span>
         </h1>
 
         {/* Subtitle */}
-        <h2 style={styles.subtitle}>When are you arriving?</h2>
+        <h2 style={styles.paragraph}>Select the day you would like to view the itinerary of.</h2>
 
         {/* Calendar */}
         <div style={styles.calendarContainer}>
@@ -81,6 +81,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 9999,
   },
   modal: {
     width: "96vw",
@@ -98,7 +99,6 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem",
-    fontFamily: "Subtitle, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "1rem",
@@ -111,9 +111,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     margin: "0 auto",
     marginTop: "-10px",
   },
-  subtitle: {
-    fontSize: "1.5rem",
-    fontFamily: "Subtitle, sans-serif",
+  paragraph: {
+    fontSize: "1.2rem",
     color: "#000000",
     textAlign: "center",
     marginBottom: "2rem",
@@ -172,4 +171,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default TravelDetailsModal;
+export default DateSelection;
