@@ -6,7 +6,7 @@ import TripButton from "./TripButton";
 import Logo from "./Logo";
 import { useRouter } from "next/navigation";
 
-export default function Topbar() {
+const Topbar = ({ tripTextColor = 'text-white', currentTrip = "Trip 1", profilePersonColor = 'text-white', profileBgColor = 'bg-black' }) => {
   const router = useRouter();
     return (
         <div
@@ -25,7 +25,7 @@ export default function Topbar() {
 
       <Logo/>
 
-      <TripButton iconColor='text-white' tripName="Trip 1"/>
+      <TripButton iconColor={tripTextColor} tripName={currentTrip}/>
 
       <div
         style={{
@@ -44,10 +44,11 @@ export default function Topbar() {
             }}
             onClick={() => router.push("/account-settings")}>
                 
-            <CircleWithIcon circleColor='bg-black' iconColor='text-white' />
+            <CircleWithIcon circleColor={profileBgColor} iconColor={profilePersonColor} />
         </button>
       </div>
     </div>
   );
 }
     
+export default Topbar;

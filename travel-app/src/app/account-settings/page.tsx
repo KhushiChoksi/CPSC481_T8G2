@@ -22,7 +22,7 @@ const AccountSettings: React.FC = () => {
   return (
     <div className="flex flex-col items-center min-h-screen text-darkblue">
       {/* Topbar */}
-      <Topbar />
+      <Topbar profilePersonColor="text-hl-orange"/>
 
       {/* Main Content */}
       <main className="mt-10 flex flex-col items-start w-full px-4 py-6 pt-10">
