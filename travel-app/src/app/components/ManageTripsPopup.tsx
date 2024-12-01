@@ -1,73 +1,59 @@
 "use client";
 
-import React from "react";
-import { FaTimesCircle } from "react-icons/fa"; // Red X icon
-import { FaEdit } from "react-icons/fa"; // Edit icon
+import React, { useState } from "react";
+import { FaTimesCircle } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import EditTripPopup from "./EditTripPopup";
+import RemoveTripPopup from "./RemoveTripPopup";
+import { useTrip } from "../context/TripContext";
 
-interface ManageTripsPopupProps {
-  onClose: () => void; // Callback to close the popup
-  onAddTrip: () => void; // Callback to add a trip
-  onEditTrip: (tripName: string) => void; // Callback to edit a trip
-  onRemoveTrip: (tripName: string) => void; // Callback to remove a trip
-}
+const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const { trips } = useTrip();
+  const [showRemovePopup, setShowRemovePopup] = useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [selectedTripToRemove, setSelectedTripToRemove] = useState<string | null>(null);
+  const [selectedTripToEdit, setSelectedTripToEdit] = useState<string | null>(null);
 
-const ManageTripsPopup: React.FC<ManageTripsPopupProps> = ({
-  onClose,
-  onAddTrip,
-  onEditTrip,
-  onRemoveTrip,
-}) => {
-  const trips = [
-    { name: "Trip 1", dates: "2024/09/02 - 2024/09/16" },
-    { name: "Trip 2", dates: "2024/10/20 - 2024/11/20" },
-    { name: "Trip 3", dates: "2025/01/05 - 2025/02/05" },
-  ];
+  const handleRemoveClick = (tripName: string) => {
+    setSelectedTripToRemove(tripName);
+    setShowRemovePopup(true);
+  };
+
+  const handleEditClick = (tripName: string) => {
+    setSelectedTripToEdit(tripName);
+    setShowEditPopup(true);
+  };
 
   return (
     <>
-      {/* Modal */}
       <div style={styles.modalOverlay}>
         <div style={styles.modal}>
-          {/* Title */}
-          <h1 style={styles.modalTitle}>
-            Manage Trips<span style={styles.underline}></span>
-          </h1>
-
-          {/* Trips List */}
+          <h1 style={styles.modalTitle}>Manage Trips</h1>
           <div style={styles.tripList}>
             {trips.map((trip) => (
               <div key={trip.name} style={styles.tripItem}>
-                {/* Remove Icon */}
                 <FaTimesCircle
                   style={styles.removeIcon}
-                  onClick={() => onRemoveTrip(trip.name)}
+                  onClick={() => handleRemoveClick(trip.name)}
                   title="Remove Trip"
                 />
-
-                {/* Trip Details */}
                 <div style={styles.tripDetails}>
                   <span>{trip.name}</span>
                   <br />
-                  <span style={{ fontWeight: "normal" }}>{trip.dates}</span>
+                  <span>{trip.dates}</span>
                 </div>
-
-                {/* Edit Icon */}
                 <FaEdit
                   style={styles.editIcon}
-                  onClick={() => onEditTrip(trip.name)}
+                  onClick={() => handleEditClick(trip.name)}
                   title="Edit Trip"
                 />
               </div>
             ))}
           </div>
 
-          {/* Add Trip Button */}
+          {/* Bottom Buttons */}
           <div style={styles.bottomSection}>
-            <button style={styles.addTripButton} onClick={onAddTrip}>
-              Add a Trip
-            </button>
-
-            {/* Bottom Buttons */}
+            <button style={styles.addTripButton}>Add a Trip</button>
             <div style={styles.buttonContainer}>
               <button style={styles.backButton} onClick={onClose}>
                 Back
@@ -79,6 +65,22 @@ const ManageTripsPopup: React.FC<ManageTripsPopupProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Remove Trip Popup */}
+      {showRemovePopup && selectedTripToRemove && (
+        <RemoveTripPopup
+          tripName={selectedTripToRemove}
+          onClose={() => setShowRemovePopup(false)}
+        />
+      )}
+
+      {/* Edit Trip Popup */}
+      {showEditPopup && selectedTripToEdit && (
+        <EditTripPopup
+          tripName={selectedTripToEdit}
+          onClose={() => setShowEditPopup(false)}
+        />
+      )}
     </>
   );
 };
@@ -126,7 +128,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   tripList: {
     width: "100%",
-    flex: 1, // Ensure it takes up remaining space
+    flex: 1,
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
@@ -174,7 +176,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
-    marginBottom:"2rem",
+    marginBottom: "1rem", // Ensure spacing above back/done buttons
   },
   buttonContainer: {
     width: "100%",

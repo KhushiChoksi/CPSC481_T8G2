@@ -77,6 +77,7 @@ const WelcomeScreen: React.FC = () => {
         />
       )}
 
+
       {/* Create Account Popup */}
       {showCreateAccountPopup && (
         <CreateAccountModal onClose={() => setShowCreateAccountPopup(false)} />
