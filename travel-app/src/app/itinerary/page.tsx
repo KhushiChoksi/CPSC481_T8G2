@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import Navbar from "../components/Navbar";
 import Topbar from "../components/Topbar";
 import DayView from "./components/DayView";
+import BackButton from '../components/BackButton';
 import Link from "next/link";
 
 export default function ItineraryPage() {
@@ -21,6 +22,7 @@ export default function ItineraryPage() {
       <Topbar />
       <div className="flex flex-col items-center w-full">
         <main className="mt-10 flex flex-col items-center w-full px-4 py-6">
+        {/* <BackButton title='Itinerary Page'/> */}
 
           {/* Calendar */}
           <div className="flex justify-center w-full max-w-[300px]">
@@ -34,7 +36,7 @@ export default function ItineraryPage() {
 
             {/* Edit button */}
             <button
-              className={`${buttonStyle} ${isEditing ? 'bg-darkblue2 text-white font-bold' : 'bg-[white]'}`}
+              className={`${buttonStyle} ${isEditing ? 'bg-darkblue2 text-white font-bold' : 'bg-white'}`}
               onClick={handleEditToggle}
             >
               {isEditing ? 'Stop Editing' : 'Edit'}
