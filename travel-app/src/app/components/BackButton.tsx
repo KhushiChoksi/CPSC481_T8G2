@@ -13,7 +13,7 @@ interface BackButtonProps {
 const BackButton: React.FC<BackButtonProps> = ({
   onClick,
   ariaLabel = "Go back",
-  title = "Go back",
+  title = "",
 }) => {
   const router = useRouter();
 
@@ -23,15 +23,18 @@ const BackButton: React.FC<BackButtonProps> = ({
   };
 
   return (
+    <div className="flex flex-row mt-2">
     <button
       type="button"
       onClick={handleBackClick}
-      className="mr-2"
+      className="mr-2 pl-1 pr-2 border border-1 border-solid border-black"
       aria-label={ariaLabel}
       title={title}
     >
-      <FaArrowLeft className="text-black h-6 w-6" />
+      <FaArrowLeft className="text-4xl text-black h-6 w-6" />
     </button>
+    <h2 className="ml-2 text-2xl font-bold">{title}</h2>
+    </div>
   );
 };
 
