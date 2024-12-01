@@ -3,13 +3,14 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../globals.css";
+import "../../globals.css";
+import { useTrip } from "../../context/TripContext";
 
 interface EditDeparturePopupProps {
   tripName: string;
   arrivalDate: Date;
   onClose: () => void; // Final close
-  onGoBack: () => void; // Go back to arrival popup
+  onGoBack: () => void; // Go back to EditArrivalPopup
 }
 
 const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
@@ -18,6 +19,7 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
   onClose,
   onGoBack,
 }) => {
+  const { setTrips } = useTrip();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleConfirmDate = () => {
@@ -25,15 +27,28 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
       alert("Please select a departure date before continuing or use 'Skip'.");
       return;
     }
-    console.log(
-      `Saving trip ${tripName} with dates ${arrivalDate.toLocaleDateString()} - ${selectedDate.toLocaleDateString()}`
+    setTrips((prevTrips) =>
+      prevTrips.map((trip) =>
+        trip.name === tripName
+          ? {
+              ...trip,
+              dates: `${arrivalDate.toLocaleDateString()} - ${selectedDate.toLocaleDateString()}`,
+            }
+          : trip
+      )
     );
-    onClose(); // Final close
+    onClose(); // Close the modal
   };
 
   const handleSkip = () => {
-    console.log(`Saving trip ${tripName} with dates ${arrivalDate.toLocaleDateString()} - `);
-    onClose(); // Final close
+    setTrips((prevTrips) =>
+      prevTrips.map((trip) =>
+        trip.name === tripName
+          ? { ...trip, dates: `${arrivalDate.toLocaleDateString()} - ` }
+          : trip
+      )
+    );
+    onClose(); // Close the modal
   };
 
   return (
