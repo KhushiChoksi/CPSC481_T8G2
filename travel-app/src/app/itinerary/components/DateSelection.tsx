@@ -35,13 +35,9 @@ const DateSelection: React.FC<DateSelectionModalProps> = ({
         {/* Calendar */}
         <div style={styles.calendarContainer}>
           <Calendar
-            onChange={(date) => setSelectedDate(date as Date)}
-            value={selectedDate}
-            tileClassName={({ date }) =>
-              selectedDate && date.toDateString() === selectedDate.toDateString()
-                ? "selected-date"
-                : ""
-            }
+            onChange={(date) => setSelectedDate(date as Date)} // Update state with selected date
+            value={selectedDate} // Highlight selected date
+            showNeighboringMonth={false} // Exclude days from adjacent months
           />
         </div>
 

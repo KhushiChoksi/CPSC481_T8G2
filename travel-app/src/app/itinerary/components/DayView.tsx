@@ -19,15 +19,15 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
     {
       id: '1',
       title: 'Calgary Tower',
-      start: '2024-11-30T09:00:00',
-      end: '2024-11-30T10:00:00',
+      start: '2024-12-01T09:00:00',
+      end: '2024-12-01T10:00:00',
       address: '101 9 Ave SW, Calgary, AB T2P 1J9',
     },
     {
       id: '2',
       title: 'Kinjo Sushi',
-      start: '2024-11-30T12:00:00',
-      end: '2024-11-30T12:30:00',
+      start: '2024-12-01T12:00:00',
+      end: '2024-12-01T12:30:00',
       address: '300 8 Ave SW, Calgary, AB T2P 1C6',
     },
   ]);
