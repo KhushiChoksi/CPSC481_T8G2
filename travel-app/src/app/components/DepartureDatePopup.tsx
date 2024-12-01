@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-// npm install react-calendar *** need to add to instructions for library. On version 18.3, no warnings or issues with downloading/installing this
+// npm install react-calendar
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Default styles
-import "../globals.css"; // Import global styles
+import "react-calendar/dist/Calendar.css";
+import "../globals.css";
 
 interface DepartureDetailsModalProps {
   onClose: () => void;
@@ -33,13 +33,9 @@ const DepartureDetailsModal: React.FC<DepartureDetailsModalProps> = ({
         {/* Calendar */}
         <div style={styles.calendarContainer}>
           <Calendar
-            onChange={(date) => setSelectedDate(date as Date)}
-            value={selectedDate}
-            tileClassName={({ date }) =>
-              selectedDate && date.toDateString() === selectedDate.toDateString()
-                ? "selected-date"
-                : ""
-            }
+            onChange={(date) => setSelectedDate(date as Date)} // Update state with selected date
+            value={selectedDate} // Highlight selected date
+            showNeighboringMonth={false} // Exclude days from adjacent months
           />
         </div>
 
@@ -52,7 +48,7 @@ const DepartureDetailsModal: React.FC<DepartureDetailsModalProps> = ({
           </div>
         )}
 
-        {/* Go Back and Confirm Date Buttons */}
+        {/* Go Back and Confirm Buttons */}
         <div style={styles.modalButtonContainer}>
           {onGoBack && (
             <button style={styles.cancelButton} onClick={onGoBack}>
@@ -79,7 +75,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxSizing: "border-box",
   },
   modal: {
     width: "96vw", // Responsive width
@@ -90,10 +85,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "20px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start", // Align content at the top
     alignItems: "center",
     overflowY: "auto", // Add scrolling for overflow content
     boxSizing: "border-box",
+    gap: "1rem", // Consistent spacing between elements
   },
   modalTitle: {
     fontSize: "2.5rem", // Adjust for responsiveness
@@ -119,16 +115,16 @@ const styles: { [key: string]: React.CSSProperties } = {
   calendarContainer: {
     width: "100%",
     flexGrow: 1,
-    marginBottom: "2rem",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start", // Align calendar closer to the top
+    marginBottom: "1rem", // Adjust spacing
   },
   skipButtonContainer: {
     width: "100%",
     display: "flex",
     justifyContent: "center", // Center the Skip button
-    marginBottom: "1rem", // Space between Skip and other buttons
+    marginBottom: "2.5rem", // Space between Skip and other buttons
   },
   skipButton: {
     width: "100%",
@@ -141,6 +137,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: "pointer",
   },
   modalButtonContainer: {
+    marginTop: "auto", // Push buttons to the bottom
     width: "100%",
     display: "flex",
     justifyContent: "space-between", // Keep Go Back and Confirm buttons side by side
