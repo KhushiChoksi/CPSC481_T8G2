@@ -5,12 +5,15 @@ import { FaTimesCircle } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import EditTripPopup from "./EditTripPopup";
 import RemoveTripPopup from "./RemoveTripPopup";
+import AddNewTripPopup from "./AddNewTripPopup";
 import { useTrip } from "../context/TripContext";
+import { FaInfinity } from "react-icons/fa";
 
 const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { trips } = useTrip();
   const [showRemovePopup, setShowRemovePopup] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showAddTripPopup, setShowAddTripPopup] = useState(false); // New state
   const [selectedTripToRemove, setSelectedTripToRemove] = useState<string | null>(null);
   const [selectedTripToEdit, setSelectedTripToEdit] = useState<string | null>(null);
 
@@ -28,7 +31,9 @@ const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <>
       <div style={styles.modalOverlay}>
         <div style={styles.modal}>
-          <h1 style={styles.modalTitle}>Manage Trips</h1>
+          <h1 style={styles.modalTitle}>Manage Trips
+          <span style={styles.underline}></span>
+          </h1>
           <div style={styles.tripList}>
             {trips.map((trip) => (
               <div key={trip.name} style={styles.tripItem}>
@@ -40,7 +45,15 @@ const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <div style={styles.tripDetails}>
                   <span>{trip.name}</span>
                   <br />
-                  <span>{trip.dates}</span>
+                  <span>
+                    {trip.dates.includes(" - ") && trip.dates.endsWith(" - ") ? (
+                      <span style={{ display: "inline-flex", alignItems: "center" }}>
+                        {trip.dates.split(" - ")[0]} - <FaInfinity style={{ fontSize: "1.1rem", marginLeft: "0.2rem" }} />
+                      </span>
+                    ) : (
+                      trip.dates
+                    )}
+                  </span>
                 </div>
                 <FaEdit
                   style={styles.editIcon}
@@ -53,7 +66,12 @@ const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
           {/* Bottom Buttons */}
           <div style={styles.bottomSection}>
-            <button style={styles.addTripButton}>Add a Trip</button>
+            <button
+              style={styles.addTripButton}
+              onClick={() => setShowAddTripPopup(true)} // Show AddNewTripPopup
+            >
+              Add a Trip
+            </button>
             <div style={styles.buttonContainer}>
               <button style={styles.backButton} onClick={onClose}>
                 Back
@@ -65,6 +83,11 @@ const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </div>
         </div>
       </div>
+
+      {/* Add New Trip Popup */}
+      {showAddTripPopup && (
+        <AddNewTripPopup onClose={() => setShowAddTripPopup(false)} />
+      )}
 
       {/* Remove Trip Popup */}
       {showRemovePopup && selectedTripToRemove && (
@@ -123,7 +146,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     height: "3px",
     width: "100%",
     backgroundColor: "#000000",
-    margin: "0 auto",
     marginTop: "-10px",
   },
   tripList: {
@@ -176,7 +198,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
-    marginBottom: "1rem", // Ensure spacing above back/done buttons
+    marginBottom: "2rem",
+    marginTop: "2.2rem",
   },
   buttonContainer: {
     width: "100%",

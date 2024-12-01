@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import ManageTripsPopup from "./ManageTripsPopup";
 import { useTrip } from "../context/TripContext";
+import { FaInfinity } from "react-icons/fa";
 
 interface AddedTripsPopupProps {
   onClose: () => void;
@@ -47,7 +48,22 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
                   <div style={styles.tripDetails}>
                     <span>{trip.name}</span>
                     <br />
-                    <span>{trip.dates}</span>
+                    <span>
+                      {trip.dates.includes(" - ") && trip.dates.endsWith(" - ") ? (
+                        <span style={{ display: "inline-flex", alignItems: "center" }}>
+                          {trip.dates.split(" - ")[0]} -{" "}
+                          <FaInfinity
+                            style={{
+                            fontSize: selectedTrip === trip.name ? "1.2rem" : "1.1rem", // Slightly larger when active
+                            marginLeft: "0.2rem",
+                            verticalAlign: "middle",
+                            }}
+                          />
+                        </span>
+                      ) : (
+                        trip.dates
+                      )}
+                    </span>
                   </div>
                 </label>
               ))}

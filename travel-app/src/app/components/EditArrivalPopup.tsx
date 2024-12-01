@@ -1,72 +1,79 @@
 "use client";
-// npm install react-calendar
+
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../globals.css";
+import EditDeparturePopup from "./EditDeparturePopup";
 
-interface TravelDetailsModalProps {
+interface EditArrivalPopupProps {
+  tripName: string;
   onClose: () => void;
-  onGoBack: () => void;
 }
 
-const TravelDetailsModal: React.FC<TravelDetailsModalProps> = ({
-  onClose,
-  onGoBack,
-}) => {
+const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({ tripName, onClose }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showDeparturePopup, setShowDeparturePopup] = useState(false);
+
+  const handleConfirmDate = () => {
+    if (!selectedDate) {
+      alert("Please select an arrival date before continuing.");
+      return;
+    }
+    setShowDeparturePopup(true); // Move to the departure date popup
+  };
 
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modal}>
-        {/* Title */}
-        <h1 style={styles.modalTitle}>
-          Travel Details<span style={styles.underline}></span>
-        </h1>
-
-        {/* Subtitle */}
-        <h2 style={styles.subtitle}>When are you arriving?</h2>
-
-        {/* Calendar */}
-        <div style={styles.calendarContainer}>
-          <Calendar
-            onChange={(date) => setSelectedDate(date as Date)} // Update state with selected date
-            value={selectedDate} // Highlight selected date
-            showNeighboringMonth={false} // Exclude days from adjacent months
-          />
+    <>
+      {!showDeparturePopup && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h1 style={styles.modalTitle}>
+              Editing: {tripName}
+              <span style={styles.underline}></span>
+            </h1>
+            <h2 style={styles.subtitle}>When are you arriving?</h2>
+            <div style={styles.calendarContainer}>
+              <Calendar
+                onChange={(date) => setSelectedDate(date as Date)} // Update selected date
+                value={selectedDate} // Highlight selected date
+                showNeighboringMonth={false} // Exclude days from adjacent months
+              />
+            </div>
+            <div style={styles.modalButtonContainer}>
+              <button style={styles.cancelButton} onClick={onClose}>
+                Go Back
+              </button>
+              <button style={styles.continueButton} onClick={handleConfirmDate}>
+                Confirm Date
+              </button>
+            </div>
+          </div>
         </div>
+      )}
 
-        {/* Go Back and Confirm Buttons */}
-        <div style={styles.modalButtonContainer}>
-          <button style={styles.cancelButton} onClick={onGoBack}>
-            Go Back
-          </button>
-          <button
-            style={styles.continueButton}
-            onClick={() => {
-              console.log("Selected Date:", selectedDate);
-              onClose();
-            }}
-          >
-            Confirm Date
-          </button>
-        </div>
-      </div>
-    </div>
+      {showDeparturePopup && selectedDate && (
+        <EditDeparturePopup
+          tripName={tripName}
+          arrivalDate={selectedDate}
+          onClose={onClose} // Pass onClose to end the flow after departure
+        />
+      )}
+    </>
   );
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
   modalOverlay: {
     position: "fixed",
-    top: 0,
+    top: "63px", // Align with other popups
     left: 0,
     width: "100vw",
-    height: "100vh",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    height: "calc(100vh - 63px)",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
+    zIndex: 1001,
   },
   modal: {
     width: "96vw",
@@ -143,4 +150,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default TravelDetailsModal;
+export default EditArrivalPopup;

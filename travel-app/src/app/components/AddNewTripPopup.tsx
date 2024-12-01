@@ -2,38 +2,29 @@
 
 import React, { useState } from "react";
 import { useTrip } from "../context/TripContext";
-import EditArrivalPopup from "./EditArrivalPopup";
+import AddNewArrivalPopup from "./AddNewArrivalPopup";
 
-interface EditTripPopupProps {
-  tripName: string;
+interface AddNewTripPopupProps {
   onClose: () => void;
 }
 
-const EditTripPopup: React.FC<EditTripPopupProps> = ({ tripName, onClose }) => {
-  const { trips, setTrips, setSelectedTrip } = useTrip();
-  const [editedTripName, setEditedTripName] = useState(tripName);
+const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({ onClose }) => {
+  const { trips } = useTrip(); // No direct trip updates here
+  const [newTripName, setNewTripName] = useState("");
   const [showArrivalPopup, setShowArrivalPopup] = useState(false);
 
   const handleSaveName = () => {
-    const trimmedName = editedTripName.trim();
+    const trimmedName = newTripName.trim();
     if (trimmedName === "") {
       alert("Trip name cannot be empty.");
       return;
     }
 
-    if (trips.some((trip) => trip.name === trimmedName && trip.name !== tripName)) {
+    if (trips.some((trip) => trip.name === trimmedName)) {
       alert("A trip with this name already exists.");
       return;
     }
 
-    // Update the trip name
-    setTrips((prevTrips) =>
-      prevTrips.map((trip) =>
-        trip.name === tripName ? { ...trip, name: trimmedName } : trip
-      )
-    );
-
-    setSelectedTrip(trimmedName); // Update the selected trip
     setShowArrivalPopup(true); // Move to the next step
   };
 
@@ -43,17 +34,15 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({ tripName, onClose }) => {
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
             <h1 style={styles.modalTitle}>
-              Editing: {tripName}
+              Add a Trip
               <span style={styles.underline}></span>
             </h1>
 
-            <p style={styles.label}>
-              Edit trip name or press continue to change the trip dates.
-            </p>
+            <p style={styles.label}>Enter a trip name:</p>
             <input
               type="text"
-              value={editedTripName}
-              onChange={(e) => setEditedTripName(e.target.value)}
+              value={newTripName}
+              onChange={(e) => setNewTripName(e.target.value)}
               style={styles.inputField}
               placeholder="Enter a new trip name"
             />
@@ -70,9 +59,10 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({ tripName, onClose }) => {
       )}
 
       {showArrivalPopup && (
-        <EditArrivalPopup
-          tripName={editedTripName}
-          onClose={onClose} // Pass the same close handler
+        <AddNewArrivalPopup
+          tripName={newTripName}
+          onClose={onClose} // Final close
+          onGoBack={() => setShowArrivalPopup(false)} // Go back to this popup
         />
       )}
     </>
@@ -162,4 +152,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default EditTripPopup;
+export default AddNewTripPopup;
