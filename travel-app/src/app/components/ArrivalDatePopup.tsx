@@ -1,7 +1,6 @@
 "use client";
-
-import React, { useState } from "react";
 // npm install react-calendar
+import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../globals.css";
@@ -9,15 +8,11 @@ import "../globals.css";
 interface TravelDetailsModalProps {
   onClose: () => void;
   onGoBack: () => void;
-  showSkip?: boolean; // Optional prop to show the "Skip" button
-  onSkip?: () => void;
 }
 
 const TravelDetailsModal: React.FC<TravelDetailsModalProps> = ({
   onClose,
   onGoBack,
-  showSkip = false,
-  onSkip,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -35,33 +30,24 @@ const TravelDetailsModal: React.FC<TravelDetailsModalProps> = ({
         {/* Calendar */}
         <div style={styles.calendarContainer}>
           <Calendar
-            onChange={(date) => setSelectedDate(date as Date)}
-            value={selectedDate}
-            tileClassName={({ date }) =>
-              selectedDate && date.toDateString() === selectedDate.toDateString()
-                ? "selected-date"
-                : ""
-            }
+            onChange={(date) => setSelectedDate(date as Date)} // Update state with selected date
+            value={selectedDate} // Highlight selected date
+            showNeighboringMonth={false} // Exclude days from adjacent months
           />
         </div>
-
-        {/* Skip Button Placeholder */}
-        {showSkip ? (
-          <div style={styles.skipButtonContainer}>
-            <button style={styles.skipButton} onClick={onSkip}>
-              Skip
-            </button>
-          </div>
-        ) : (
-          <div style={{ height: "4.1rem" }} /> // Placeholder height
-        )}
 
         {/* Go Back and Confirm Buttons */}
         <div style={styles.modalButtonContainer}>
           <button style={styles.cancelButton} onClick={onGoBack}>
             Go Back
           </button>
-          <button style={styles.continueButton} onClick={onClose}>
+          <button
+            style={styles.continueButton}
+            onClick={() => {
+              console.log("Selected Date:", selectedDate);
+              onClose();
+            }}
+          >
             Confirm Date
           </button>
         </div>
@@ -91,10 +77,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "20px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start", // Align content at the top
     alignItems: "center",
     overflowY: "auto",
     boxSizing: "border-box",
+    gap: "1rem", // Add spacing between elements
   },
   modalTitle: {
     fontSize: "2.5rem",
@@ -120,29 +107,13 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   calendarContainer: {
     width: "100%",
-    flexGrow: 1,
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
-    marginBottom: "2rem",
-  },
-  skipButtonContainer: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "1rem",
-  },
-  skipButton: {
-    width: "345px",
-    height: "50px",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontSize: "16px",
-    cursor: "pointer",
+    alignItems: "flex-start", // Ensure the calendar is closer to the top
+    marginBottom: "1rem", // Reduce the bottom margin
   },
   modalButtonContainer: {
+    marginTop: "auto", // Push buttons to the bottom
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
@@ -150,7 +121,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   cancelButton: {
     flex: "1",
-    maxWidth: "44%", // Ensures buttons resize on smaller screens
+    maxWidth: "44%",
     height: "3.1rem",
     backgroundColor: "#FFFFFF",
     color: "#003554",
