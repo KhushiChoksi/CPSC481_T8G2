@@ -70,6 +70,7 @@ const WelcomeScreen: React.FC = () => {
         <ResetPasswordPopup
           onCancel={() => setShowResetPopup(false)} // Close Reset Password Popup
           onComplete={() => setShowResetPopup(false)} // Close and return to login screen
+          redirectTo="/"
         />
       )}
 
