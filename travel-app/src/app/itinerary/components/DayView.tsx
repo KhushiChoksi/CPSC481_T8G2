@@ -80,7 +80,7 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
         eventBorderColor="black"
         eventTimeFormat={{ hour: '2-digit', minute: '2-digit', hour12: true }} // show time with AM and PM
         slotDuration="00:30:00"
-        height="600px"
+        height="550px"
         allDaySlot={false}
         headerToolbar={{
           left: 'calendarIcon',
