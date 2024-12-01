@@ -1,63 +1,66 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import ResetPasswordPopup from "../components/ResetPasswordPopup";
 import CreateAccountModal from "./CreateAccountPopup";
-import Logo from "../components/Logo"; // Import the reusable Logo component
-import { useRouter } from 'next/navigation';
+import Logo from "../components/Logo";
 
 const WelcomeScreen: React.FC = () => {
   const [showResetPopup, setShowResetPopup] = useState(false); // For Reset Password Popup
   const [showCreateAccountPopup, setShowCreateAccountPopup] = useState(false); // For Create Account Popup
-  const router = useRouter();
 
   return (
-    <div className="flex flex-col items-center min-h-screen text-darkblue py-1">
+    <div className="flex flex-col items-center min-h-screen text-darkblue py-1 px-4">
       <Logo />
 
       {/* Main Content */}
-      <main className="mt-10 flex flex-col items-center w-full px-4 py-6">
+      <main className="mt-8 flex flex-col items-center w-full max-w-lg px-6 py-6">
         {/* Welcome Header */}
-        <h1 className="text-4xl font-bold text-black text-center mt-10 mb-10 relative">
+        <h1 className="text-3xl md:text-4xl font-bold text-black text-center mt-8 mb-8">
           Welcome!
           <span className="block w-full h-1 bg-black mt-2"></span>
         </h1>
 
         {/* Input Section */}
-        <div className="w-full max-w-md flex flex-col items-center mb-8">
-          <div className="w-[307px] mb-6">
-            <label className="block text-lg text-black mb-2">Please enter your email:</label>
+        <div className="w-full flex flex-col items-center mb-8 space-y-6">
+          <div className="w-full">
+            <label className="block text-lg md:text-xl text-black mb-2">
+              Please enter your email:
+            </label>
             <input
               type="text"
-              className="w-full px-4 py-2 border border-black rounded-lg text-black mb-2"
+              className="w-full px-4 py-2 border border-black rounded-lg text-black"
             />
           </div>
-          <div className="w-[307px] mb-6">
-            <label className="block text-lg text-black mb-2">Please enter your password:</label>
+          <div className="w-full">
+            <label className="block text-lg md:text-xl text-black mb-2">
+              Please enter your password:
+            </label>
             <input
               type="password"
-              className="w-full px-4 py-2 border border-black rounded-lg text-black mb-2"
+              className="w-full px-4 py-2 border border-black rounded-lg text-black"
             />
           </div>
         </div>
 
         {/* Buttons */}
-        <div className="w-[307px] flex flex-col items-center">
+        <div className="w-full flex flex-col space-y-16 py-10">
+          <Link href="/home">
+            <button
+              className="w-full h-12 bg-darkblue text-white rounded-md border border-black text-base md:text-lg"
+            >
+              Login
+            </button>
+          </Link>
           <button
-            className="w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
-            // **Add onClick handler to navigate to '/home'**
-            onClick={() => router.push('/home')}
-          >
-            Login
-          </button>
-          <button
-            className="w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
+            className="w-full h-12 bg-darkblue text-white rounded-md border border-black text-base md:text-lg"
             onClick={() => setShowResetPopup(true)}
           >
             Reset Password
           </button>
           <button
-            className="w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg"
+            className="w-full h-12 bg-darkblue text-white rounded-md border border-black text-base md:text-lg"
             onClick={() => setShowCreateAccountPopup(true)}
           >
             New? Create an Account!
@@ -74,8 +77,11 @@ const WelcomeScreen: React.FC = () => {
         />
       )}
 
+
       {/* Create Account Popup */}
-      {showCreateAccountPopup && <CreateAccountModal onClose={() => setShowCreateAccountPopup(false)} />}
+      {showCreateAccountPopup && (
+        <CreateAccountModal onClose={() => setShowCreateAccountPopup(false)} />
+      )}
     </div>
   );
 };
