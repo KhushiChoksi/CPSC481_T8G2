@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import ResetPasswordPopup from "../components/ResetPasswordPopup";
-import CreateAccountModal from "./CreateAccountPopup";
+import ResetPasswordPopup from "../components/account-settings/ResetPasswordPopup";
+import CreateAccountModal from "../components/welcome-login/CreateAccountPopup";
 import Logo from "../components/Logo";
 
 const WelcomeScreen: React.FC = () => {

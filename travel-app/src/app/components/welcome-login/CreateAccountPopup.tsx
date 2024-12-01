@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import TravelDetailsModal from "../components/ArrivalDatePopup";
-import DepartureDetailsModal from "../components/DepartureDatePopup";
-import SuccessPopup from "../components/SuccessPopup";
+import TravelDetailsModal from "../ArrivalDatePopup";
+import DepartureDetailsModal from "../DepartureDatePopup";
+import SuccessPopup from "../SuccessPopup";
 import CancelAccountPopup from "./CancelCreateAccountPopup"; // Ensure the path is correct
 import { useRouter } from "next/navigation";
 

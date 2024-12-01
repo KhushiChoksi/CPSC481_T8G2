@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SuccessPopup from "./SuccessPopup"; // Reuse the SuccessPopup for confirmation
+import SuccessPopup from "../SuccessPopup"; // Reuse the SuccessPopup for confirmation
 import { useRouter } from "next/navigation";
 
 interface ResetPasswordPopupProps {

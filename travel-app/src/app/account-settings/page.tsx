@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Topbar from "../components/Topbar";
-import UpdateEmailPopup from "../components/UpdateEmailPopup"; 
-import UpdatePasswordPopup from "../components/UpdatePasswordPopup"; 
+import UpdateEmailPopup from "../components/account-settings/UpdateEmailPopup"; 
+import UpdatePasswordPopup from "../components/account-settings/UpdatePasswordPopup"; 
 import BackButton from "../components/BackButton";
 import { useRouter } from "next/navigation";
 

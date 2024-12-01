@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useTrip } from "../context/TripContext";
+import { useTrip } from "../../context/TripContext";
 
 interface RemoveTripPopupProps {
   tripName: string;

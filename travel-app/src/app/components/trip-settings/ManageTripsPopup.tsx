@@ -6,7 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import EditTripPopup from "./EditTripPopup";
 import RemoveTripPopup from "./RemoveTripPopup";
 import AddNewTripPopup from "./AddNewTripPopup";
-import { useTrip } from "../context/TripContext";
+import { useTrip } from "../../context/TripContext";
 import { FaInfinity } from "react-icons/fa";
 
 const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
