@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTrip } from "../context/TripContext";
+import { useTrip } from "../../context/TripContext";
 import AddNewArrivalPopup from "./AddNewArrivalPopup";
 
 interface AddNewTripPopupProps {

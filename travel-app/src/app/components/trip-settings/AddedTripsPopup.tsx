@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import ManageTripsPopup from "./ManageTripsPopup";
-import { useTrip } from "../context/TripContext";
+import { useTrip } from "../../context/TripContext";
 import { FaInfinity } from "react-icons/fa";
 
 interface AddedTripsPopupProps {

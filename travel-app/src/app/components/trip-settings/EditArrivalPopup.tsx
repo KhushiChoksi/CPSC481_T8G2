@@ -8,10 +8,15 @@ import EditDeparturePopup from "./EditDeparturePopup";
 
 interface EditArrivalPopupProps {
   tripName: string;
-  onClose: () => void;
+  onClose: () => void; // Final close
+  onGoBack: () => void; // Go back to previous popup
 }
 
-const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({ tripName, onClose }) => {
+const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({
+  tripName,
+  onClose,
+  onGoBack,
+}) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [showDeparturePopup, setShowDeparturePopup] = useState(false);
 
@@ -41,8 +46,8 @@ const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({ tripName, onClose }
               />
             </div>
             <div style={styles.modalButtonContainer}>
-              <button style={styles.cancelButton} onClick={onClose}>
-                Go Back
+              <button style={styles.cancelButton} onClick={onGoBack}>
+                Back
               </button>
               <button style={styles.continueButton} onClick={handleConfirmDate}>
                 Confirm Date
@@ -56,7 +61,8 @@ const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({ tripName, onClose }
         <EditDeparturePopup
           tripName={tripName}
           arrivalDate={selectedDate}
-          onClose={onClose} // Pass onClose to end the flow after departure
+          onClose={onClose} // Final close
+          onGoBack={() => setShowDeparturePopup(false)} // Go back to arrival popup
         />
       )}
     </>

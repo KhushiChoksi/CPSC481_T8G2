@@ -47,7 +47,7 @@ const AddNewArrivalPopup: React.FC<AddNewArrivalPopupProps> = ({
             </div>
             <div style={styles.modalButtonContainer}>
               <button style={styles.cancelButton} onClick={onGoBack}>
-                Go Back
+                Back
               </button>
               <button style={styles.continueButton} onClick={handleConfirmDate}>
                 Confirm Date

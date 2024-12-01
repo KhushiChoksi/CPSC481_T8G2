@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTrip } from "../context/TripContext";
+import { useTrip } from "../../context/TripContext";
 import EditArrivalPopup from "./EditArrivalPopup";
 
 interface EditTripPopupProps {
@@ -73,6 +73,7 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({ tripName, onClose }) => {
         <EditArrivalPopup
           tripName={editedTripName}
           onClose={onClose} // Pass the same close handler
+          onGoBack={() => setShowArrivalPopup(false)} // Navigate back to EditTripPopup
         />
       )}
     </>

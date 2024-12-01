@@ -4,22 +4,20 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../globals.css";
-import { useTrip } from "../context/TripContext";
 
-interface AddNewDeparturePopupProps {
+interface EditDeparturePopupProps {
   tripName: string;
   arrivalDate: Date;
-  onClose: () => void;
-  onGoBack: () => void; // Function to go back to the arrival popup
+  onClose: () => void; // Final close
+  onGoBack: () => void; // Go back to arrival popup
 }
 
-const AddNewDeparturePopup: React.FC<AddNewDeparturePopupProps> = ({
+const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
   tripName,
   arrivalDate,
   onClose,
   onGoBack,
 }) => {
-  const { setTrips, setSelectedTrip } = useTrip();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleConfirmDate = () => {
@@ -27,37 +25,22 @@ const AddNewDeparturePopup: React.FC<AddNewDeparturePopupProps> = ({
       alert("Please select a departure date before continuing or use 'Skip'.");
       return;
     }
-
-    // Add the new trip with both arrival and departure dates
-    setTrips((prevTrips) => [
-      ...prevTrips,
-      {
-        name: tripName,
-        dates: `${arrivalDate.toLocaleDateString()} - ${selectedDate.toLocaleDateString()}`,
-      },
-    ]);
-    setSelectedTrip(tripName); // Update the selected trip
-    onClose(); // Close the modal
+    console.log(
+      `Saving trip ${tripName} with dates ${arrivalDate.toLocaleDateString()} - ${selectedDate.toLocaleDateString()}`
+    );
+    onClose(); // Final close
   };
 
   const handleSkip = () => {
-    // Add the new trip with only the arrival date
-    setTrips((prevTrips) => [
-      ...prevTrips,
-      {
-        name: tripName,
-        dates: `${arrivalDate.toLocaleDateString()} - `,
-      },
-    ]);
-    setSelectedTrip(tripName); // Update the selected trip
-    onClose(); // Close the modal
+    console.log(`Saving trip ${tripName} with dates ${arrivalDate.toLocaleDateString()} - `);
+    onClose(); // Final close
   };
 
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modal}>
         <h1 style={styles.modalTitle}>
-          Add a Trip
+          Editing: {tripName}
           <span style={styles.underline}></span>
         </h1>
         <h2 style={styles.subtitle}>When are you leaving?</h2>
@@ -75,7 +58,7 @@ const AddNewDeparturePopup: React.FC<AddNewDeparturePopupProps> = ({
         </div>
         <div style={styles.modalButtonContainer}>
           <button style={styles.cancelButton} onClick={onGoBack}>
-            Go Back
+            Back
           </button>
           <button style={styles.confirmButton} onClick={handleConfirmDate}>
             Confirm Date
@@ -190,4 +173,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default AddNewDeparturePopup;
+export default EditDeparturePopup;

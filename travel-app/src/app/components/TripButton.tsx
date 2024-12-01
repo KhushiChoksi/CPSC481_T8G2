@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import AddedTripsPopup from "./AddedTripsPopup";
+import AddedTripsPopup from "./trip-settings/AddedTripsPopup";
 import { useTrip } from "../context/TripContext"; // Import the context hook
 
 const TripButton: React.FC = () => {
