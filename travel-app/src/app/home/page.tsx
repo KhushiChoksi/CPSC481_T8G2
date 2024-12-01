@@ -17,7 +17,7 @@ export default function HomePage() {
         {/* Todays plan */}
 
         <div className="w-full bg-white shadow-md rounded-lg p-4 text-center mb-6">
-          <h2 className="font-bold mb-2">TODAY'S PLAN</h2>
+          <h2 className="font-bold mb-2">TODAY&apos;S PLAN</h2>
           <p className="text-gray-500">Nothing planned for today!</p>
         </div>
 
