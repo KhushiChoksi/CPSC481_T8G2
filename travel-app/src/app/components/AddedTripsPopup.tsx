@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import ManageTripsPopup from "./ManageTripsPopup"; // Import the ManageTripsPopup
+import ManageTripsPopup from "./ManageTripsPopup";
+import { useTrip } from "../context/TripContext";
 
 interface AddedTripsPopupProps {
-  onClose: () => void; // Callback to close the popup
-  selectedTrip: string; // Currently selected trip
-  onTripChange: (tripName: string) => void; // Callback to update the selected trip
+  onClose: () => void;
+  selectedTrip: string;
+  onTripChange: (tripName: string) => void;
 }
 
 const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
@@ -14,29 +15,18 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
   selectedTrip,
   onTripChange,
 }) => {
+  const { trips } = useTrip();
   const [showManageTrips, setShowManageTrips] = useState(false);
-
-  const trips = [
-    { name: "Trip 1", dates: "2024/09/02 - 2024/09/16" },
-    { name: "Trip 2", dates: "2024/10/20 - 2024/11/20" },
-    { name: "Trip 3", dates: "2025/01/05 - 2025/02/05" },
-  ];
 
   return (
     <>
-      {/* Background Blur Overlay */}
       <div style={styles.blurOverlay}></div>
-
-      {/* Modal */}
       {!showManageTrips && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
-            {/* Title */}
-            <h1 style={styles.modalTitle}>
-              Added Trips<span style={styles.underline}></span>
+            <h1 style={styles.modalTitle}>Added Trips
+            <span style={styles.underline}></span>
             </h1>
-
-            {/* Trips List */}
             <div style={styles.tripList}>
               {trips.map((trip) => (
                 <label
@@ -57,38 +47,28 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
                   <div style={styles.tripDetails}>
                     <span>{trip.name}</span>
                     <br />
-                    <span style={{ fontWeight: "normal" }}>{trip.dates}</span>
+                    <span>{trip.dates}</span>
                   </div>
                 </label>
               ))}
             </div>
-
-            {/* Bottom Section */}
-            <div style={styles.bottomSection}>
-              <div style={styles.buttonContainer}>
-                <button style={styles.backButton} onClick={onClose}>
-                  Back
-                </button>
-                <button
-                  style={styles.manageButton}
-                  onClick={() => setShowManageTrips(true)}
-                >
-                  Manage
-                </button>
-              </div>
+            <div style={styles.buttonContainer}>
+              <button style={styles.backButton} onClick={onClose}>
+                Back
+              </button>
+              <button
+                style={styles.manageButton}
+                onClick={() => setShowManageTrips(true)}
+              >
+                Manage
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* ManageTripsPopup */}
       {showManageTrips && (
-        <ManageTripsPopup
-          onClose={() => setShowManageTrips(false)}
-          onAddTrip={() => alert("Add Trip clicked!")}
-          onEditTrip={(trip) => alert(`Edit Trip: ${trip}`)}
-          onRemoveTrip={(trip) => alert(`Remove Trip: ${trip}`)}
-        />
+        <ManageTripsPopup onClose={() => setShowManageTrips(false)} />
       )}
     </>
   );
