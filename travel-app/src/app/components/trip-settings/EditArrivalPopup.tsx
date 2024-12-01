@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../globals.css";
+import "../../globals.css";
 import EditDeparturePopup from "./EditDeparturePopup";
 
 interface EditArrivalPopupProps {
   tripName: string;
   onClose: () => void; // Final close
-  onGoBack: () => void; // Go back to previous popup
+  onGoBack: () => void; // Go back to EditTripPopup
 }
 
 const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({
@@ -62,7 +62,7 @@ const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({
           tripName={tripName}
           arrivalDate={selectedDate}
           onClose={onClose} // Final close
-          onGoBack={() => setShowDeparturePopup(false)} // Go back to arrival popup
+          onGoBack={() => setShowDeparturePopup(false)} // Go back to this popup
         />
       )}
     </>
