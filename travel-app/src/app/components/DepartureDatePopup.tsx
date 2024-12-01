@@ -124,7 +124,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: "100%",
     display: "flex",
     justifyContent: "center", // Center the Skip button
-    marginBottom: "2.5rem", // Space between Skip and other buttons
+    marginBottom: "2rem", // Space between Skip and other buttons
   },
   skipButton: {
     width: "100%",
