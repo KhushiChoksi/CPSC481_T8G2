@@ -34,14 +34,14 @@ export default function ItineraryPage() {
 
             {/* Edit button */}
             <button
-              className={`${buttonStyle} ${isEditing ? 'bg-[#003554] text-white' : 'bg-[white]'}`}
+              className={`${buttonStyle} ${isEditing ? 'bg-darkblue2 text-white font-bold' : 'bg-[white]'}`}
               onClick={handleEditToggle}
             >
               {isEditing ? 'Stop Editing' : 'Edit'}
             </button>
 
             <div className="flex flex-col space-y-4 w-full">
-              <Link href="/explore"><button className={buttonStyle}>Add events</button></Link>
+              <Link href="/explore"><button className={buttonStyle}>Add events/spots</button></Link>
               <Link href="/restaurants"><button className={buttonStyle}>Add restaurants</button></Link>
             </div>
           </div>

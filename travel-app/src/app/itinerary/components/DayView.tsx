@@ -1,5 +1,5 @@
-// // https://fullcalendar.io/docs/css-customization
-// // https://fullcalendar.io/docs/bootstrap4
+// https://fullcalendar.io/docs/css-customization
+// https://fullcalendar.io/docs/bootstrap4
 'use client';
 
 import React, { useState } from 'react';
@@ -9,9 +9,11 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import { MdCancel } from 'react-icons/md';
 import DateSelection from './DateSelection';
+import RemoveEventConfirmation from './RemoveEventConfirmation';
 
 const DayView = ({ isEditing }: { isEditing: boolean }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState<any>(null);
   
   const [events, setEvents] = useState([
     {
@@ -30,10 +32,21 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
     },
   ]);
 
-  const handleDeleteEvent = (eventId: string) => {
-    if (window.confirm('Are you sure you want to delete this event?')) {
-      setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+  const handleDeleteEvent = (eventId: string, eventTitle: string) => {
+    setEventToDelete({ id: eventId, title: eventTitle });
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (eventToDelete) {
+      setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventToDelete.id));
+      setIsModalOpen(false);
     }
+  };
+
+  const cancelDelete = () => {
+    setIsModalOpen(false);
+    setEventToDelete(null);
   };
 
   return (
@@ -43,6 +56,14 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
         <DateSelection
           onClose={() => setIsModalOpen(false)}         // close modal
           onGoBack={() => setIsModalOpen(false)}        // go back button
+        />
+      )}
+
+      {isModalOpen && eventToDelete && (
+        <RemoveEventConfirmation
+          eventTitle={eventToDelete.title}
+          onCancel={cancelDelete}
+          onConfirm={confirmDelete}
         />
       )}
 
@@ -84,7 +105,7 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
 function renderEventContent(
   eventInfo: { event: any },
   isEditing: boolean,
-  handleDeleteEvent: (id: string) => void
+  handleDeleteEvent: (id: string, title: string) => void
 ) {
   const { event } = eventInfo; // access event data
   const address = event.extendedProps.address; // get address from event
@@ -103,7 +124,7 @@ function renderEventContent(
             cursor: 'pointer',
             fontSize: '30px',
           }}
-          onClick={() => handleDeleteEvent(event.id)}
+          onClick={() => handleDeleteEvent(event.id, event.title)}
           title="Delete Event"
         />
       )}
