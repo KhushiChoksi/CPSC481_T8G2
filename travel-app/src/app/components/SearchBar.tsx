@@ -1,11 +1,11 @@
 export default function SeachBar() {
     return (
         <section style={{ padding: '20px', textAlign: 'center' }}>
-        <h1>Restaurant</h1>
+        {/* <h1>Restaurant</h1> */}
         <div style={{ 
           display: 'flex',
           justifyContent: 'center',
-          marginTop: '20px',
+          // marginTop: '10px',
   
         }}>
           <input
