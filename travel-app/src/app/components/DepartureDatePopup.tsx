@@ -93,7 +93,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem", // Adjust for responsiveness
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "1rem",
@@ -107,7 +107,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   subtitle: {
     fontSize: "1.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "2rem", // Space below subtitle
@@ -135,6 +135,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   modalButtonContainer: {
     marginTop: "auto", // Push buttons to the bottom
@@ -153,6 +154,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   confirmButton: {
     flex: "1",
@@ -164,6 +166,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
 };
 
