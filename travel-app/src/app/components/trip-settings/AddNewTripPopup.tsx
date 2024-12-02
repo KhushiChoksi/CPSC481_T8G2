@@ -30,6 +30,11 @@ const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({
       return;
     }
 
+    if (trimmedName.length > 20) {
+      setErrorMessage("Trip name cannot exceed 20 characters.");
+      return;
+    }
+
     if (trips.some((trip) => trip.name === trimmedName)) {
       setErrorMessage("A trip with this name already exists.");
       return;
