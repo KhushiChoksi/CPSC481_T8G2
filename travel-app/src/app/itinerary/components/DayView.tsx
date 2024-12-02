@@ -126,7 +126,7 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
   };
 
   return (
-    <div style={{ justifyContent: 'center', maxWidth: '500px' }}>
+    <div className="justify-center max-w-[500]">
     
       {isModalOpen && (
         <DateSelection
@@ -195,7 +195,7 @@ function renderEventContent(
   const endTime = event.end?.toLocaleString([], { hour: '2-digit', minute: '2-digit' }); // get end time
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="relative">
       {isEditing && (
         <MdCancel
           style={{
