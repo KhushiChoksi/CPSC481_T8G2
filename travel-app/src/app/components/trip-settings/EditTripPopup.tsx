@@ -10,7 +10,7 @@ interface EditTripPopupProps {
   tripName: string;
   onClose: () => void; // Close all popups
   onGoBack: () => void; // Navigate back to ManageTripsPopup
-  onComplete: () => void; // adding/editing complete = back to ManageTrips
+  onComplete: () => void; // Adding/editing complete = back to ManageTrips
 }
 
 const EditTripPopup: React.FC<EditTripPopupProps> = ({
@@ -22,20 +22,23 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({
   const { trips, setTrips, setSelectedTrip } = useTrip();
   const [editedTripName, setEditedTripName] = useState(tripName);
   const [showArrivalPopup, setShowArrivalPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSaveName = () => {
     const trimmedName = editedTripName.trim();
+
     if (trimmedName === "") {
-      alert("Trip name cannot be empty.");
+      setErrorMessage("Trip name cannot be empty.");
       return;
     }
 
     if (trips.some((trip) => trip.name === trimmedName && trip.name !== tripName)) {
-      alert("A trip with this name already exists.");
+      setErrorMessage("A trip with this name already exists.");
       return;
     }
 
-    // Update the trip name
+    // Clear error message and update the trip name
+    setErrorMessage("");
     setTrips((prevTrips) =>
       prevTrips.map((trip) =>
         trip.name === tripName ? { ...trip, name: trimmedName } : trip
@@ -68,6 +71,11 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({
               Editing: {tripName}
               <span style={styles.underline}></span>
             </h1>
+
+            {/* Error Message */}
+            <div style={styles.errorContainer}>
+              {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+            </div>
 
             <p style={styles.label}>
               Edit trip name or press continue to change the trip dates.
@@ -152,6 +160,20 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: "#000000",
     margin: "0 auto",
     marginTop: "-10px",
+  },
+  errorContainer: {
+    width: "100%",
+    height: "2rem", // Reserve space for error message
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "1rem",
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "1rem",
+    textAlign: "center",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   label: {
     fontSize: "1.2rem",

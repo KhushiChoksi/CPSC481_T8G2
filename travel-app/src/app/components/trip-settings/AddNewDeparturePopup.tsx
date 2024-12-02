@@ -25,10 +25,16 @@ const AddNewDeparturePopup: React.FC<AddNewDeparturePopupProps> = ({
 }) => {
   const { setTrips, setSelectedTrip } = useTrip();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleConfirmDate = () => {
     if (!selectedDate) {
-      alert("Please select a departure date before continuing or use 'Skip'.");
+      setErrorMessage("Please select a departure date or before continuing or press skip.");
+      return;
+    }
+
+    if (selectedDate < arrivalDate) {
+      setErrorMessage("Departure date cannot be earlier than the arrival date.");
       return;
     }
 
@@ -40,8 +46,10 @@ const AddNewDeparturePopup: React.FC<AddNewDeparturePopupProps> = ({
         dates: `${arrivalDate.toLocaleDateString()} - ${selectedDate.toLocaleDateString()}`,
       },
     ]);
+
     setSelectedTrip(tripName); // Update the selected trip
-    onComplete(); // Navigate back to ManageTripsPopup
+    setErrorMessage(""); // Clear error message
+    onComplete(); // Navigate to ManageTripsPopup
   };
 
   const handleSkip = () => {
@@ -53,8 +61,10 @@ const AddNewDeparturePopup: React.FC<AddNewDeparturePopupProps> = ({
         dates: `${arrivalDate.toLocaleDateString()} - `,
       },
     ]);
+
     setSelectedTrip(tripName); // Update the selected trip
-    onComplete(); // Navigate back to ManageTripsPopup
+    setErrorMessage(""); // Clear error message
+    onComplete(); // Navigate to ManageTripsPopup
   };
 
   return (
@@ -82,6 +92,11 @@ const AddNewDeparturePopup: React.FC<AddNewDeparturePopupProps> = ({
           <span style={styles.underline}></span>
         </h1>
         <h2 style={styles.subtitle}>When are you leaving?</h2>
+
+        {/* Error Message */}
+        <div style={styles.errorContainer}>
+          {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+        </div>
 
         {/* Calendar */}
         <div style={styles.calendarContainer}>
@@ -170,7 +185,21 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
-    marginBottom: "2rem",
+    marginBottom: "1rem", // Adjusted for error message
+  },
+  errorContainer: {
+    width: "100%",
+    height: "0rem", // No extra space unless an error message is displayed
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "0rem",
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "1rem",
+    textAlign: "center",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   calendarContainer: {
     width: "100%",

@@ -20,20 +20,24 @@ const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({
   const { trips } = useTrip();
   const [newTripName, setNewTripName] = useState("");
   const [showArrivalPopup, setShowArrivalPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSaveName = () => {
     const trimmedName = newTripName.trim();
+
     if (trimmedName === "") {
-      alert("Trip name cannot be empty.");
+      setErrorMessage("Trip name cannot be empty.");
       return;
     }
 
     if (trips.some((trip) => trip.name === trimmedName)) {
-      alert("A trip with this name already exists.");
+      setErrorMessage("A trip with this name already exists.");
       return;
     }
 
-    setShowArrivalPopup(true); // Move to the next step
+    // Clear error message and move to the next step
+    setErrorMessage("");
+    setShowArrivalPopup(true);
   };
 
   return (
@@ -58,6 +62,11 @@ const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({
               Add a Trip
               <span style={styles.underline}></span>
             </h1>
+
+            {/* Error Message */}
+            <div style={styles.errorContainer}>
+              {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+            </div>
 
             <p style={styles.label}>Enter a trip name:</p>
             <input
@@ -140,6 +149,20 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: "#000000",
     margin: "0 auto",
     marginTop: "-10px",
+  },
+  errorContainer: {
+    width: "100%",
+    height: "2rem", // Reserve space for error message
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "1rem",
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "1rem",
+    textAlign: "center",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   label: {
     fontSize: "1.2rem",
