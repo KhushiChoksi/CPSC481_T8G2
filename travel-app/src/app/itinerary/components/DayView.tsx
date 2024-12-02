@@ -13,7 +13,7 @@ import RemoveEventConfirmation from './RemoveEventConfirmation';
 
 import ReactCalendar from "react-calendar";
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
-
+import "../../globals.css";
 
 const DayView = ({ isEditing }: { isEditing: boolean }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

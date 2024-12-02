@@ -24,6 +24,11 @@ const DateSelection: React.FC<DateSelectionModalProps> = ({
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
+  const handlePopUpDateChange = (date : Value) => {
+    handleDateChange(date);
+    setSelectedDate(date);
+  }
+
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modal}>
@@ -38,7 +43,7 @@ const DateSelection: React.FC<DateSelectionModalProps> = ({
         {/* Calendar */}
         <div style={styles.calendarContainer}>
           <Calendar
-            onChange={handleDateChange} // Update state with selected date
+            onChange={handlePopUpDateChange} // Update state with selected date
             value={selectedDate} // Highlight selected date
             showNeighboringMonth={false} // Exclude days from adjacent months
           />
