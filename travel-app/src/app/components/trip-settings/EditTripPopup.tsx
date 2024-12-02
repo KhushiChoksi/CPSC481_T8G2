@@ -107,7 +107,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "5rem",
@@ -125,11 +125,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     textAlign: "center",
     color: "#000000",
     marginBottom: "0rem", // Reduced margin between label and input
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   inputField: {
     width: "100%", // Matches the combined width of the buttons
     padding: "0.75rem",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     borderRadius: "5px",
     border: "1px solid #000000",
     marginBottom: "1.5rem",
@@ -152,6 +154,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
   saveButton: {
@@ -163,6 +166,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
 };

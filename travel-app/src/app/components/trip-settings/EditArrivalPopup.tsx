@@ -98,7 +98,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "1rem",
@@ -113,7 +113,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   subtitle: {
     fontSize: "1.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "2rem",
@@ -141,6 +141,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
   continueButton: {
@@ -152,6 +153,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
 };
