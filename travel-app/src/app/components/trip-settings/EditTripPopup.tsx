@@ -3,13 +3,22 @@
 import React, { useState } from "react";
 import { useTrip } from "../../context/TripContext";
 import EditArrivalPopup from "./EditArrivalPopup";
+import CloseButton from "../CloseButton"; // Import CloseButton component
+import BackButtonPopup from "../BackButtonPopup"; // Import BackButtonPopup component
 
 interface EditTripPopupProps {
   tripName: string;
-  onClose: () => void;
+  onClose: () => void; // Close all popups
+  onGoBack: () => void; // Navigate back to ManageTripsPopup
+  onComplete: () => void; // adding/editing complete = back to ManageTrips
 }
 
-const EditTripPopup: React.FC<EditTripPopupProps> = ({ tripName, onClose }) => {
+const EditTripPopup: React.FC<EditTripPopupProps> = ({
+  tripName,
+  onClose,
+  onGoBack,
+  onComplete,
+}) => {
   const { trips, setTrips, setSelectedTrip } = useTrip();
   const [editedTripName, setEditedTripName] = useState(tripName);
   const [showArrivalPopup, setShowArrivalPopup] = useState(false);
@@ -42,6 +51,19 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({ tripName, onClose }) => {
       {!showArrivalPopup && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
+            {/* Back Button */}
+            <div style={styles.backButtonContainer}>
+              <BackButtonPopup
+                onClick={onGoBack} // Navigate back to ManageTripsPopup
+                ariaLabel="Go Back from Edit Trip"
+              />
+            </div>
+
+            {/* Close Button */}
+            <div style={styles.closeButtonContainer}>
+              <CloseButton onClick={onClose} ariaLabel="Close Edit Trip Popup" />
+            </div>
+
             <h1 style={styles.modalTitle}>
               Editing: {tripName}
               <span style={styles.underline}></span>
@@ -58,10 +80,7 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({ tripName, onClose }) => {
               placeholder="Enter a new trip name"
             />
             <div style={styles.buttonContainer}>
-              <button style={styles.cancelButton} onClick={onClose}>
-                Cancel
-              </button>
-              <button style={styles.saveButton} onClick={handleSaveName}>
+              <button style={styles.continueButton} onClick={handleSaveName}>
                 Continue
               </button>
             </div>
@@ -74,6 +93,7 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({ tripName, onClose }) => {
           tripName={editedTripName}
           onClose={onClose} // Pass the same close handler
           onGoBack={() => setShowArrivalPopup(false)} // Navigate back to EditTripPopup
+          onComplete={onComplete} // Navigate back to ManageTripsPopup
         />
       )}
     </>
@@ -105,12 +125,25 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: "center",
     boxSizing: "border-box",
   },
+  backButtonContainer: {
+    position: "absolute",
+    top: "21px",
+    left: "34px",
+    zIndex: 1100,
+  },
+  closeButtonContainer: {
+    position: "absolute",
+    top: "11px",
+    right: "19px",
+    zIndex: 1100,
+  },
   modalTitle: {
     fontSize: "2.5rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "5rem",
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
@@ -141,27 +174,13 @@ const styles: { [key: string]: React.CSSProperties } = {
   buttonContainer: {
     width: "100%",
     display: "flex",
-    justifyContent: "space-between",
-    gap: "1rem",
+    justifyContent: "center",
     marginTop: "auto",
   },
-  cancelButton: {
-    flex: 1,
-    maxWidth: "44%",
+  continueButton: {
+    width: "100%", // Full width
     height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontSize: "1rem",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-    cursor: "pointer",
-  },
-  saveButton: {
-    flex: 1,
-    maxWidth: "44%",
-    height: "3.1rem",
-    backgroundColor: "#003554",
+    backgroundColor: "#003554", // Dark blue
     color: "#FFFFFF",
     border: "1px solid #000000",
     borderRadius: "5px",
