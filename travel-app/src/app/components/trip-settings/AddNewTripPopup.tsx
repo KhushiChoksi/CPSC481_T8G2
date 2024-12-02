@@ -90,7 +90,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "20px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    gap: "0.2rem",
     alignItems: "center",
     boxSizing: "border-box",
   },
@@ -99,7 +99,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontFamily: "Subtitle, sans-serif",
     color: "#000000",
     textAlign: "center",
-    marginBottom: "1rem",
+    marginBottom: "5rem",
   },
   underline: {
     display: "block",
@@ -113,25 +113,28 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1.2rem",
     textAlign: "center",
     color: "#000000",
-    marginBottom: "2rem",
+    marginBottom: "0rem", // Reduced margin between label and input
   },
   inputField: {
-    width: "90%",
+    width: "100%", // Matches the combined width of the buttons
     padding: "0.75rem",
     fontSize: "1rem",
     borderRadius: "5px",
     border: "1px solid #000000",
     marginBottom: "1.5rem",
     textAlign: "center",
+    marginTop: "0",
   },
   buttonContainer: {
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
     gap: "1rem",
+    marginTop: "auto",
   },
   cancelButton: {
     flex: 1,
+    maxWidth: "44%",
     height: "3.1rem",
     backgroundColor: "#FFFFFF",
     color: "#003554",
@@ -142,6 +145,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   saveButton: {
     flex: 1,
+    maxWidth: "44%",
     height: "3.1rem",
     backgroundColor: "#003554",
     color: "#FFFFFF",
@@ -151,5 +155,4 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: "pointer",
   },
 };
-
 export default AddNewTripPopup;
