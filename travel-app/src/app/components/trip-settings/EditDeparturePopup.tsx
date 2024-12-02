@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../../globals.css";
+import BackButtonPopup from "../BackButtonPopup";
+import CloseButton from "../CloseButton";
 import { useTrip } from "../../context/TripContext";
 
 interface EditDeparturePopupProps {
@@ -11,6 +13,7 @@ interface EditDeparturePopupProps {
   arrivalDate: Date;
   onClose: () => void; // Final close
   onGoBack: () => void; // Go back to EditArrivalPopup
+  onComplete: () => void; // Go back to ManageTripsPopup
 }
 
 const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
@@ -18,6 +21,7 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
   arrivalDate,
   onClose,
   onGoBack,
+  onComplete,
 }) => {
   const { setTrips } = useTrip();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -37,7 +41,7 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
           : trip
       )
     );
-    onClose(); // Close the modal
+    onComplete(); // Navigate back to ManageTripsPopup
   };
 
   const handleSkip = () => {
@@ -48,17 +52,36 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
           : trip
       )
     );
-    onClose(); // Close the modal
+    onComplete(); // Navigate back to ManageTripsPopup
   };
 
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modal}>
+        {/* Back Button */}
+        <div style={styles.backButtonContainer}>
+          <BackButtonPopup
+            onClick={onGoBack} // Navigate back to EditArrivalPopup
+            ariaLabel="Go Back from Edit Departure"
+          />
+        </div>
+
+        {/* Close Button */}
+        <div style={styles.closeButtonContainer}>
+          <CloseButton
+            onClick={onClose} // Close all popups
+            ariaLabel="Close Edit Departure Popup"
+          />
+        </div>
+
+        {/* Title */}
         <h1 style={styles.modalTitle}>
           Editing: {tripName}
           <span style={styles.underline}></span>
         </h1>
         <h2 style={styles.subtitle}>When are you leaving?</h2>
+
+        {/* Calendar */}
         <div style={styles.calendarContainer}>
           <Calendar
             onChange={(date) => setSelectedDate(date as Date)} // Update selected date
@@ -66,15 +89,16 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
             showNeighboringMonth={false} // Exclude days from adjacent months
           />
         </div>
+
+        {/* Skip Button */}
         <div style={styles.skipButtonContainer}>
           <button style={styles.skipButton} onClick={handleSkip}>
             Skip
           </button>
         </div>
-        <div style={styles.modalButtonContainer}>
-          <button style={styles.cancelButton} onClick={onGoBack}>
-            Back
-          </button>
+
+        {/* Confirm Date Button */}
+        <div style={styles.buttonContainer}>
           <button style={styles.confirmButton} onClick={handleConfirmDate}>
             Confirm Date
           </button>
@@ -111,12 +135,25 @@ const styles: { [key: string]: React.CSSProperties } = {
     boxSizing: "border-box",
     gap: "1rem",
   },
+  backButtonContainer: {
+    position: "absolute",
+    top: "21px",
+    left: "34px",
+    zIndex: 1100,
+  },
+  closeButtonContainer: {
+    position: "absolute",
+    top: "11px",
+    right: "19px",
+    zIndex: 1100,
+  },
   modalTitle: {
     fontSize: "2.5rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "1rem",
+    marginTop: "2.5rem", // Standardized value
   },
   underline: {
     display: "block",
@@ -139,13 +176,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
-    marginBottom: "1rem",
+    marginBottom: "0rem",
   },
   skipButtonContainer: {
     width: "100%",
     display: "flex",
-    justifyContent: "center", // Center the skip button
-    marginBottom: "2rem",
+    justifyContent: "center",
+    marginBottom: "1.5rem",
   },
   skipButton: {
     width: "100%",
@@ -157,30 +194,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1rem",
     cursor: "pointer",
   },
-  modalButtonContainer: {
-    marginTop: "auto",
+  buttonContainer: {
     width: "100%",
-    display: "flex",
-    justifyContent: "space-between",
-    gap: "1rem",
-  },
-  cancelButton: {
-    flex: "1",
-    maxWidth: "44%",
-    height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontSize: "1rem",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-    cursor: "pointer",
   },
   confirmButton: {
-    flex: "1",
-    maxWidth: "44%",
+    width: "100%",
     height: "3.1rem",
-    backgroundColor: "#003554",
+    backgroundColor: "#003554", // Dark blue button
     color: "#FFFFFF",
     border: "1px solid #000000",
     borderRadius: "5px",

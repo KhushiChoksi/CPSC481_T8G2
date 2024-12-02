@@ -4,19 +4,19 @@ import React, { useState } from "react";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import AddedTripsPopup from "./trip-settings/AddedTripsPopup";
-import { useTrip } from "../context/TripContext"; // Import the context hook
+import { useTrip } from "../context/TripContext";
 
 const TripButton: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const { selectedTrip, setSelectedTrip } = useTrip(); // Use the context
+  const { selectedTrip, setSelectedTrip } = useTrip();
 
   return (
     <>
       {/* Trip Button */}
       <div
         className="flex items-center bg-black py-4 px-12 rounded-full cursor-pointer h-[56px]"
-        style={{ zIndex: 1001 }} // Ensure TripButton is above the blur
-        onClick={() => setShowPopup(!showPopup)} // Toggle popup
+        style={{ zIndex: 1001 }}
+        onClick={() => setShowPopup(!showPopup)}
       >
         <FaPlaneDeparture
           className={`text-[20px] -ml-6 mr-6 ${
@@ -40,8 +40,9 @@ const TripButton: React.FC = () => {
       {/* Added Trips Popup */}
       {showPopup && (
         <AddedTripsPopup
-          onClose={() => setShowPopup(false)} // Close popup callback
-          selectedTrip={selectedTrip} // Pass current trip
+          onClose={() => setShowPopup(false)} // Close the entire popup series
+          onGoBack={() => setShowPopup(false)} // Navigate "back" (same as close for now)
+          selectedTrip={selectedTrip}
           onTripChange={(trip) => setSelectedTrip(trip)} // Update selected trip
         />
       )}

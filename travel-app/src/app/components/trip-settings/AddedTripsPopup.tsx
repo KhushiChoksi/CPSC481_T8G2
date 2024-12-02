@@ -2,17 +2,21 @@
 
 import React, { useState } from "react";
 import ManageTripsPopup from "./ManageTripsPopup";
+import CloseButton from "../CloseButton";
+import BackButtonPopup from "../BackButtonPopup";
 import { useTrip } from "../../context/TripContext";
 import { FaInfinity } from "react-icons/fa";
 
 interface AddedTripsPopupProps {
-  onClose: () => void;
+  onClose: () => void; // Close the entire popup series
+  onGoBack: () => void; // Go back one step
   selectedTrip: string;
   onTripChange: (tripName: string) => void;
 }
 
 const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
   onClose,
+  onGoBack,
   selectedTrip,
   onTripChange,
 }) => {
@@ -25,8 +29,22 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
       {!showManageTrips && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
-            <h1 style={styles.modalTitle}>Added Trips
-            <span style={styles.underline}></span>
+            {/* Back Button */}
+            <div style={styles.backButtonContainer}>
+              <BackButtonPopup
+                onClick={onGoBack}
+                ariaLabel="Go Back from Added Trips"
+              />
+            </div>
+
+            {/* Close Button */}
+            <div style={styles.closeButtonContainer}>
+              <CloseButton onClick={onClose} ariaLabel="Close Added Trips Popup" />
+            </div>
+
+            <h1 style={styles.modalTitle}>
+              Added Trips
+              <span style={styles.underline}></span>
             </h1>
             <div style={styles.tripList}>
               {trips.map((trip) => (
@@ -54,9 +72,9 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
                           {trip.dates.split(" - ")[0]} -{" "}
                           <FaInfinity
                             style={{
-                            fontSize: selectedTrip === trip.name ? "1.2rem" : "1.1rem", // Slightly larger when active
-                            marginLeft: "0.2rem",
-                            verticalAlign: "middle",
+                              fontSize: selectedTrip === trip.name ? "1.2rem" : "1.1rem",
+                              marginLeft: "0.2rem",
+                              verticalAlign: "middle",
                             }}
                           />
                         </span>
@@ -69,9 +87,6 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
               ))}
             </div>
             <div style={styles.buttonContainer}>
-              <button style={styles.backButton} onClick={onClose}>
-                Back
-              </button>
               <button
                 style={styles.manageButton}
                 onClick={() => setShowManageTrips(true)}
@@ -84,7 +99,10 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
       )}
 
       {showManageTrips && (
-        <ManageTripsPopup onClose={() => setShowManageTrips(false)} />
+        <ManageTripsPopup
+          onClose={onClose}
+          onGoBack={() => setShowManageTrips(false)}
+        />
       )}
     </>
   );
@@ -119,6 +137,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "20px",
     border: "1px solid #000000",
     padding: "20px",
+    position: "relative", // Allows positioning of the CloseButton
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -126,12 +145,25 @@ const styles: { [key: string]: React.CSSProperties } = {
     overflowY: "auto",
     boxSizing: "border-box",
   },
+  backButtonContainer: {
+    position: "absolute",
+    top: "20px",
+    left: "25px",
+    zIndex: 1100, // Ensure it's above other content
+  },
+  closeButtonContainer: {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    zIndex: 1100, // Ensure it's above other content
+  },
   modalTitle: {
     fontSize: "2.5rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "1rem",
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
@@ -167,33 +199,15 @@ const styles: { [key: string]: React.CSSProperties } = {
     flex: 1,
     textAlign: "left",
   },
-  bottomSection: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-  },
   buttonContainer: {
     width: "100%",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
     gap: "1rem",
-  },
-  backButton: {
-    flex: 1,
-    maxWidth: "44%",
-    height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontSize: "1rem",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-    cursor: "pointer",
   },
   manageButton: {
     flex: 1,
-    maxWidth: "44%",
+    maxWidth: "100%",
     height: "3.1rem",
     backgroundColor: "#003554",
     color: "#FFFFFF",

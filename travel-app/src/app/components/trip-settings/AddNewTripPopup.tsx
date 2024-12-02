@@ -4,13 +4,20 @@ import React, { useState } from "react";
 import { useTrip } from "../../context/TripContext";
 import AddNewArrivalPopup from "./AddNewArrivalPopup";
 import CloseButton from "../CloseButton";
+import BackButtonPopup from "../BackButtonPopup";
 
 interface AddNewTripPopupProps {
-  onClose: () => void;
+  onClose: () => void; // Final close
+  onGoBack: () => void; // Go back to ManageTripsPopup
+  onComplete: () => void; // Notify ManageTripsPopup that the flow is complete
 }
 
-const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({ onClose }) => {
-  const { trips } = useTrip(); // No direct trip updates here
+const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({
+  onClose,
+  onGoBack,
+  onComplete,
+}) => {
+  const { trips } = useTrip();
   const [newTripName, setNewTripName] = useState("");
   const [showArrivalPopup, setShowArrivalPopup] = useState(false);
 
@@ -34,6 +41,14 @@ const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({ onClose }) => {
       {!showArrivalPopup && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
+            {/* Back Button */}
+            <div style={styles.backButtonContainer}>
+              <BackButtonPopup
+                onClick={onGoBack} // Navigate back to ManageTripsPopup
+                ariaLabel="Go Back from Add Trip"
+              />
+            </div>
+
             {/* Close Button */}
             <div style={styles.closeButtonContainer}>
               <CloseButton onClick={onClose} ariaLabel="Close Add Trip Popup" />
@@ -53,9 +68,6 @@ const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({ onClose }) => {
               placeholder="Enter a new trip name"
             />
             <div style={styles.buttonContainer}>
-              <button style={styles.cancelButton} onClick={onClose}>
-                Cancel
-              </button>
               <button style={styles.continueButton} onClick={handleSaveName}>
                 Continue
               </button>
@@ -69,6 +81,7 @@ const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({ onClose }) => {
           tripName={newTripName}
           onClose={onClose} // Final close
           onGoBack={() => setShowArrivalPopup(false)} // Go back to this popup
+          onComplete={onComplete} // Notify ManageTripsPopup
         />
       )}
     </>
@@ -94,18 +107,23 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "20px",
     border: "1px solid #000000",
     padding: "20px",
-    position: "relative", // Ensure child components like CloseButton are positioned correctly
     display: "flex",
     flexDirection: "column",
     gap: "0.2rem",
     alignItems: "center",
     boxSizing: "border-box",
   },
+  backButtonContainer: {
+    position: "absolute",
+    top: "21px",
+    left: "34px",
+    zIndex: 1100,
+  },
   closeButtonContainer: {
     position: "absolute",
-    top: "10px",
-    right: "10px",
-    zIndex: 1100, // Ensure it's above other content
+    top: "11px",
+    right: "19px",
+    zIndex: 1100,
   },
   modalTitle: {
     fontSize: "2.5rem",
@@ -113,7 +131,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#000000",
     textAlign: "center",
     marginBottom: "5rem",
-    marginTop: "3rem",
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
@@ -131,7 +149,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginBottom: "0rem", // Reduced margin between label and input
   },
   inputField: {
-    width: "100%", // Matches the combined width of the buttons
+    width: "100%",
     padding: "0.75rem",
     fontSize: "1rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
@@ -143,33 +161,17 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   buttonContainer: {
     width: "100%",
-    display: "flex",
-    justifyContent: "space-between",
-    gap: "1rem",
     marginTop: "auto",
   },
-  cancelButton: {
-    flex: 1,
-    maxWidth: "44%",
-    height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-    borderRadius: "5px",
-    fontSize: "1rem",
-    cursor: "pointer",
-  },
   continueButton: {
-    flex: 1,
-    maxWidth: "44%",
+    width: "100%", // Full width
     height: "3.1rem",
     backgroundColor: "#003554",
     color: "#FFFFFF",
     border: "1px solid #000000",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
 };

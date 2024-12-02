@@ -6,10 +6,20 @@ import { FaEdit } from "react-icons/fa";
 import EditTripPopup from "./EditTripPopup";
 import RemoveTripPopup from "./RemoveTripPopup";
 import AddNewTripPopup from "./AddNewTripPopup";
+import CloseButton from "../CloseButton"; // Import CloseButton component
+import BackButtonPopup from "../BackButtonPopup"; // Import BackButtonPopup component
 import { useTrip } from "../../context/TripContext";
 import { FaInfinity } from "react-icons/fa";
 
-const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+interface ManageTripsPopupProps {
+  onClose: () => void; // Close all popups
+  onGoBack: () => void; // Navigate back to AddedTripsPopup
+}
+
+const ManageTripsPopup: React.FC<ManageTripsPopupProps> = ({
+  onClose,
+  onGoBack,
+}) => {
   const { trips } = useTrip();
   const [showRemovePopup, setShowRemovePopup] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false);
@@ -31,8 +41,22 @@ const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <>
       <div style={styles.modalOverlay}>
         <div style={styles.modal}>
-          <h1 style={styles.modalTitle}>Manage Trips
-          <span style={styles.underline}></span>
+          {/* Back Button */}
+          <div style={styles.backButtonContainer}>
+            <BackButtonPopup
+              onClick={onGoBack} // Navigate back to AddedTripsPopup
+              ariaLabel="Go Back from Manage Trips"
+            />
+          </div>
+
+          {/* Close Button */}
+          <div style={styles.closeButtonContainer}>
+            <CloseButton onClick={onClose} ariaLabel="Close Manage Trips Popup" />
+          </div>
+
+          <h1 style={styles.modalTitle}>
+            Manage Trips
+            <span style={styles.underline}></span>
           </h1>
           <div style={styles.tripList}>
             {trips.map((trip) => (
@@ -48,7 +72,8 @@ const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   <span>
                     {trip.dates.includes(" - ") && trip.dates.endsWith(" - ") ? (
                       <span style={{ display: "inline-flex", alignItems: "center" }}>
-                        {trip.dates.split(" - ")[0]} - <FaInfinity style={{ fontSize: "1.1rem", marginLeft: "0.2rem" }} />
+                        {trip.dates.split(" - ")[0]} -{" "}
+                        <FaInfinity style={{ fontSize: "1.1rem", marginLeft: "0.2rem" }} />
                       </span>
                     ) : (
                       trip.dates
@@ -72,28 +97,25 @@ const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             >
               Add a Trip
             </button>
-            <div style={styles.buttonContainer}>
-              <button style={styles.backButton} onClick={onClose}>
-                Back
-              </button>
-              <button style={styles.doneButton} onClick={onClose}>
-                Done
-              </button>
-            </div>
           </div>
         </div>
       </div>
 
       {/* Add New Trip Popup */}
       {showAddTripPopup && (
-        <AddNewTripPopup onClose={() => setShowAddTripPopup(false)} />
+        <AddNewTripPopup
+          onClose={onClose} // Close all popups
+          onGoBack={() => setShowAddTripPopup(false)} // Navigate back to ManageTripsPopup
+          onComplete={() => setShowAddTripPopup(false)} // End Add Trip flow
+          />
       )}
 
       {/* Remove Trip Popup */}
       {showRemovePopup && selectedTripToRemove && (
         <RemoveTripPopup
           tripName={selectedTripToRemove}
-          onClose={() => setShowRemovePopup(false)}
+          onClose={onClose} // Close all popups
+          onGoBack={() => setShowRemovePopup(false)} // Navigate back to ManageTripsPopup
         />
       )}
 
@@ -101,7 +123,9 @@ const ManageTripsPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       {showEditPopup && selectedTripToEdit && (
         <EditTripPopup
           tripName={selectedTripToEdit}
-          onClose={() => setShowEditPopup(false)}
+          onClose={onClose} // Close all popups
+          onGoBack={() => setShowEditPopup(false)}
+          onComplete={() => setShowEditPopup(false)}
         />
       )}
     </>
@@ -127,6 +151,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "20px",
     border: "1px solid #000000",
     padding: "20px",
+    position: "relative", // Enables absolute positioning for the BackButtonPopup and CloseButton
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -134,12 +159,25 @@ const styles: { [key: string]: React.CSSProperties } = {
     overflowY: "auto",
     boxSizing: "border-box",
   },
+  backButtonContainer: {
+    position: "absolute",
+    top: "20px",
+    left: "25px",
+    zIndex: 1100,
+  },
+  closeButtonContainer: {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    zIndex: 1100,
+  },
   modalTitle: {
     fontSize: "2.5rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "1rem",
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
@@ -192,45 +230,14 @@ const styles: { [key: string]: React.CSSProperties } = {
   addTripButton: {
     width: "100%",
     height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontSize: "1rem",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-    cursor: "pointer",
-    marginBottom: "2rem",
-    marginTop: "2.2rem",
-  },
-  buttonContainer: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-between",
-    gap: "1rem",
-  },
-  backButton: {
-    flex: 1,
-    maxWidth: "44%",
-    height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontSize: "1rem",
-    cursor: "pointer",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-  },
-  doneButton: {
-    flex: 1,
-    maxWidth: "44%",
-    height: "3.1rem",
     backgroundColor: "#003554",
     color: "#FFFFFF",
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
-    cursor: "pointer",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+    cursor: "pointer",
+    marginTop: "2.2rem",
   },
 };
 
