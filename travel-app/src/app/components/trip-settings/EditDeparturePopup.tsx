@@ -10,20 +10,22 @@ import { useTrip } from "../../context/TripContext";
 
 interface EditDeparturePopupProps {
   tripName: string;
-  arrivalDate: Date;
+  proposedTripName: string; // New proposed trip name
+  arrivalDate: Date; // Newly selected arrival date
   onClose: () => void; // Final close
   onGoBack: () => void; // Go back to EditArrivalPopup
-  onComplete: () => void; // Go back to ManageTripsPopup
+  onComplete: () => void; // Complete editing and navigate to ManageTripsPopup
 }
 
 const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
   tripName,
+  proposedTripName,
   arrivalDate,
   onClose,
   onGoBack,
   onComplete,
 }) => {
-  const { setTrips } = useTrip();
+  const { setTrips, setSelectedTrip } = useTrip();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -38,35 +40,43 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
       return;
     }
 
-    // Save trip with valid dates
+    // Apply updates to the trip
     setTrips((prevTrips) =>
       prevTrips.map((trip) =>
         trip.name === tripName
           ? {
               ...trip,
-              dates: `${arrivalDate.toLocaleDateString()} - ${selectedDate.toLocaleDateString()}`,
+              name: proposedTripName, // Update the trip name
+              dates: `${arrivalDate.toLocaleDateString()} - ${selectedDate.toLocaleDateString()}`, // Update the trip dates
             }
           : trip
       )
     );
 
-    // Clear errors and complete
-    setErrorMessage("");
-    onComplete();
+    // Update selected trip and complete
+    setSelectedTrip(proposedTripName); // Set the new name as the active trip
+    setErrorMessage(""); // Clear error message
+    onComplete(); // Navigate back to ManageTripsPopup
   };
 
   const handleSkip = () => {
+    // Apply updates to the trip with only arrival date
     setTrips((prevTrips) =>
       prevTrips.map((trip) =>
         trip.name === tripName
-          ? { ...trip, dates: `${arrivalDate.toLocaleDateString()} - ` }
+          ? {
+              ...trip,
+              name: proposedTripName, // Update the trip name
+              dates: `${arrivalDate.toLocaleDateString()} - `, // Update the trip dates with skipped departure
+            }
           : trip
       )
     );
 
-    // Clear errors and complete
-    setErrorMessage("");
-    onComplete();
+    // Update selected trip and complete
+    setSelectedTrip(proposedTripName); // Set the new name as the active trip
+    setErrorMessage(""); // Clear error message
+    onComplete(); // Navigate back to ManageTripsPopup
   };
 
   return (
@@ -90,7 +100,7 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
 
         {/* Title */}
         <h1 style={styles.modalTitle}>
-          Editing: {tripName}
+          Editing Trip
           <span style={styles.underline}></span>
         </h1>
         <h2 style={styles.subtitle}>When are you leaving?</h2>

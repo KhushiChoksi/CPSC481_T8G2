@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { useTrip } from "../../context/TripContext";
 import EditArrivalPopup from "./EditArrivalPopup";
-import CloseButton from "../CloseButton"; // Import CloseButton component
-import BackButtonPopup from "../BackButtonPopup"; // Import BackButtonPopup component
+import CloseButton from "../CloseButton";
+import BackButtonPopup from "../BackButtonPopup";
 
 interface EditTripPopupProps {
   tripName: string;
-  onClose: () => void; // Close all popups
-  onGoBack: () => void; // Navigate back to ManageTripsPopup
-  onComplete: () => void; // Adding/editing complete = back to ManageTrips
+  onClose: () => void;
+  onGoBack: () => void;
+  onComplete: () => void;
 }
 
 const EditTripPopup: React.FC<EditTripPopupProps> = ({
@@ -19,13 +19,13 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({
   onGoBack,
   onComplete,
 }) => {
-  const { trips, setTrips, setSelectedTrip } = useTrip();
-  const [editedTripName, setEditedTripName] = useState(tripName);
-  const [showArrivalPopup, setShowArrivalPopup] = useState(false);
+  const { trips } = useTrip();
+  const [proposedTripName, setProposedTripName] = useState(tripName);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showArrivalPopup, setShowArrivalPopup] = useState(false);
 
   const handleSaveName = () => {
-    const trimmedName = editedTripName.trim();
+    const trimmedName = proposedTripName.trim();
 
     if (trimmedName === "") {
       setErrorMessage("Trip name cannot be empty.");
@@ -42,16 +42,8 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({
       return;
     }
 
-    // Clear error message and update the trip name
     setErrorMessage("");
-    setTrips((prevTrips) =>
-      prevTrips.map((trip) =>
-        trip.name === tripName ? { ...trip, name: trimmedName } : trip
-      )
-    );
-
-    setSelectedTrip(trimmedName); // Update the selected trip
-    setShowArrivalPopup(true); // Move to the next step
+    setShowArrivalPopup(true); // Proceed to arrival editing
   };
 
   return (
@@ -59,36 +51,26 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({
       {!showArrivalPopup && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
-            {/* Back Button */}
             <div style={styles.backButtonContainer}>
-              <BackButtonPopup
-                onClick={onGoBack} // Navigate back to ManageTripsPopup
-                ariaLabel="Go Back from Edit Trip"
-              />
+              <BackButtonPopup onClick={onGoBack} ariaLabel="Go Back" />
             </div>
-
-            {/* Close Button */}
             <div style={styles.closeButtonContainer}>
-              <CloseButton onClick={onClose} ariaLabel="Close Edit Trip Popup" />
+              <CloseButton onClick={onClose} ariaLabel="Close" />
             </div>
 
             <h1 style={styles.modalTitle}>
-              Editing: {tripName}
+              Editing Trip
               <span style={styles.underline}></span>
             </h1>
-
-            {/* Error Message */}
             <div style={styles.errorContainer}>
               {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
             </div>
 
-            <p style={styles.label}>
-              Edit trip name or press continue to change the trip dates.
-            </p>
+            <p style={styles.label}>Edit trip name or press continue to edit dates.</p>
             <input
               type="text"
-              value={editedTripName}
-              onChange={(e) => setEditedTripName(e.target.value)}
+              value={proposedTripName}
+              onChange={(e) => setProposedTripName(e.target.value)}
               style={styles.inputField}
               placeholder="Enter a new trip name"
             />
@@ -103,10 +85,11 @@ const EditTripPopup: React.FC<EditTripPopupProps> = ({
 
       {showArrivalPopup && (
         <EditArrivalPopup
-          tripName={editedTripName}
-          onClose={onClose} // Pass the same close handler
-          onGoBack={() => setShowArrivalPopup(false)} // Navigate back to EditTripPopup
-          onComplete={onComplete} // Navigate back to ManageTripsPopup
+          tripName={tripName} // Current trip name
+          proposedTripName={proposedTripName} // Temporary holder for new name
+          onClose={onClose}
+          onGoBack={() => setShowArrivalPopup(false)}
+          onComplete={onComplete}
         />
       )}
     </>
