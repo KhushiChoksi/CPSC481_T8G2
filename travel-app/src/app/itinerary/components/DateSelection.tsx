@@ -152,6 +152,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "2.8rem",
     marginBottom: "10px",
     cursor: "pointer",
+    color: "black",
   },
   continueButton: {
     flex: "1",
