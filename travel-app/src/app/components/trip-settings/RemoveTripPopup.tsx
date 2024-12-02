@@ -49,10 +49,10 @@ const RemoveTripPopup: React.FC<RemoveTripPopupProps> = ({ tripName, onClose }) 
 const styles: { [key: string]: React.CSSProperties } = {
   modalOverlay: {
     position: "fixed",
-    top: "63px", // Matches the top alignment of other modals
+    top: "63px",
     left: 0,
     width: "100vw",
-    height: "calc(100vh - 63px)", // Matches the height of other modals
+    height: "calc(100vh - 63px)",
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
@@ -61,22 +61,22 @@ const styles: { [key: string]: React.CSSProperties } = {
   modal: {
     width: "96vw",
     height: "91vh",
-    backgroundColor: "#A5B6C2", // Same as other modals
+    backgroundColor: "#A5B6C2",
     borderRadius: "20px",
     border: "1px solid #000000",
     padding: "20px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    gap: "0.2rem",
     alignItems: "center",
     boxSizing: "border-box",
   },
   modalTitle: {
     fontSize: "2.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
-    marginBottom: "1rem",
+    marginBottom: "5rem",
   },
   underline: {
     display: "block",
@@ -90,13 +90,15 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1.2rem",
     textAlign: "center",
     color: "#000000",
-    margin: "2rem 0",
+    marginBottom: "0rem", // Reduced margin between label and input
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   buttonContainer: {
     width: "100%",
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
+    marginTop: "auto",
   },
   cancelButton: {
     width: "100%",
@@ -106,8 +108,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
-    marginBottom: "1rem"
+    marginBottom: "2rem"
   },
   removeButton: {
     width: "100%",
@@ -117,6 +120,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
 };

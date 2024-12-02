@@ -50,7 +50,7 @@ const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({ onClose }) => {
               <button style={styles.cancelButton} onClick={onClose}>
                 Cancel
               </button>
-              <button style={styles.saveButton} onClick={handleSaveName}>
+              <button style={styles.continueButton} onClick={handleSaveName}>
                 Continue
               </button>
             </div>
@@ -96,7 +96,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "5rem",
@@ -111,6 +111,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   label: {
     fontSize: "1.2rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     textAlign: "center",
     color: "#000000",
     marginBottom: "0rem", // Reduced margin between label and input
@@ -119,6 +120,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: "100%", // Matches the combined width of the buttons
     padding: "0.75rem",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     borderRadius: "5px",
     border: "1px solid #000000",
     marginBottom: "1.5rem",
@@ -139,17 +141,19 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: "#FFFFFF",
     color: "#003554",
     border: "1px solid #000000",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
   },
-  saveButton: {
+  continueButton: {
     flex: 1,
     maxWidth: "44%",
     height: "3.1rem",
     backgroundColor: "#003554",
     color: "#FFFFFF",
     border: "1px solid #000000",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",

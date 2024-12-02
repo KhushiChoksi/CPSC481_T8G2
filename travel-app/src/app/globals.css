@@ -22,13 +22,13 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .react-calendar {
   background-color: transparent; /* Matches the modal background or removes background */
   border: none; /* Removes border to integrate with modal */
-  font-family: "Subtitle, sans-serif"; /* Consistent font styling */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 18px; /* Adjust readability */
   width: 100%; /* Full width inside container */
   color: black; /* Default text color */
