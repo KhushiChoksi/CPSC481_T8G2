@@ -36,7 +36,7 @@ export default function ItineraryPage() {
 
             {/* Edit button */}
             <button
-              className={`${isEditing ? 'bg-darkblue2 text-white font-bold' : ''} ${buttonStyle}`}
+              className={`${isEditing ? 'text-red-500 font-bold' : ''} ${buttonStyle}`}
               onClick={handleEditToggle}
             >
               {isEditing ? 'Stop Editing' : 'Edit'}
