@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useTrip } from "../../context/TripContext";
 import AddNewArrivalPopup from "./AddNewArrivalPopup";
+import CloseButton from "../CloseButton";
 
 interface AddNewTripPopupProps {
   onClose: () => void;
@@ -33,6 +34,11 @@ const AddNewTripPopup: React.FC<AddNewTripPopupProps> = ({ onClose }) => {
       {!showArrivalPopup && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
+            {/* Close Button */}
+            <div style={styles.closeButtonContainer}>
+              <CloseButton onClick={onClose} ariaLabel="Close Add Trip Popup" />
+            </div>
+
             <h1 style={styles.modalTitle}>
               Add a Trip
               <span style={styles.underline}></span>
@@ -88,11 +94,18 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "20px",
     border: "1px solid #000000",
     padding: "20px",
+    position: "relative", // Ensure child components like CloseButton are positioned correctly
     display: "flex",
     flexDirection: "column",
     gap: "0.2rem",
     alignItems: "center",
     boxSizing: "border-box",
+  },
+  closeButtonContainer: {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    zIndex: 1100, // Ensure it's above other content
   },
   modalTitle: {
     fontSize: "2.5rem",
@@ -100,6 +113,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#000000",
     textAlign: "center",
     marginBottom: "5rem",
+    marginTop: "3rem",
   },
   underline: {
     display: "block",
@@ -159,4 +173,5 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: "pointer",
   },
 };
+
 export default AddNewTripPopup;
