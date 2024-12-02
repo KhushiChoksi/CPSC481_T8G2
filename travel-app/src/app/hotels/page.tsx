@@ -90,17 +90,31 @@ export default function HotelsPage() {
         {showPopup && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-md">
-              <h2 className="text-lg font-bold mb-4">Select Dates</h2>
-              <p>This is a placeholder for the popup content.</p>
-              <button
-                onClick={handleClosePopup}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-              >
-                Close
-              </button>
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">DATE SELECTION</h2>
+
+              <p className="text-gray-600 mb-6 text-center">Please select your dates of stay below.</p>
+
+              <div className="flex justify-between mt-6">
+                <button
+                  onClick={handleClosePopup}
+                  className="bg-transparent text-gray-700 px-4 py-2 rounded-md border border-gray-400 hover:bg-gray-100 transition"
+                >
+                  Go Back
+                </button>
+
+                <button
+                  onClick={() => {
+                    handleClosePopup();
+                  }}
+                  className="bg-darkblue text-white px-4 py-2 rounded-md border border-gray-400 hover:bg-gray-100 transition"
+                >
+                  Confirm
+                </button>
+              </div>
             </div>
           </div>
         )}
+
 
         <Navbar/>
       </div>
