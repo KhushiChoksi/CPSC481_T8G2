@@ -141,8 +141,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     boxSizing: "border-box",
   },
   modalTitle: {
-    fontSize: "2.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontSize: "2.49rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
   },
@@ -161,6 +161,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   label: {
     fontSize: "1.2rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     marginBottom: "0.5rem",
   },
@@ -180,6 +181,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
     marginBottom: "1.5rem",
     textAlign: "center",
@@ -187,6 +189,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   errorMessage: {
     color: "red",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     textAlign: "center",
     marginBottom: "1rem",
   },
@@ -203,6 +206,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#003554",
     border: "1px solid #000000",
     borderRadius: "5px",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   longConfirmButton: {
     width: "100%",
@@ -211,6 +215,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#FFFFFF",
     border: "1px solid #000000",
     borderRadius: "5px",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
 };
 

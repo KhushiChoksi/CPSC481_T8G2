@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import TravelDetailsModal from "../components/ArrivalDatePopup";
-import DepartureDetailsModal from "../components/DepartureDatePopup";
-import SuccessPopup from "../components/SuccessPopup";
+import TravelDetailsModal from "../ArrivalDatePopup";
+import DepartureDetailsModal from "../DepartureDatePopup";
+import SuccessPopup from "../SuccessPopup";
 import CancelAccountPopup from "./CancelCreateAccountPopup"; // Ensure the path is correct
 import { useRouter } from "next/navigation";
 
@@ -120,6 +120,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "center",
     alignItems: "center",
     boxSizing: "border-box",
+    zIndex: "1002",
   },
   modal: {
     width: "96vw", // Makes the modal width responsive
@@ -137,7 +138,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem", // Scales for responsiveness
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     position: "relative",
@@ -159,7 +160,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   label: {
     fontSize: "1rem", // Scales for smaller screens
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     marginBottom: "0.5rem",
   },
@@ -189,6 +190,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
   continueButton: {
@@ -200,6 +202,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
 };

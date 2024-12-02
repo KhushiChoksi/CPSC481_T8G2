@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SuccessPopup from "./SuccessPopup"; // Reuse the SuccessPopup for confirmation
+import SuccessPopup from "../SuccessPopup"; // Reuse the SuccessPopup for confirmation
 import { useRouter } from "next/navigation";
 
 interface ResetPasswordPopupProps {
@@ -77,6 +77,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "center",
     alignItems: "center",
     boxSizing: "border-box",
+    zIndex: "1002",
   },
   modal: {
     width: "96vw", // Responsive width
@@ -94,7 +95,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     position: "relative",
@@ -116,7 +117,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   label: {
     fontSize: "1.2rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     marginBottom: "0.5rem",
   },
@@ -127,6 +128,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     padding: "0 0.5rem",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     backgroundColor: "#FFFFFF",
   },
@@ -145,6 +147,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
   longConfirmButton: {
@@ -155,6 +158,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
   },
 };

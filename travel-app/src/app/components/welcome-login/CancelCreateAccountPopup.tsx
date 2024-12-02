@@ -50,6 +50,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "center",
     alignItems: "center",
     boxSizing: "border-box",
+    zIndex: "1002",
   },
   modal: {
     width: "96vw", // Responsive width
@@ -67,7 +68,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     position: "relative",
@@ -82,7 +83,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   subtitle: {
     fontSize: "1.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginTop: "10px", // Space below the title
@@ -104,6 +105,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   longConfirmButton: {
     width: "100%",
@@ -114,6 +116,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
 };
 
