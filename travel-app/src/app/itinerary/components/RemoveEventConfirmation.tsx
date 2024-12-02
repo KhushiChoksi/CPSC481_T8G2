@@ -19,7 +19,7 @@ const RemoveEventConfirmation: React.FC<RemoveEventConfirmationProps> = ({ event
         </h1>
 
         {/* Subtitle */}
-        <h2 style={styles.paragraph}>Press YES to remove "{eventTitle}" from your itinerary. Otherwise, press NO.</h2>
+        <h2 style={styles.paragraph}>Press YES to remove &quot;{eventTitle}&quot; from your itinerary. Otherwise, press NO.</h2>
 
         {/* Yes and No options */}
         <div style={styles.modalButtonContainer}>

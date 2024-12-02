@@ -11,13 +11,22 @@ import { MdCancel } from 'react-icons/md';
 import DateSelection from './DateSelection';
 import RemoveEventConfirmation from './RemoveEventConfirmation';
 
-import ReactCalendar from "react-calendar";
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
 import "../../globals.css";
 
+interface Event {
+  id: string;
+  title: string;
+  start: string | Date | null;
+  end: string | Date | null;
+  extendedProps: {
+    address?: string;
+  };
+}
+
 const DayView = ({ isEditing }: { isEditing: boolean }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [eventToDelete, setEventToDelete] = useState<any>(null);
+  const [eventToDelete, setEventToDelete] = useState<Event | null >(null);
 
   const [currentDate, setCurrentDate] = useState(new Date());     // initial date as today
   const calendarRef = useRef<Calendar | null>(null);
@@ -77,19 +86,30 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
       title: 'Calgary Tower',
       start: '2024-12-01T09:00:00',
       end: '2024-12-01T10:00:00',
-      address: '101 9 Ave SW, Calgary, AB T2P 1J9',
+      extendedProps: {address: '101 9 Ave SW, Calgary, AB T2P 1J9'},
     },
     {
       id: '2',
       title: 'Kinjo Sushi',
       start: '2024-12-01T12:00:00',
       end: '2024-12-01T12:30:00',
-      address: '300 8 Ave SW, Calgary, AB T2P 1C6',
+      extendedProps : {address: '300 8 Ave SW, Calgary, AB T2P 1C6'},
     },
   ]);
 
   const handleDeleteEvent = (eventId: string, eventTitle: string) => {
-    setEventToDelete({ id: eventId, title: eventTitle });
+    // setEventToDelete({ id: eventId, title: eventTitle });
+
+    // Find the event by its ID
+    const eventToDelete = events.find((event) => event.id === eventId);
+    
+    // If event is found, set it in state
+    if (eventToDelete) {
+      setEventToDelete({id: eventId, title: eventTitle, start: '', end: '', extendedProps: {address: ''}}); // Set the full event to delete
+      setIsModalOpen(true); // Open the modal
+    } else {
+      console.error('Event not found');
+    }
     setIsModalOpen(true);
   };
 
@@ -165,14 +185,14 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
 };
 
 function renderEventContent(
-  eventInfo: { event: any },
+  eventInfo: { event: Event },
   isEditing: boolean,
   handleDeleteEvent: (id: string, title: string) => void
 ) {
   const { event } = eventInfo; // access event data
   const address = event.extendedProps.address; // get address from event
-  const startTime = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // get start time
-  const endTime = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // get end time
+  const startTime = event.start?.toLocaleString([], { hour: '2-digit', minute: '2-digit' }); // get start time
+  const endTime = event.end?.toLocaleString([], { hour: '2-digit', minute: '2-digit' }); // get end time
 
   return (
     <div style={{ position: 'relative' }}>

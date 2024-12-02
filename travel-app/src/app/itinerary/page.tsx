@@ -14,7 +14,7 @@ export default function ItineraryPage() {
   const buttonStyle = "bg-white text-darkblue p-2 h-8 rounded-lg border border-solid border-black w-full h-full";
 
   const handleEditToggle = () => {
-    setIsEditing((prev: any) => !prev);
+    setIsEditing((prev: boolean) => !prev);
   };
 
   return (

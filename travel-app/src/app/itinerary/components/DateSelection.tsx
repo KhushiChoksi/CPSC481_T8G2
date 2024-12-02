@@ -26,7 +26,7 @@ const DateSelection: React.FC<DateSelectionModalProps> = ({
 
   const handlePopUpDateChange = (date : Value) => {
     handleDateChange(date);
-    setSelectedDate(date);
+    setSelectedDate(date as Date);
   }
 
   return (
