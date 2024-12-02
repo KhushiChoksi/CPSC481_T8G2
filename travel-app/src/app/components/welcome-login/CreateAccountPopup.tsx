@@ -120,6 +120,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "center",
     alignItems: "center",
     boxSizing: "border-box",
+    zIndex: "1002",
   },
   modal: {
     width: "96vw", // Makes the modal width responsive

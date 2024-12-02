@@ -52,7 +52,7 @@ const DepartureDetailsModal: React.FC<DepartureDetailsModalProps> = ({
         <div style={styles.modalButtonContainer}>
           {onGoBack && (
             <button style={styles.cancelButton} onClick={onGoBack}>
-              Go Back
+              Back
             </button>
           )}
           <button style={styles.confirmButton} onClick={onClose}>
@@ -75,6 +75,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: "1002",
   },
   modal: {
     width: "96vw", // Responsive width

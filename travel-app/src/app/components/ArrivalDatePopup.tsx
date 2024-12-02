@@ -39,7 +39,7 @@ const TravelDetailsModal: React.FC<TravelDetailsModalProps> = ({
         {/* Go Back and Confirm Buttons */}
         <div style={styles.modalButtonContainer}>
           <button style={styles.cancelButton} onClick={onGoBack}>
-            Go Back
+            Back
           </button>
           <button
             style={styles.continueButton}
@@ -67,6 +67,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: "1002",
   },
   modal: {
     width: "96vw",
