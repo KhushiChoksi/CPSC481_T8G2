@@ -23,13 +23,17 @@ const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [showDeparturePopup, setShowDeparturePopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleConfirmDate = () => {
     if (!selectedDate) {
-      alert("Please select an arrival date before continuing.");
+      setErrorMessage("Please select an arrival date before continuing.");
       return;
     }
-    setShowDeparturePopup(true); // Move to the departure date popup
+
+    // Clear error message and move to the departure popup
+    setErrorMessage("");
+    setShowDeparturePopup(true);
   };
 
   return (
@@ -59,6 +63,11 @@ const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({
               <span style={styles.underline}></span>
             </h1>
             <h2 style={styles.subtitle}>When are you arriving?</h2>
+
+            {/* Error Message */}
+            <div style={styles.errorContainer}>
+              {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+            </div>
 
             {/* Calendar */}
             <div style={styles.calendarContainer}>
@@ -152,7 +161,21 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
-    marginBottom: "2rem",
+    marginBottom: "1rem", // Adjust margin for error message
+  },
+  errorContainer: {
+    width: "100%",
+    height: "0rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "0rem",
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "1rem",
+    textAlign: "center",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   calendarContainer: {
     width: "100%",

@@ -25,12 +25,20 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
 }) => {
   const { setTrips } = useTrip();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleConfirmDate = () => {
     if (!selectedDate) {
-      alert("Please select a departure date before continuing or use 'Skip'.");
+      setErrorMessage("Please select a departure date before continuing or press skip.");
       return;
     }
+
+    if (selectedDate < arrivalDate) {
+      setErrorMessage("Departure date cannot be earlier than the arrival date.");
+      return;
+    }
+
+    // Save trip with valid dates
     setTrips((prevTrips) =>
       prevTrips.map((trip) =>
         trip.name === tripName
@@ -41,7 +49,10 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
           : trip
       )
     );
-    onComplete(); // Navigate back to ManageTripsPopup
+
+    // Clear errors and complete
+    setErrorMessage("");
+    onComplete();
   };
 
   const handleSkip = () => {
@@ -52,7 +63,10 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
           : trip
       )
     );
-    onComplete(); // Navigate back to ManageTripsPopup
+
+    // Clear errors and complete
+    setErrorMessage("");
+    onComplete();
   };
 
   return (
@@ -80,6 +94,11 @@ const EditDeparturePopup: React.FC<EditDeparturePopupProps> = ({
           <span style={styles.underline}></span>
         </h1>
         <h2 style={styles.subtitle}>When are you leaving?</h2>
+
+        {/* Error Message */}
+        <div style={styles.errorContainer}>
+          {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+        </div>
 
         {/* Calendar */}
         <div style={styles.calendarContainer}>
@@ -168,7 +187,21 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
-    marginBottom: "2rem",
+    marginBottom: "1rem", // Adjusted for error message
+  },
+  errorContainer: {
+    width: "100%",
+    height: "0rem", // No extra space unless an error message is displayed
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "0rem",
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "1rem",
+    textAlign: "center",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   calendarContainer: {
     width: "100%",
