@@ -5,12 +5,14 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../../globals.css";
+import { Value } from "react-calendar/dist/esm/shared/types.js";
 
 interface DateSelectionModalProps {
   onClose: () => void;
   onGoBack: () => void;
   showSkip?: boolean; // Optional prop to show the "Skip" button
   onSkip?: () => void;
+  handleDateChange: (value: Value) => void
 }
 
 const DateSelection: React.FC<DateSelectionModalProps> = ({
@@ -18,6 +20,7 @@ const DateSelection: React.FC<DateSelectionModalProps> = ({
   onGoBack,
   showSkip = false,
   onSkip,
+  handleDateChange,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -35,7 +38,7 @@ const DateSelection: React.FC<DateSelectionModalProps> = ({
         {/* Calendar */}
         <div style={styles.calendarContainer}>
           <Calendar
-            onChange={(date) => setSelectedDate(date as Date)} // Update state with selected date
+            onChange={handleDateChange} // Update state with selected date
             value={selectedDate} // Highlight selected date
             showNeighboringMonth={false} // Exclude days from adjacent months
           />

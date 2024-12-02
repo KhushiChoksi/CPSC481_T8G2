@@ -2,7 +2,7 @@
 // https://fullcalendar.io/docs/bootstrap4
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Calendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -11,9 +11,65 @@ import { MdCancel } from 'react-icons/md';
 import DateSelection from './DateSelection';
 import RemoveEventConfirmation from './RemoveEventConfirmation';
 
+import ReactCalendar from "react-calendar";
+import { Value } from 'react-calendar/dist/esm/shared/types.js';
+
+
 const DayView = ({ isEditing }: { isEditing: boolean }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eventToDelete, setEventToDelete] = useState<any>(null);
+
+  const [currentDate, setCurrentDate] = useState(new Date());     // initial date as today
+  const calendarRef = useRef<Calendar | null>(null);
+
+  const handleDateChange = (value: Value) => {
+    if (value === null) return;           // return if no date is selected
+
+    const selectedDate = Array.isArray(value) ? value[0] : value;       // if a range of dates is selected, take the first date
+
+    if (selectedDate !== null) {
+      const localDate = new Date(selectedDate);               // fix the selected date to local time
+
+      localDate.setHours(0, 0, 0, 0);                         // set the time to midnight to avoid timezone shifts
+
+      localStorage.setItem('selectedDate', localDate.toISOString());      // save the date, so it doesn't reset each time the user goes to a different screen
+
+      setCurrentDate(localDate);                              // set the corrected date to currentDate state
+
+      console.log(localDate);                                 // print selected date to console to ensure it works right
+
+      // move itinerary view to the new date
+      if (calendarRef.current) {
+        const calendarApi = calendarRef.current.getApi();
+        calendarApi.gotoDate(localDate);
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   if (calendarRef.current) {
+  //     const calendarApi = calendarRef.current.getApi();
+  //     calendarApi.gotoDate(currentDate); // Move the calendar to the selected date when `currentDate` changes
+  //   }
+  // }, [currentDate]);
+
+  useEffect(() => {
+    // Retrieve the saved date from localStorage
+    const savedDate = localStorage.getItem('selectedDate');
+  
+    if (savedDate) {
+      const localDate = new Date(savedDate);
+      setCurrentDate(localDate);
+  
+      // Move FullCalendar to the saved date
+      if (calendarRef.current) {
+        const calendarApi = calendarRef.current.getApi();
+        calendarApi.gotoDate(localDate);
+      }
+    }
+  }, []);
+  
+
   
   const [events, setEvents] = useState([
     {
@@ -56,6 +112,7 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
         <DateSelection
           onClose={() => setIsModalOpen(false)}         // close modal
           onGoBack={() => setIsModalOpen(false)}        // go back button
+          handleDateChange={handleDateChange}
         />
       )}
 
@@ -71,6 +128,11 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
         themeSystem="bootstrap"
         plugins={[timeGridPlugin, bootstrapPlugin]}
         initialView="timeGridDay"
+
+        timeZone="local"                  // use local time
+        initialDate={currentDate}
+        ref={calendarRef}        
+
         events={events}
         eventContent={(eventInfo) =>
           renderEventContent(eventInfo, isEditing, handleDeleteEvent)
