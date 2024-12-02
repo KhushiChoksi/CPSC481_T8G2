@@ -10,6 +10,7 @@ import CloseButton from "../CloseButton";
 
 interface EditArrivalPopupProps {
   tripName: string;
+  proposedTripName: string; // New proposed trip name
   onClose: () => void; // Final close
   onGoBack: () => void; // Go back to EditTripPopup
   onComplete: () => void; // Complete editing and navigate to ManageTripsPopup
@@ -17,6 +18,7 @@ interface EditArrivalPopupProps {
 
 const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({
   tripName,
+  proposedTripName,
   onClose,
   onGoBack,
   onComplete,
@@ -59,7 +61,7 @@ const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({
 
             {/* Title */}
             <h1 style={styles.modalTitle}>
-              Editing: {tripName}
+              Editing Trip
               <span style={styles.underline}></span>
             </h1>
             <h2 style={styles.subtitle}>When are you arriving?</h2>
@@ -90,8 +92,9 @@ const EditArrivalPopup: React.FC<EditArrivalPopupProps> = ({
 
       {showDeparturePopup && selectedDate && (
         <EditDeparturePopup
-          tripName={tripName}
-          arrivalDate={selectedDate}
+          tripName={tripName} // Original trip name
+          proposedTripName={proposedTripName} // New proposed trip name
+          arrivalDate={selectedDate} // Selected arrival date
           onClose={onClose} // Final close
           onGoBack={() => setShowDeparturePopup(false)} // Go back to this popup
           onComplete={onComplete} // Navigate back to ManageTripsPopup
