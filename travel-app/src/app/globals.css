@@ -5,8 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --bg-lightblue: #E4EFF6; 
-  --bg-darkblue: #65BFFF;
+  --bg-lightblue: #e4eff6;
+  --bg-darkblue: #65bfff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +19,58 @@
 body {
   color: var(--foreground);
   background-image: linear-gradient(var(--bg-lightblue), var(--bg-darkblue));
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
-  font-family: Arial, Helvetica, sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.react-calendar {
+  background-color: transparent; /* Matches the modal background or removes background */
+  border: none; /* Removes border to integrate with modal */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px; /* Adjust readability */
+  width: 100%; /* Full width inside container */
+  color: black; /* Default text color */
+}
+
+.react-calendar__month-view {
+  display: grid;
+  grid-template-rows: auto 1fr; /* First row for weekdays, then dates */
+}
+
+.react-calendar__month-view__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for weekdays */
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px; /* Space between weekdays and numbers */
+}
+
+.react-calendar__month-view__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+  grid-auto-rows: auto; /* Rows adjust automatically */
+}
+
+.react-calendar__tile {
+  color: black; /* Makes all numbers black */
+  text-align: center;
+  padding: 10px; /* Balance padding */
+  background: none;
+  border-radius: 50%; /* Round tiles */
+  width: 100%; /* Ensure tiles fill the grid cell */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.react-calendar__tile--active,
+.react-calender__tile--focused {
+  background: #003554 !important; /* Navy blue for selected date */
+  color: white !important;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.react-calendar__tile:hover {
+  background: #dcdcdc; /* Light gray hover effect */
 }

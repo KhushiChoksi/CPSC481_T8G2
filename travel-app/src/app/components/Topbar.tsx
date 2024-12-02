@@ -1,52 +1,58 @@
 "use client";
 
+import React from "react";
 import CircleWithIcon from "./UserProfile";
 import TripButton from "./TripButton";
-
 import Logo from "./Logo";
+import { useRouter } from "next/navigation";
 
+const Topbar = ({ profilePersonColor = 'text-white', profileBgColor = 'bg-black' }) => {
+  const router = useRouter();
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '70px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 20px',
+        zIndex: 1000,
+      }}
+    >
+      {/* Logo */}
+      <Logo />
 
-export default function Topbar() {
-    return (
-        <div
-            style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: '70px',
-                display: 'flex',
-                alignItems: 'center', 
-                justifyContent: 'space-between', 
-                padding: '0 20px',
-                zIndex: 1000,
-            }}>
+      {/* Trip Button */}
+      <TripButton /> {/* No props needed */}
 
-      <Logo/>
-
-      <TripButton iconColor='text-white' tripName="Trip 1"/>
-
+      {/* User Profile Button */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <button
-            title="User profile"
-            style={{
+          title="User profile"
+          style={{
             width: '40px',
             height: '40px',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            }}
-            onClick={() => alert('Profile button clicked!')}>
-                
-            <CircleWithIcon circleColor='bg-black' iconColor='text-white' />
+          }}
+          onClick={() => router.push("/account-settings")}
+        >
+          <CircleWithIcon circleColor={profileBgColor} iconColor={profilePersonColor} />
         </button>
       </div>
     </div>
   );
-}
-    
+};
+
+export default Topbar;
