@@ -1,7 +1,6 @@
 export default function SeachBar() {
     return (
         <section style={{ padding: '20px', textAlign: 'center' }}>
-        <h1>Restaurant</h1>
         <div style={{ 
           display: 'flex',
           justifyContent: 'center',
