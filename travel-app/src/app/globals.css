@@ -5,8 +5,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --bg-lightblue: #E4EFF6; 
-  --bg-darkblue: #65BFFF;
+  --bg-lightblue: #e4eff6;
+  --bg-darkblue: #65bfff;
+  --darkblue: #003554;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +20,125 @@
 body {
   color: var(--foreground);
   background-image: linear-gradient(var(--bg-lightblue), var(--bg-darkblue));
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
-  font-family: Arial, Helvetica, sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.react-calendar {
+  background-color: transparent; /* Matches the modal background or removes background */
+  border: none; /* Removes border to integrate with modal */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px; /* Adjust readability */
+  width: 100%; /* Full width inside container */
+  color: black; /* Default text color */
+}
+
+.react-calendar__month-view {
+  display: grid;
+  grid-template-rows: auto 1fr; /* First row for weekdays, then dates */
+}
+
+.react-calendar__month-view__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for weekdays */
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px; /* Space between weekdays and numbers */
+}
+
+.react-calendar__month-view__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+  grid-auto-rows: auto; /* Rows adjust automatically */
+}
+
+.react-calendar__tile {
+  color: black; /* Makes all numbers black */
+  text-align: center;
+  padding: 10px; /* Balance padding */
+  background: none;
+  border-radius: 50%; /* Round tiles */
+  width: 100%; /* Ensure tiles fill the grid cell */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.react-calendar__tile--active,
+.react-calender__tile--focused {
+  background: #003554 !important; /* Navy blue for selected date */
+  color: white !important;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.react-calendar__tile:hover {
+  background: #dcdcdc; /* Light gray hover effect */
+}
+
+
+
+
+/* STYLING FOR ITINERARY CALENDAR */
+.fc {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 20px; 
+  background-color: rgb(255, 255, 255, 0.75);
+  width: 400px;
+}
+
+.fc-header-toolbar .fc-calendarIcon-button {
+  font-size: 25px;
+  color: black;
+  background-color: rgb(221, 221, 221);
+  padding: 0px;
+  min-height: 30px;
+  min-width: 45px;
+  border: 1px solid black;
+  border-radius: 18px;
+}
+
+.fc-header-toolbar .fc-toolbar-title {
+  font-size: 25px;
+  font-style: italic;
+  color: black; 
+}
+
+.fc-timegrid-slot-label {
+  color: black; 
+}
+
+.fc-col-header-cell-cushion {
+  color: rgb(12, 9, 9) !important;
+}
+
+.fc-timegrid-slot {
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px dashed rgba(11, 11, 11, 0);
+}
+
+.fc-timegrid-slot-lane {                          /* major lines (hourly) */
+  border-top: 1px dashed rgba(0, 0, 0, 0.4);
+}
+
+.fc-timegrid-slot-lane.fc-timegrid-slot-minor {   /* minor lines (sub-hourly) */
+  border-top: 1px dashed rgba(0, 0, 0, 0);
+}
+
+.fc-timegrid-slot-label {                         /* time column */
+  background-color: rgb(255, 255, 255, 0);
+  border: 1.5px solid rgba(0, 0, 0, 0.7);
+}
+
+/* https://stackoverflow.com/questions/7258655/can-the-default-timeslot-height-be-set-in-fullcalendar */
+.fc .fc-timegrid-slot {
+  height: 65px !important;
+  line-height: 0.2em !important;
+  border-bottom: 0 !important;
+}
+/* .fc .fc-timegrid-slot.fc-scrollgrid-shrink {
+  height: 1.5em !important;
+  line-height: 1.5em !important;
+  border-bottom: 0 !important;
+} */
