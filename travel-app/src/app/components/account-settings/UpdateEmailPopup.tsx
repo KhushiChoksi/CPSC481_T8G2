@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-//import SuccessPopup from "./SuccessPopup"; // Reuse for confirmation
+import CloseButton from "../CloseButton"; // Import the CloseButton component
 
 interface UpdateEmailPopupProps {
   onCancel: () => void;
@@ -32,68 +32,88 @@ const UpdateEmailPopup: React.FC<UpdateEmailPopupProps> = ({
   };
 
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modal}>
-        {/* Title */}
-        <h1 style={styles.modalTitle}>
-          Update Email<span style={styles.underline}></span>
-        </h1>
+    <>
+      {/* Blur Effect */}
+      <div style={styles.blurOverlay}></div>
 
-        {/* Input Fields */}
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter your email:</label>
-          <input
-            type="email"
-            style={styles.input}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter new email"
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please confirm your email:</label>
-          <input
-            type="email"
-            style={styles.input}
-            value={confirmEmail}
-            onChange={(e) => setConfirmEmail(e.target.value)}
-            placeholder="Confirm new email"
-          />
-        </div>
+      {/* Modal */}
+      <div style={styles.modalOverlay}>
+        <div style={styles.modal}>
+          {/* Close Button */}
+          <div style={styles.closeButtonContainer}>
+            <CloseButton
+              onClick={onCancel} // Close the popup
+              ariaLabel="Close Update Email Popup"
+            />
+          </div>
 
-        {/* Reserved Error Message Space */}
-        <div style={styles.errorContainer}>
-          {errorMessage && (
-            <div style={styles.errorMessage}>{errorMessage}</div>
-          )}
-        </div>
+          {/* Title */}
+          <h1 style={styles.modalTitle}>
+            Update Email<span style={styles.underline}></span>
+          </h1>
 
-        {/* Buttons */}
-        <div style={styles.modalButtonContainer}>
-          <button style={styles.longCancelButton} onClick={onCancel}>
-            Cancel
-          </button>
-          <button style={styles.longConfirmButton} onClick={handleConfirm}>
-            Confirm Email Update
-          </button>
+          {/* Input Fields */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter your email:</label>
+            <input
+              type="email"
+              style={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter new email"
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please confirm your email:</label>
+            <input
+              type="email"
+              style={styles.input}
+              value={confirmEmail}
+              onChange={(e) => setConfirmEmail(e.target.value)}
+              placeholder="Confirm new email"
+            />
+          </div>
+
+          {/* Reserved Error Message Space */}
+          <div style={styles.errorContainer}>
+            {errorMessage && (
+              <div style={styles.errorMessage}>{errorMessage}</div>
+            )}
+          </div>
+
+          {/* Confirm Button */}
+          <div style={styles.modalButtonContainer}>
+            <button style={styles.longConfirmButton} onClick={handleConfirm}>
+              Confirm Email Update
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
+  blurOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dim background
+    backdropFilter: "blur(5px)",
+    zIndex: 1020, // Ensure blur is below modal but above everything else
+  },
   modalOverlay: {
     position: "fixed",
     top: 0,
     left: 0,
     width: "100vw",
     height: "100vh",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 1000,
+    zIndex: 2000, // Ensure modal is above blur
   },
   modal: {
     width: "96vw",
@@ -107,13 +127,21 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "space-between",
     alignItems: "center",
     boxSizing: "border-box",
+    position: "relative",
+  },
+  closeButtonContainer: {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    zIndex: 1100,
   },
   modalTitle: {
     fontSize: "2.5rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
-    position: "relative",
+    marginBottom: "0rem",
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
@@ -121,6 +149,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: "100%",
     backgroundColor: "#000000",
     margin: "0 auto",
+    marginTop: "-10px",
   },
   inputGroup: {
     width: "100%",
@@ -162,15 +191,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: "column",
     gap: "3rem",
     width: "100%",
-  },
-  longCancelButton: {
-    width: "100%",
-    height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   longConfirmButton: {
     width: "100%",

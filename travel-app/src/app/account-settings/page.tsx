@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Topbar from "../components/Topbar";
-import UpdateEmailPopup from "../components/account-settings/UpdateEmailPopup"; 
-import UpdatePasswordPopup from "../components/account-settings/UpdatePasswordPopup"; 
+import UpdateEmailPopup from "../components/account-settings/UpdateEmailPopup";
+import UpdatePasswordPopup from "../components/account-settings/UpdatePasswordPopup";
 import BackButton from "../components/BackButton";
 import { useRouter } from "next/navigation";
 
@@ -22,17 +22,14 @@ const AccountSettings: React.FC = () => {
   return (
     <div className="flex flex-col items-center min-h-screen text-darkblue">
       {/* Topbar */}
-      <Topbar profilePersonColor="text-hl-orange"/>
+      <Topbar profilePersonColor="text-hl-orange" />
 
       {/* Main Content */}
       <main className="mt-10 flex flex-col items-start w-full px-4 py-6 pt-10">
         {/* Header with Back Arrow and Title */}
         <div className="flex flex-col items-start w-full max-w-md">
           <div className="flex items-center mb-2">
-            <BackButton ariaLabel="Go back" />
-            <h1 className="text-2xl font-bold text-black">
-              Account Settings
-            </h1>
+            <BackButton title="Account" />
           </div>
 
           {/* Success Message Container */}
@@ -41,7 +38,7 @@ const AccountSettings: React.FC = () => {
               successMessage ? "text-green-600" : "text-transparent"
             } mb-4`}
           >
-            {successMessage || "\u00A0"} {/*holds space for success message for screen consistency*/}
+            {successMessage || "\u00A0"} {/* Placeholder for consistency */}
           </p>
         </div>
 
@@ -55,9 +52,7 @@ const AccountSettings: React.FC = () => {
             <button
               type="button"
               className="max-w-lg w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
-              onClick={() => {
-                setShowUpdateEmailPopup(true);
-              }}
+              onClick={() => setShowUpdateEmailPopup(true)}
             >
               Update Email Address
             </button>
@@ -65,15 +60,11 @@ const AccountSettings: React.FC = () => {
 
           {/* Security Section */}
           <div className="w-full mb-6 flex flex-col items-start px-4">
-            <label className="block text-lg text-black mb-2">
-              Security
-            </label>
+            <label className="block text-lg text-black mb-2">Security</label>
             <button
               type="button"
               className="max-w-lg w-full h-[50px] bg-darkblue text-white rounded-md border border-black text-lg mb-[60px]"
-              onClick={() => {
-                setShowUpdatePasswordPopup(true);
-              }}
+              onClick={() => setShowUpdatePasswordPopup(true)}
             >
               Update Password
             </button>
@@ -81,9 +72,7 @@ const AccountSettings: React.FC = () => {
 
           {/* Sign Out Section */}
           <div className="w-full mb-6 flex flex-col items-start px-4">
-            <label className="block text-lg text-black mb-2">
-              Sign Out
-            </label>
+            <label className="block text-lg text-black mb-2">Sign Out</label>
             <button
               type="button"
               className="max-w-lg w-full h-[50px] bg-white text-[#003554] rounded-lg border border-black text-lg"
@@ -112,7 +101,8 @@ const AccountSettings: React.FC = () => {
       {/* Update Password Popup */}
       {showUpdatePasswordPopup && (
         <UpdatePasswordPopup
-          onCancel={() => setShowUpdatePasswordPopup(false)}
+          onClose={() => setShowUpdatePasswordPopup(false)} // Close all popups
+          onGoBack={() => setShowUpdatePasswordPopup(false)} // Go back to this page
           onComplete={() => {
             setShowUpdatePasswordPopup(false);
             showMessage("Password was updated successfully");
