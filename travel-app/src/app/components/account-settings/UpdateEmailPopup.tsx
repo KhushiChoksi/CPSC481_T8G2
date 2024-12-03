@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import CloseButton from "../CloseButton"; // Import the CloseButton component
+import { useAccount } from "../../context/AccountContext";
+import CloseButton from "../CloseButton";
 
 interface UpdateEmailPopupProps {
   onCancel: () => void;
@@ -12,9 +13,15 @@ const UpdateEmailPopup: React.FC<UpdateEmailPopupProps> = ({
   onCancel,
   onComplete,
 }) => {
+  const { updateEmail } = useAccount(); // Get the updateEmail method from context
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleConfirm = () => {
     if (!email || !confirmEmail) {
@@ -25,34 +32,30 @@ const UpdateEmailPopup: React.FC<UpdateEmailPopupProps> = ({
       setErrorMessage("Email addresses do not match.");
       return;
     }
+    if (!isValidEmail(email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
 
-    // Reset error message and call onComplete
     setErrorMessage("");
+    updateEmail(email); // Update email in context
     onComplete();
   };
 
   return (
     <>
-      {/* Blur Effect */}
       <div style={styles.blurOverlay}></div>
-
-      {/* Modal */}
       <div style={styles.modalOverlay}>
         <div style={styles.modal}>
-          {/* Close Button */}
           <div style={styles.closeButtonContainer}>
             <CloseButton
-              onClick={onCancel} // Close the popup
+              onClick={onCancel}
               ariaLabel="Close Update Email Popup"
             />
           </div>
-
-          {/* Title */}
           <h1 style={styles.modalTitle}>
             Update Email<span style={styles.underline}></span>
           </h1>
-
-          {/* Input Fields */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Please enter your email:</label>
             <input
@@ -73,15 +76,9 @@ const UpdateEmailPopup: React.FC<UpdateEmailPopupProps> = ({
               placeholder="Confirm new email"
             />
           </div>
-
-          {/* Reserved Error Message Space */}
           <div style={styles.errorContainer}>
-            {errorMessage && (
-              <div style={styles.errorMessage}>{errorMessage}</div>
-            )}
+            {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
           </div>
-
-          {/* Confirm Button */}
           <div style={styles.modalButtonContainer}>
             <button style={styles.longConfirmButton} onClick={handleConfirm}>
               Confirm Email Update

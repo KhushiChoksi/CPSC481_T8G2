@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import CloseButton from "../CloseButton";
 import ResetPasswordPopup from "./ResetPasswordPopup";
+import { useAccount } from "../../context/AccountContext";
 
 interface UpdatePasswordPopupProps {
   onClose: () => void; // Close all popups
@@ -14,6 +15,7 @@ const UpdatePasswordPopup: React.FC<UpdatePasswordPopupProps> = ({
   onClose,
   onComplete,
 }) => {
+  const { updatePassword } = useAccount(); // Use the context function
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -21,6 +23,7 @@ const UpdatePasswordPopup: React.FC<UpdatePasswordPopupProps> = ({
   const [showResetPasswordPopup, setShowResetPasswordPopup] = useState(false);
 
   const handleConfirm = () => {
+    // Front-end validation
     if (!currentPassword || !newPassword || !confirmNewPassword) {
       setErrorMessage("All fields are required.");
       return;
@@ -30,8 +33,16 @@ const UpdatePasswordPopup: React.FC<UpdatePasswordPopupProps> = ({
       return;
     }
 
+    // Use the context to validate and update the password
+    const isSuccess = updatePassword(currentPassword, newPassword);
+    if (!isSuccess) {
+      setErrorMessage("Current password is incorrect.");
+      return;
+    }
+
+    // Close popup and let the main page handle success messages
     setErrorMessage("");
-    onComplete();
+    onComplete(); // Notify parent component of successful update
   };
 
   if (showResetPasswordPopup) {
@@ -39,7 +50,6 @@ const UpdatePasswordPopup: React.FC<UpdatePasswordPopupProps> = ({
       <ResetPasswordPopup
         onClose={onClose}
         onGoBack={() => setShowResetPasswordPopup(false)}
-        onComplete={onComplete}
         redirectTo="/account-settings"
       />
     );
@@ -109,9 +119,7 @@ const UpdatePasswordPopup: React.FC<UpdatePasswordPopupProps> = ({
 
           {/* Error Message */}
           <div style={styles.errorContainer}>
-            {errorMessage && (
-              <div style={styles.errorMessage}>{errorMessage}</div>
-            )}
+            {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
           </div>
 
           {/* Confirm Button */}

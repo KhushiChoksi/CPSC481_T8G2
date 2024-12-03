@@ -7,9 +7,11 @@ import UpdateEmailPopup from "../components/account-settings/UpdateEmailPopup";
 import UpdatePasswordPopup from "../components/account-settings/UpdatePasswordPopup";
 import BackButton from "../components/BackButton";
 import { useRouter } from "next/navigation";
+import { useAccount } from "../context/AccountContext"; // Import the AccountContext
 
 const AccountSettings: React.FC = () => {
   const router = useRouter();
+  const { account } = useAccount(); // Access the account details from the context
   const [showUpdateEmailPopup, setShowUpdateEmailPopup] = useState(false);
   const [showUpdatePasswordPopup, setShowUpdatePasswordPopup] = useState(false);
   const [successMessage, setSuccessMessage] = useState(""); // For displaying success messages
@@ -17,6 +19,11 @@ const AccountSettings: React.FC = () => {
   const showMessage = (message: string) => {
     setSuccessMessage(message);
     setTimeout(() => setSuccessMessage(""), 3000); // Clear the message after 3 seconds
+  };
+
+  // Helper to truncate text if it's too long
+  const truncateText = (text: string) => {
+    return text.length > 30 ? `${text.slice(0, 27)}...` : text;
   };
 
   return (
@@ -29,7 +36,7 @@ const AccountSettings: React.FC = () => {
         {/* Header with Back Arrow and Title */}
         <div className="flex flex-col items-start w-full max-w-md">
           <div className="flex items-center mb-2">
-            <BackButton title="Account" />
+            <BackButton title="Account Settings" />
           </div>
 
           {/* Success Message Container */}
@@ -44,10 +51,23 @@ const AccountSettings: React.FC = () => {
 
         {/* Content Section */}
         <div className="w-full max-w-md flex flex-col items-start mb-8 pt-10">
+          {/* User Name */}
+          <div className="w-full mb-4 flex flex-col items-start px-4">
+            <label
+              className="block text-lg text-black mb-2"
+              title={`${account.firstName} ${account.lastName}`} // Show full name on hover
+            >
+              User: {truncateText(account.firstName)} {truncateText(account.lastName)}
+            </label>
+          </div>
+
           {/* Current Email Address */}
-          <div className="w-full mb-6 flex flex-col items-start mt-10 px-4">
-            <label className="block text-lg text-black mb-2">
-              Current email address: example@ucalgary.ca
+          <div className="w-full mb-6 flex flex-col items-start mt-4 px-4">
+            <label
+              className="block text-lg text-black mb-2"
+              title={account.email} // Show full email on hover
+            >
+              Current email address: {truncateText(account.email)}
             </label>
             <button
               type="button"

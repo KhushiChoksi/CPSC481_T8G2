@@ -5,32 +5,55 @@ import SuccessPopup from "../SuccessPopup";
 import CloseButton from "../CloseButton";
 import BackButtonPopup from "../BackButtonPopup";
 import { useRouter } from "next/navigation";
+import { useAccount } from "../../context/AccountContext"; // Context to update password
 
 interface ResetPasswordPopupProps {
   onClose: () => void; // Close all popups
   onGoBack: () => void; // Go back to the previous popup
-  onComplete: () => void; // Callback after reset flow
   redirectTo: string; // Determines where to navigate after success
 }
 
 const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
   onClose,
   onGoBack,
-  onComplete,
   redirectTo,
 }) => {
+  const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [step, setStep] = useState<"inputEmail" | "emailSent">("inputEmail");
   const router = useRouter();
+  const { resetPassword } = useAccount(); // Use context to update the password
+
+  const handleConfirm = () => {
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      setErrorMessage("Email cannot be empty.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setErrorMessage("Invalid email address.");
+      return;
+    }
+
+    // Clear errors and proceed to the success step
+    setErrorMessage("");
+    setStep("emailSent");
+  };
 
   if (step === "emailSent") {
     return (
       <SuccessPopup
         title="Reset Password"
         subtitle="Please check your email for password reset instructions."
+        errorMessage="We do not have email capabilities at this time. Your password was reset to 'password'."
         buttonText="Continue"
         onGetStarted={() => {
-          onComplete();
-          router.push(redirectTo);
+          resetPassword("password"); // Reset password to 'password'
+          onClose(); // Close the popup
+          router.push(redirectTo); // Navigate to the account settings page
         }}
       />
     );
@@ -65,15 +88,23 @@ const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
           {/* Input Field */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Please enter your e-mail:</label>
-            <input type="text" style={styles.input} />
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={styles.input}
+              placeholder="Enter your email address"
+            />
+          </div>
+
+          {/* Error Message */}
+          <div style={styles.errorContainer}>
+            {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
           </div>
 
           {/* Confirm Button */}
           <div style={styles.modalButtonContainer}>
-            <button
-              style={styles.longConfirmButton}
-              onClick={() => setStep("emailSent")}
-            >
+            <button style={styles.longConfirmButton} onClick={handleConfirm}>
               Confirm Reset Password
             </button>
           </div>
@@ -170,6 +201,17 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     backgroundColor: "#FFFFFF",
+  },
+  errorContainer: {
+    width: "100%",
+    height: "0rem", // Reserve space for the error message
+    display: "flex",
+    justifyContent: "flex-start", // Aligns error message to match input alignment
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   modalButtonContainer: {
     width: "100%",
