@@ -5,138 +5,197 @@ import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import Topbar from "../components/Topbar";
 import { IoIosArrowBack } from "react-icons/io";
-import FilterBar from "../components/FilterBar";
-import RestaurantCard from "../components/RestaurantCard";
+import { FilterBar } from "../components/FilterBar";
+
+
+type Restaurant = {
+  name: string;
+  description: string;
+  address: string;
+  imageUrl: string;
+  cuisine: string;
+  price: string;
+  reservation: string[];
+};
+
+const restaurants: Restaurant[] = [
+  {
+    name: "Cactus Club Cafe",
+    description: "Fine casual dining restaurant offering the best in global cuisine.",
+    address: "101 3 Ave SW",
+    imageUrl: "/images/cactus.jpg",
+    cuisine: "International",
+    price: "$$",
+    reservation: [],
+  },
+  {
+    name: "Osmows",
+    description: "A casual Mediterranean restaurant that offers a halal collection.",
+    address: "890 32 Ave NW",
+    imageUrl: "/images/osm.jpg",
+    cuisine: "Mediterranean",
+    price: "$",
+    reservation: ["Halal"],
+  },
+  {
+    name: "Ryuko",
+    description: "Fine Dining Japanese kitchen and bar with a mix of tradition and modernity.",
+    address: "45 12 Ave SW",
+    imageUrl: "/images/ryuko.jpg",
+    cuisine: "Japanese",
+    price: "$$$",
+    reservation: [],
+  },
+  {
+    name: "Kinjo",
+    description: "A casual restaurant where a lot of people can meet up. Offers gluten-free options.",
+    address: "990 64 Ave NW",
+    imageUrl: "/images/kinjo.jpg",
+    cuisine: "Japanese",
+    price: "$",
+    reservation: ["Gluten Free"],
+  },
+];
 
 export default function RestaurantsPage() {
-  const router = useRouter();
-
-  // Restaurant data
-  const restaurants = [
-    {
-      id: 1,
-      imageSrc: "/images/cactus.jpg",
-      title: "Cactus Club Cafe",
-      description: "Fine casual dining restaurant offering the best in global cuisine.",
-      cuisine: "International",
-      tags: [],
-      price: "$$",
-    },
-    {
-      id: 2,
-      imageSrc: "/images/osm.jpg",
-      title: "Osmows",
-      description: "A casual Mediterranean restaurant that offers a halal collection.",
-      cuisine: "Mediterranean",
-      tags: ["Halal"],
-      price: "$",
-    },
-    {
-      id: 3,
-      imageSrc: "/images/ryuko.jpg",
-      title: "Ryuko",
-      description: "Fine Dining Japanese kitchen and bar with a mix of tradition and modernity.",
-      cuisine: "Japanese",
-      tags: [],
-      price: "$$$",
-    },
-    {
-      id: 4,
-      imageSrc: "/images/Kinjo.jpg",
-      title: "Kinjo",
-      description: "A casual restaurant where a lot of people can meet up. Offers gluten free options.",
-      cuisine: "Japanese",
-      tags: ["Gluten Free"],
-      price: "$",
-    },
-  ];
-
-  // Filter state
-  const [filters, setFilters] = useState({
-    cuisine: "", // "Japanese", "Mediterranean"
-    price: "", // "$", "$$", "$$$"
-    regulation: "", // "Halal", "Gluten Free"
-    
+  const [activeFilters, setActiveFilters] = useState({
+    cuisine: [] as string[],
+    price: [] as string[],
+    reservation: [] as string[],
   });
 
-  // Function to handle filter changes
-  const handleFilterChange = (filterType: string, value: string) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterType]: value,
-    }));
+  const handleFilterChange = (filterType: "cuisine" | "price" | "reservation", value: string) => {
+    setActiveFilters((prev) => {
+      const isActive = prev[filterType].includes(value);
+      const updatedFilters = isActive
+        ? prev[filterType].filter((item) => item !== value)
+        : [...prev[filterType], value];
+
+      return { ...prev, [filterType]: updatedFilters };
+    });
   };
 
-  // Filtered restaurants based on the selected filters
+  const handleFilterReset = (filterType: "cuisine" | "price" | "reservation") => {
+    setActiveFilters((prev) => ({ ...prev, [filterType]: [] }));
+  };
+
   const filteredRestaurants = restaurants.filter((restaurant) => {
     const matchesCuisine =
-      filters.cuisine === "" || restaurant.cuisine === filters.cuisine;
-    const matchesRegulation =
-      filters.regulation === "" || restaurant.tags.includes(filters.regulation);
-    const matchesPrice = filters.price === "" || restaurant.price === filters.price;
+      activeFilters.cuisine.length === 0 || activeFilters.cuisine.includes(restaurant.cuisine);
+    const matchesPrice =
+      activeFilters.price.length === 0 || activeFilters.price.includes(restaurant.price);
+    const matchesReservation =
+      activeFilters.reservation.length === 0 ||
+      activeFilters.reservation.some((r) => restaurant.reservation.includes(r));
 
-    return matchesCuisine && matchesRegulation && matchesPrice;
+    return matchesCuisine && matchesPrice && matchesReservation;
   });
-
-  const handleMenuClick = (restaurantId: number) => {
-    alert(`View menu for restaurant ID: ${restaurantId}`);
-  };
 
   return (
     <div>
       <Topbar />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          padding: "10px 20px",
-          marginTop: "60px",
-        }}
-      >
-        <button
-          onClick={() => router.back()}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            border: "none",
-            cursor: "pointer",
-            marginRight: "10px",
-          }}
-        >
-          <IoIosArrowBack style={{ fontSize: "20px", color: "#333" }} />
-        </button>
-        <span style={{ fontSize: "30px", fontWeight: "bold", color: "#333" }}>
-          Restaurants
-        </span>
-      </div>
+      <div style={{ marginTop: "75px", marginLeft: "20px" }}>
+          <h2
+            style={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              color: "#000",
+              marginBottom: "10px",
+            }}
+          >
+            Restaurants:
+          </h2>
+        </div>
 
-      
-      <FilterBar onFilterChange={handleFilterChange} />
+      <FilterBar
+        activeFilters={activeFilters}
+        onFilterChange={handleFilterChange}
+        onFilterReset={handleFilterReset}
+      />
 
-     
       <SearchBar />
 
-      
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "20px",
-          padding: "20px",
-        }}
-      >
-        {filteredRestaurants.map((restaurant) => (
-          <RestaurantCard
-            key={restaurant.id}
-            imageSrc={restaurant.imageSrc}
-            title={restaurant.title}
-            description={restaurant.description}
-            onButtonClick={() => handleMenuClick(restaurant.id)}
-          />
+      <div style={{ padding: "20px" }}>
+        {filteredRestaurants.map((restaurant, index) => (
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              backgroundColor: "#e5f2ff",
+              borderRadius: "15px",
+              marginBottom: "20px",
+              overflow: "hidden",
+              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+              position: "relative",
+              color: "black",
+            }}
+          >
+            <div style={{ position: "relative", flexShrink: "0" }}>
+              <img
+                src={restaurant.imageUrl}
+                alt={restaurant.name}
+                style={{
+                  width: "150px",
+                  height: "200px",
+                  objectFit: "cover",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "10px",
+                  left: "5px",
+                  right: "5px",
+                  backgroundColor: "#fff",
+                  padding: "5px 10px",
+                  borderRadius: "10px",
+                  fontSize: "0.8rem",
+                  textAlign: "center",
+                }}
+              >
+                {restaurant.address}
+              </div>
+            </div>
+            <div
+              style={{
+                paddingLeft: "20px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                <h3
+                  style={{
+                    fontSize: "1.5rem",
+                    fontWeight: "bold",
+                    marginBottom: "5px",
+                  }}
+                >
+                  {restaurant.name}
+                </h3>
+                <p style={{ color: "#5a5a5a", paddingRight: "10px" }}>
+                  {restaurant.description}
+                </p>
+              </div>
+              <button
+                style={{
+                  alignSelf: "flex-end",
+                  marginRight: "10px",
+                  marginBottom: "10px",
+                  padding: "10px 20px",
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                  backgroundColor: "#007bff",
+                  color: "#fff",
+                  cursor: "pointer",
+                }}
+              >
+                Menu
+              </button>
+            </div>
+          </div>
         ))}
       </div>
 
@@ -144,6 +203,5 @@ export default function RestaurantsPage() {
     </div>
   );
 }
-
 
 
