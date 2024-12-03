@@ -6,7 +6,7 @@ import SearchBar from "../components/SearchBar";
 import Topbar from "../components/Topbar";
 import { IoIosArrowBack } from "react-icons/io";
 import { FilterBar } from "../components/FilterBar";
-
+import BackButton from "../components/BackButton";
 
 type Restaurant = {
   name: string;
@@ -95,16 +95,7 @@ export default function RestaurantsPage() {
     <div>
       <Topbar />
       <div style={{ marginTop: "75px", marginLeft: "20px" }}>
-          <h2
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              color: "#000",
-              marginBottom: "10px",
-            }}
-          >
-            Restaurants:
-          </h2>
+      <div className='mt-20 px-4'> <BackButton title='Restaurants'/> </div>
         </div>
 
       <FilterBar
