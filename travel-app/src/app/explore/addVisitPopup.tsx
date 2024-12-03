@@ -6,9 +6,13 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 type Suggestion = {
   title: string;
+  description: string;
   address: string;
   timeOpen: string;
   visitDate: string;
+  booked: boolean;
+  timeStart: string;
+  timeEnd: string;
 };
 interface PopupModalProps {
   isOpen: boolean;
@@ -26,10 +30,12 @@ const PopupModal: React.FC<PopupModalProps> = ({
   const [selectedTime, setSelectedTime] = useState<string | null>('12:00');
 
   const handleAddToSchedule = () => {
-    if (selectedSuggestion && selectedDate instanceof Date) {
-      // Format the date as desired, e.g., "YYYY/MM/DD"
+    if (selectedSuggestion && selectedDate instanceof Date && selectedTime) {
       const formattedDate = selectedDate.toLocaleDateString('en-CA');
       selectedSuggestion.visitDate = formattedDate;
+      selectedSuggestion.timeStart = selectedTime;
+      selectedSuggestion.timeEnd = selectedTime; // Changed endTime to selectedTime
+      selectedSuggestion.booked = true;
     }
     onClose();
   };
@@ -79,8 +85,10 @@ const PopupModal: React.FC<PopupModalProps> = ({
             >
               {selectedSuggestion.title}
             </h3>
+            <p style={{ marginBottom: "25px" }}>{`${selectedSuggestion.description}`}</p>
             <p>{`Location: ${selectedSuggestion.address}`}</p>
             <p>{`Time open: ${selectedSuggestion.timeOpen}`}</p>
+            
             </div>
             <div style={{ marginTop: "30px", textAlign: "center" }}>
               <button
@@ -122,12 +130,11 @@ const PopupModal: React.FC<PopupModalProps> = ({
           onBack={() => setShowDateTimePicker(false)}
           selectedSuggestion={selectedSuggestion}
           selectedDate={selectedDate}
-          selectedTime={selectedTime}
           setSelectedDate={setSelectedDate}
-          setSelectedTime={setSelectedTime}
         />
       )}
     </>
   );
 };
+
 export default PopupModal;

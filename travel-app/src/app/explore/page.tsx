@@ -17,6 +17,8 @@ type Suggestion = {
   timeOpen: string;
   visitDate: string;
   booked: boolean;
+  timeStart: string;
+  timeEnd: string;
 };
 
 // Suggestions data array with the correct type
@@ -30,7 +32,9 @@ const suggestions: Suggestion[] = [
     category: "Sights",
     timeOpen: "9 a.m. - 9 p.m.",
     visitDate: "",
-    booked: false
+    booked: false,
+    timeStart: "",
+    timeEnd: "",
   },
   {
     id: 13,
@@ -41,7 +45,9 @@ const suggestions: Suggestion[] = [
     category: "Parks",
     timeOpen: "5 a.m. - 11 p.m.",
     visitDate: "",
-    booked: false
+    booked: false,
+    timeStart: "",
+    timeEnd: "",
   },
   {
     id: 14,
@@ -52,7 +58,9 @@ const suggestions: Suggestion[] = [
     category: "Sights",
     timeOpen: "Open 24/7",
     visitDate: "",
-    booked: false
+    booked: false,
+    timeStart: "",
+    timeEnd: "",
   },
   {
     id: 15,
@@ -63,7 +71,9 @@ const suggestions: Suggestion[] = [
     category: "Museums",
     timeOpen: "9 a.m. - 5 p.m.",
     visitDate: "",
-    booked: false
+    booked: false,
+    timeStart: "",
+    timeEnd: "",
   },
   {
     id: 16,
@@ -74,7 +84,9 @@ const suggestions: Suggestion[] = [
     category: "Museums",
     timeOpen: "10 a.m. - 5 p.m.",
     visitDate: "",
-    booked: false
+    booked: false,
+    timeStart: "",
+    timeEnd: "",
   },
   {
     id: 17,
@@ -85,7 +97,9 @@ const suggestions: Suggestion[] = [
     category: "Parks",
     timeOpen: "5 a.m. - 11 p.m.",
     visitDate: "",
-    booked: false
+    booked: false,
+    timeStart: "",
+    timeEnd: "",
   }
 ];
 
@@ -226,14 +240,18 @@ export default function ExplorePage() {
               </div>
         
               <div style={{ marginTop: "10px", textAlign: "left" }}>
-                <h3
-                  style={{
-                    fontSize: "1.4rem",
-                    fontWeight: "bold",
-                    marginBottom: "5px",
-                  }}
-                >
+                <h3 style={{
+                  fontSize: "1.4rem",
+                  fontWeight: "bold",
+                  marginBottom: "5px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px"
+                }}>
                   {suggestion.title}
+                  {suggestion.booked && (
+                    <span style={{ color: "green", fontSize: "1.2rem" }}>✓</span>
+                  )}
                 </h3>
                 <p style={{ color: "#5a5a5a", fontSize: "1rem" }}>
                   {suggestion.description}

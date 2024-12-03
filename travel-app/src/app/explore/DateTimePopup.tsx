@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-// import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import TimeSelectionPopup from './TimeSelectionPopup';
 
@@ -12,6 +11,10 @@ type Suggestion = {
   title: string;
   address: string;
   timeOpen: string;
+  visitDate: string;
+  booked: boolean;
+  timeStart: string;
+  timeEnd: string;
 };
 
 interface DateTimePopupProps {
@@ -20,9 +23,7 @@ interface DateTimePopupProps {
   onBack: () => void;
   selectedSuggestion: Suggestion;
   selectedDate: Value;
-  selectedTime: string | null;
   setSelectedDate: (value: Value) => void;
-  setSelectedTime: (value: string | null) => void;
 }
 
 export default function DateTimePopup({
@@ -31,15 +32,13 @@ export default function DateTimePopup({
   onBack,
   selectedSuggestion,
   selectedDate,
-  selectedTime,
   setSelectedDate,
-  setSelectedTime,
 }: DateTimePopupProps) {
   if (!isOpen) return null;
 
   const [showTimeSelection, setShowTimeSelection] = useState<boolean>(false);
-const [startTime, setStartTime] = useState<string | null>('12:00');
-const [endTime, setEndTime] = useState<string | null>('13:00');
+  const [startTime, setStartTime] = useState<string | null>('12:00');
+  const [endTime, setEndTime] = useState<string | null>('13:00');
 
   return (
     <div style={{
@@ -61,10 +60,9 @@ const [endTime, setEndTime] = useState<string | null>('13:00');
         width: "95%",
         height: "80%",
         alignItems: "center",
-        flexDirection: "column",   // Add this
+        flexDirection: "column",
         justifyContent: "center"
       }}>
-
         <div style={{ marginTop: "20px", marginLeft: "20px" }}>
           <h2 style={{
             fontSize: "24px",
@@ -75,7 +73,6 @@ const [endTime, setEndTime] = useState<string | null>('13:00');
           }}>
             When would you like to visit {selectedSuggestion.title}?
           </h2>
-
           <div style={{
             marginBottom: "20px",
             display: "flex",
@@ -91,7 +88,6 @@ const [endTime, setEndTime] = useState<string | null>('13:00');
               value={selectedDate}
             />
           </div>
-
           <div style={{
             marginTop: "40px", 
             display: "flex", 
@@ -115,7 +111,6 @@ const [endTime, setEndTime] = useState<string | null>('13:00');
             >
               Confirm Date
             </button>
-            
             <button
               onClick={onBack}
               style={{
@@ -138,6 +133,7 @@ const [endTime, setEndTime] = useState<string | null>('13:00');
           onClose={onClose}
           onBack={() => setShowTimeSelection(false)}
           selectedSuggestion={selectedSuggestion}
+          selectedDate={selectedDate instanceof Date ? selectedDate : new Date()}
           startTime={startTime}
           endTime={endTime}
           setStartTime={setStartTime}
