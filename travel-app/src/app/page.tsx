@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import ResetPasswordPopupLogin from "./components/welcome-login/ResetPasswordPopupLogin";
 import CreateAccountModal from "./components/welcome-login/CreateAccountPopup";
-import Logo from "../app/components/Logo";
+import Logo from "./components/Logo";
 
 const WelcomeScreen: React.FC = () => {
   const [showResetPopup, setShowResetPopup] = useState(false); // For Reset Password Popup
@@ -71,12 +71,10 @@ const WelcomeScreen: React.FC = () => {
       {/* Reset Password Popup */}
       {showResetPopup && (
         <ResetPasswordPopupLogin
-          onCancel={() => setShowResetPopup(false)} // Close Reset Password Popup
-          onComplete={() => setShowResetPopup(false)} // Close and return to login screen
+          onClose={() => setShowResetPopup(false)} // Close Reset Password Popup
           redirectTo="/" // Redirect to the login page
         />
       )}
-
 
       {/* Create Account Popup */}
       {showCreateAccountPopup && (
