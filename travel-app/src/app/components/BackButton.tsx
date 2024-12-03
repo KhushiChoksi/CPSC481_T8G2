@@ -27,13 +27,13 @@ const BackButton: React.FC<BackButtonProps> = ({
     <button
       type="button"
       onClick={handleBackClick}
-      className="mr-2 pl-1 pr-2 border border-1 border-solid border-black"
+      className="mr-2 pl-1 pr-2 border border-1 border-solid border-black bg-white"
       aria-label={ariaLabel}
       title={title}
     >
       <FaArrowLeft className="text-4xl text-black h-6 w-6" />
     </button>
-    <h2 className="ml-2 text-2xl font-bold">{title}</h2>
+    <h2 className="ml-2 text-2xl text-black font-bold">{title}</h2>
     </div>
   );
 };
