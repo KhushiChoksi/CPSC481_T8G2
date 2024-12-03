@@ -5,9 +5,10 @@ type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 type Suggestion = {
-  name: string;
+  title: string;
   address: string;
   timeOpen: string;
+  visitDate: string;
 };
 interface PopupModalProps {
   isOpen: boolean;
@@ -23,6 +24,15 @@ const PopupModal: React.FC<PopupModalProps> = ({
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Value>(new Date());
   const [selectedTime, setSelectedTime] = useState<string | null>('12:00');
+
+  const handleAddToSchedule = () => {
+    if (selectedSuggestion && selectedDate instanceof Date) {
+      // Format the date as desired, e.g., "YYYY/MM/DD"
+      const formattedDate = selectedDate.toLocaleDateString('en-CA');
+      selectedSuggestion.visitDate = formattedDate;
+    }
+    onClose();
+  };
 
   if (!isOpen || !selectedSuggestion) return null;
 
@@ -45,11 +55,11 @@ const PopupModal: React.FC<PopupModalProps> = ({
         >
           <div
             style={{
-              backgroundColor: "#aaa",
+              backgroundColor: "#A5B6C2",
               borderRadius: "10px",
               padding: "20px",
-              width: "90%",
-              height: "70%",
+              width: "95%",
+              height: "80%",
               maxWidth: "none",
               display: "flex",
               flexDirection: "column",
@@ -67,7 +77,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
                 marginBottom: "10px",
               }}
             >
-              {selectedSuggestion.name}
+              {selectedSuggestion.title}
             </h3>
             <p>{`Location: ${selectedSuggestion.address}`}</p>
             <p>{`Time open: ${selectedSuggestion.timeOpen}`}</p>
@@ -77,7 +87,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
                 onClick={() => setShowDateTimePicker(true)}
                 style={{
                   padding: "15px 30px",
-                  backgroundColor: "#007bff",
+                  backgroundColor: "#003554",
                   color: "#fff",
                   border: "none",
                   borderRadius: "8px",
@@ -94,7 +104,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
                 style={{
                   marginTop: "15px",
                   textDecoration: "underline",
-                  color: "#000",
+                  color: "#003554",
                   cursor: "pointer",
                   fontSize: "1rem",
                   fontWeight: "bold",
@@ -108,7 +118,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
       ) : (
         <DateTimePopup
           isOpen={showDateTimePicker}
-          onClose={onClose}
+          onClose={handleAddToSchedule}
           onBack={() => setShowDateTimePicker(false)}
           selectedSuggestion={selectedSuggestion}
           selectedDate={selectedDate}
@@ -120,5 +130,4 @@ const PopupModal: React.FC<PopupModalProps> = ({
     </>
   );
 };
-
 export default PopupModal;

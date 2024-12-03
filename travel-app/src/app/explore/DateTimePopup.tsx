@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import TimePicker from 'react-time-picker';
+// import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
+import TimeSelectionPopup from './TimeSelectionPopup';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 type Suggestion = {
-  name: string;
+  title: string;
   address: string;
   timeOpen: string;
 };
@@ -36,56 +37,113 @@ export default function DateTimePopup({
 }: DateTimePopupProps) {
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[1000]">
-      <div className="bg-bg-lightblue rounded-lg p-8 w-[90%] max-w-2xl">
-        <div className="flex flex-col gap-6">
-          {/* Header */}
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-darkblue mb-2">
-              Select Visit Date and Time
-            </h2>
-            <p className="text-gray-600">
-              When would you like to visit {selectedSuggestion.name}?
-            </p>
-          </div>
+  const [showTimeSelection, setShowTimeSelection] = useState<boolean>(false);
+const [startTime, setStartTime] = useState<string | null>('12:00');
+const [endTime, setEndTime] = useState<string | null>('13:00');
 
-          {/* Calendar */}
-          <div className="bg-white rounded-lg p-4 shadow-md">
+  return (
+    <div style={{
+      position: "fixed",
+      top: "0",
+      left: "0",
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1000,
+    }}>
+      <div style={{
+        backgroundColor: "#A5B6C2",
+        borderRadius: "10px",
+        padding: "20px",
+        width: "95%",
+        height: "80%",
+        alignItems: "center",
+        flexDirection: "column",   // Add this
+        justifyContent: "center"
+      }}>
+
+        <div style={{ marginTop: "20px", marginLeft: "20px" }}>
+          <h2 style={{
+            fontSize: "24px",
+            fontWeight: "bold",
+            color: "#000",
+            marginBottom: "25px",
+            textAlign: "center",
+          }}>
+            When would you like to visit {selectedSuggestion.title}?
+          </h2>
+
+          <div style={{
+            marginBottom: "20px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            maxWidth: "350px",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+          }}>
             <Calendar
               onChange={(value: Value) => setSelectedDate(value)}
               value={selectedDate}
-              className="mx-auto"
             />
           </div>
 
-          {/* Time Picker */}
-          <div className="bg-white rounded-lg p-4 shadow-md">
-            <TimePicker
-              onChange={(value: string | null) => setSelectedTime(value)}
-              value={selectedTime}
-              className="mx-auto"
-            />
-          </div>
-
-          {/* Buttons */}
-          <div className="flex flex-col gap-3">
+          <div style={{
+            marginTop: "40px", 
+            display: "flex", 
+            flexDirection: "column", 
+            alignItems: "center",
+            width: "100%",
+            maxWidth: "350px",
+            gap: "15px"
+          }}>
             <button
-              onClick={onClose}
-              className="bg-darkblue text-white py-3 px-6 rounded-lg font-semibold hover:bg-opacity-90 transition-all"
+              onClick={() => setShowTimeSelection(true)}
+              style={{
+                backgroundColor: "#003554",
+                color: "white",
+                padding: "15px 30px",
+                borderRadius: "8px",
+                fontWeight: "bold",
+                border: "none",
+                cursor: "pointer",
+              }}
             >
-              Add to Schedule
+              Confirm Date
             </button>
             
             <button
               onClick={onBack}
-              className="text-darkblue font-semibold hover:underline"
+              style={{
+                color: "#003554",
+                fontWeight: "bold",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
             >
               Back
             </button>
           </div>
         </div>
       </div>
+      {showTimeSelection && (
+        <TimeSelectionPopup
+          isOpen={showTimeSelection}
+          onClose={onClose}
+          onBack={() => setShowTimeSelection(false)}
+          selectedSuggestion={selectedSuggestion}
+          startTime={startTime}
+          endTime={endTime}
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+        />
+      )}
     </div>
   );
 }

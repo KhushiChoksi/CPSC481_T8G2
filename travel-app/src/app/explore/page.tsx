@@ -8,63 +8,84 @@ import PopupModal from "./addVisitPopup";
 
 // Define the type for a suggestion object
 type Suggestion = {
-  name: string;
+  id: number;
+  title: string;
   description: string;
   address: string;
   imageUrl: string;
   category: string;
   timeOpen: string;
+  visitDate: string;
+  booked: boolean;
 };
 
 // Suggestions data array with the correct type
 const suggestions: Suggestion[] = [
   {
-    name: "Calgary Tower",
+    id: 12,
+    title: "Calgary Tower",
     description: "The Calgary Tower is a 190.8-metre free standing observation tower.",
     address: "101 9 Ave SW",
     imageUrl: "/images/Calgary_Tower.jpg",
     category: "Sights",
-    timeOpen: "9 a.m. - 9 p.m."
+    timeOpen: "9 a.m. - 9 p.m.",
+    visitDate: "",
+    booked: false
   },
   {
-    name: "Bowness Park",
+    id: 13,
+    title: "Bowness Park",
     description: "Bowness Park is a scenic Calgary park with seasonal boating and skating.",
     address: "8900 48 Ave NW",
     imageUrl: "/images/Bowness_Park.jpg",
     category: "Parks",
-    timeOpen: "5 a.m. - 11 p.m."
+    timeOpen: "5 a.m. - 11 p.m.",
+    visitDate: "",
+    booked: false
   },
   {
-    name: "Peace Bridge",
+    id: 14,
+    title: "Peace Bridge",
     description: "Peace Bridge is a bridge across the Bow River. The bridge was designed by Spanish architect Santiago Calatrava",
     address: "916 Memorial Dr NW",
     imageUrl: "/images/peace_bridge.jpg",
     category: "Sights",
-    timeOpen: "Open 24/7"
+    timeOpen: "Open 24/7",
+    visitDate: "",
+    booked: false
   },
   {
-    name: "Calgary Zoo",
+    id: 15,
+    title: "Calgary Zoo",
     description: "Home to a wide array of animals and habitats, including a prominent penguin facility.",
     address: "1300 Zoo Rd NE",
     imageUrl: "/images/calgary_zoo.jpg",
     category: "Museums",
-    timeOpen: "9 a.m. - 5 p.m."
+    timeOpen: "9 a.m. - 5 p.m.",
+    visitDate: "",
+    booked: false
   },
   {
-    name: "Glenbow Museum",
+    id: 16,
+    title: "Glenbow Museum",
     description: "Explore art and history with a vast collection of cultural artifacts and international exhibitions",
     address: "130 9 Ave SE",
     imageUrl: "/images/glenbow_museum.jpg",
     category: "Museums",
-    timeOpen: "10 a.m. - 5 p.m."
+    timeOpen: "10 a.m. - 5 p.m.",
+    visitDate: "",
+    booked: false
   },
   {
-    name: "Prince's Island Park",
+    id: 17,
+    title: "Prince's Island Park",
     description: "A green oasis in downtown Calgary offering trails, wetlands, and spaces for outdoor events",
     address: "698 Eau Claire Ave SW",
     imageUrl: "/images/prince_park.jpg",
     category: "Parks",
-    timeOpen: "5 a.m. - 11 p.m."
+    timeOpen: "5 a.m. - 11 p.m.",
+    visitDate: "",
+    booked: false
   }
 ];
 
@@ -152,63 +173,69 @@ export default function ExplorePage() {
               onClick={() => handleSuggestionClick(suggestion)}
               style={{
                 display: "flex",
-                flexDirection: "row",
-                backgroundColor: "#e5f2ff",
+                flexDirection: "column",
+                backgroundColor: "#edf2ff",
                 borderRadius: "15px",
                 marginBottom: "20px",
-                overflow: "hidden",
+                padding: "15px",
                 boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-                position: "relative",
                 color: "black",
                 cursor: "pointer",
+                position: "relative",
               }}
             >
-              <div style={{ position: "relative", flexShrink: "0" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <img
                   src={suggestion.imageUrl}
-                  alt={suggestion.name}
+                  alt={suggestion.title}
                   style={{
-                    width: "150px",
-                    height: "200px",
-                    objectFit: "cover",
+                    width: "180px",
+                    height: "180px",
+                    borderRadius: "5px",
+                    marginRight: "10px",
                   }}
                 />
-                {suggestion.address && (
-                  <div
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    backgroundColor: "#f7f7f7",
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                    padding: "5px 10px",
+                    fontSize: "0.8rem",
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    maxWidth: "calc(100% - 220px)", // Ensures it fits within the box width minus image space
+                  }}
+                >
+                  <span style={{ fontSize: "1.2rem", color: "#4a90e2" }}>📍</span>
+                  <span
                     style={{
-                      position: "absolute",
-                      bottom: "10px",
-                      left: "5px",
-                      right: "5px",
-                      backgroundColor: "#fff",
-                      padding: "5px 10px",
-                      borderRadius: "10px",
-                      fontSize: "0.8rem",
-                      textAlign: "center",
+                      overflowWrap: "break-word",
+                      wordBreak: "break-word",
+                      whiteSpace: "normal", // Allow wrapping
                     }}
                   >
                     {suggestion.address}
-                  </div>
-                )}
+                  </span>
+                </div>
               </div>
-              <div
-                style={{
-                  paddingLeft: "20px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
+        
+              <div style={{ marginTop: "10px", textAlign: "left" }}>
                 <h3
                   style={{
-                    fontSize: "1.5rem",
+                    fontSize: "1.4rem",
                     fontWeight: "bold",
                     marginBottom: "5px",
                   }}
                 >
-                  {suggestion.name}
+                  {suggestion.title}
                 </h3>
-                <p style={{ color: "#5a5a5a", paddingRight: "10px" }}>
+                <p style={{ color: "#5a5a5a", fontSize: "1rem" }}>
                   {suggestion.description}
                 </p>
               </div>
