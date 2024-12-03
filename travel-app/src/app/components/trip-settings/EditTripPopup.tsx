@@ -123,8 +123,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   backButtonContainer: {
     position: "absolute",
-    top: "21px",
-    left: "34px",
+    top: "11px",
+    left: "30px",
     zIndex: 1100,
   },
   closeButtonContainer: {
