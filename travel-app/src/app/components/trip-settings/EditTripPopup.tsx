@@ -123,8 +123,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   backButtonContainer: {
     position: "absolute",
-    top: "21px",
-    left: "34px",
+    top: "11px",
+    left: "30px",
     zIndex: 1100,
   },
   closeButtonContainer: {
@@ -175,6 +175,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "0.75rem",
     fontSize: "1rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+    color: "#000000", // Ensure the hex value has the '#' prefix
+    backgroundColor: "#FFFFFF", // Explicitly set the background color for clarity
     borderRadius: "5px",
     border: "1px solid #000000",
     marginBottom: "1.5rem",
