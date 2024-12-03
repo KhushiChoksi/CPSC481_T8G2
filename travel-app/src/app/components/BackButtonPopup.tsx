@@ -19,11 +19,20 @@ const BackButtonPopup: React.FC<BackButtonPopupProps> = ({
       <button
         type="button"
         onClick={onClick}
-        className="mr-2 pl-1 pr-2 border border-1 border-solid border-black"
+        className="mr-2 pl-1 pr-2 text-black"
         aria-label={ariaLabel}
         title={title}
+        style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          padding: "0.5rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <FaArrowLeft className="text-4xl text-black h-6 w-6" />
+        <FaArrowLeft size="1.8rem" style={{ color: "black" }} />
       </button>
       <h2 className="ml-2 text-2xl font-bold">{title}</h2>
     </div>

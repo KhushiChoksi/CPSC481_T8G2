@@ -161,8 +161,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   backButtonContainer: {
     position: "absolute",
-    top: "20px",
-    left: "25px",
+    top: "10px", // was 20
+    left: "20px", // was 25
     zIndex: 1100,
   },
   closeButtonContainer: {
@@ -204,6 +204,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: "#FFFFFF",
     border: "1px solid #000000",
     cursor: "pointer",
+    color: "#000000"
   },
   removeIcon: {
     color: "#FF0000",
@@ -215,6 +216,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginLeft: "1rem",
     marginRight: "1rem",
     textAlign: "left",
+    color: "#000000"
   },
   editIcon: {
     color: "#000000",

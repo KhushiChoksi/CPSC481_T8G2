@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import ManageTripsPopup from "./ManageTripsPopup";
 import CloseButton from "../CloseButton";
-import BackButtonPopup from "../BackButtonPopup";
 import { useTrip } from "../../context/TripContext";
 import { FaInfinity } from "react-icons/fa";
 
@@ -16,7 +15,6 @@ interface AddedTripsPopupProps {
 
 const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
   onClose,
-  onGoBack,
   selectedTrip,
   onTripChange,
 }) => {
@@ -29,13 +27,6 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
       {!showManageTrips && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
-            {/* Back Button */}
-            <div style={styles.backButtonContainer}>
-              <BackButtonPopup
-                onClick={onGoBack}
-                ariaLabel="Go Back from Added Trips"
-              />
-            </div>
 
             {/* Close Button */}
             <div style={styles.closeButtonContainer}>
@@ -64,11 +55,17 @@ const AddedTripsPopup: React.FC<AddedTripsPopupProps> = ({
                     style={styles.radioInput}
                   />
                   <div style={styles.tripDetails}>
-                    <span>{trip.name}</span>
+                    <span style={styles.text}>{trip.name}</span>
                     <br />
-                    <span>
+                    <span style={styles.text}>
                       {trip.dates.includes(" - ") && trip.dates.endsWith(" - ") ? (
-                        <span style={{ display: "inline-flex", alignItems: "center" }}>
+                        <span
+                          style={{
+                            ...styles.text,
+                            display: "inline-flex",
+                            alignItems: "center",
+                          }}
+                        >
                           {trip.dates.split(" - ")[0]} -{" "}
                           <FaInfinity
                             style={{
@@ -145,12 +142,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     overflowY: "auto",
     boxSizing: "border-box",
   },
-  backButtonContainer: {
-    position: "absolute",
-    top: "20px",
-    left: "25px",
-    zIndex: 1100, // Ensure it's above other content
-  },
   closeButtonContainer: {
     position: "absolute",
     top: "10px",
@@ -191,6 +182,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: "#FFFFFF",
     border: "1px solid #000000",
     cursor: "pointer",
+    color: "#000000",
   },
   radioInput: {
     marginRight: "1.69rem",
@@ -198,6 +190,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   tripDetails: {
     flex: 1,
     textAlign: "left",
+    color: "#000000",
   },
   buttonContainer: {
     width: "100%",
@@ -216,6 +209,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
+  },
+  text: {
+    color: "#000000", // General text color
   },
 };
 
