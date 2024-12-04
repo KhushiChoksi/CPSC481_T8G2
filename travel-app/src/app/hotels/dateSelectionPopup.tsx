@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Calendar, { CalendarProps } from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Ensures base styles are loaded
+import "react-calendar/dist/Calendar.css"; 
 
 type DateSelectionPopupProps = {
   isOpen: boolean;
@@ -120,7 +120,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginBottom: "1rem",
   },
   modalTitle: {
-    fontSize: "2.5rem",
+    fontSize: "1.8rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
   },
