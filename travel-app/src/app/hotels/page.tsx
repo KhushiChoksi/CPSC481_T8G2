@@ -4,119 +4,189 @@ import SearchBar from "../components/SearchBar";
 import Topbar from "../components/Topbar";
 import BackButton from "../components/BackButton";
 import { useState } from "react";
+import PopupModal from "./addHotelPopup";
+import DateSelectionPopup from "./dateSelectionPopup"; 
 
 
 
 export default function HotelsPage() {
-  const [showPopup, setShowPopup] = useState(false);
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null); // Explicit type for selected Hotel
+  const [isDatePopupOpen, setIsDatePopupOpen] = useState(false); // State for date popup
 
-  const handleButtonClick = () => {
-      setShowPopup(true); // Show popup when button is clicked
+  const handleHotelClick = (hotel: Hotel) => {
+    setSelectedHotel(hotel); // Open with Selected Hotel
   };
 
-  const handleClosePopup = () => {
-      setShowPopup(false); // Close popup
+  const closeModal = () => {
+    setSelectedHotel(null); // Close the modal
+  };
+  const handleOpenDatePopup = () => {
+    setIsDatePopupOpen(true); // Open date selection popup
   };
 
-    // current hotel data
-    const hotels = [
-      {
-        name: "Comfort Inn & Suites",
-        description:
-          "With an indoor pool and hot tub, only 5 minutes' drive away from the airport.",
-        location: "147 Freeport Crescent Northeast, Calgary",
-        imgSrc: "/images/hotel1.jpg",
-        booked: false,
-      },
-      {
-        name: "Hilton Garden Inn",
-        description:
-          "Featuring a rooftop hot tub, this hotel is close to downtown attractions.",
-        location: "711 4th St. S.E., Calgary",
-        imgSrc: "/images/hotel2.jpg",
-        booked: false,
-      },
+  const handleCloseDatePopup = () => {
+    setIsDatePopupOpen(false); // Close date selection popup
+  };
 
-    ];
+  const handleSelectDates = (startDate: string, endDate: string) => {
+    if (selectedHotel) {
+      setSelectedHotel({
+        ...selectedHotel,
+        visitDate: `${startDate} to ${endDate}`, // Save visit date in selectedHotel
+      });
+    }
+  };
 
-    return (
-      <div className="min-h-screen bg-lightblue px-4 pt-6">
-        <Topbar/>
+  type Hotel = {
+    id: number;
+    title: string;
+    description: string;
+    address: string;
+    imageUrl: string;
+    visitDate: string;
+    timeStart: string;
+    timeEnd: string;
+    booked: boolean;
+  };
 
-        <div className="flex items-center mt-12">
-                <BackButton 
-                    title="Hotels" 
-                />
-        </div>
-        <div className="mt-2">
-          <button
-            onClick={handleButtonClick}
-            className="border-2 border-black rounded-full px-3 py-1 flex items-center shadow-md hover:shadow-lg transition text-sm"
-          >
-            <span className="mr-1 text-black">📅</span> 
-            <span className="text-black">Select Dates for Stay</span>
-          </button>
-        </div>
+  const hotels: Hotel[] = [
+    {
+      id: 1,
+      title: "Comfort Inn & Suites",
+      description:
+        "With an indoor pool and hot tub, only 5 minutes' drive away from the airport.",
+      address: "147 Freeport Crescent Northeast, Calgary",
+      imageUrl: "/images/hotel1.jpg",
+      visitDate: "",
+      timeStart: "",
+      timeEnd: "",
+      booked: false,
+    },
+    {
+      id: 2,
+      title: "Hilton Garden Inn",
+      description:
+        "Featuring a rooftop hot tub, this hotel is close to downtown attractions.",
+      address: "711 4th St. S.E., Calgary",
+      imageUrl: "/images/hotel2.jpg",
+      visitDate: "",
+      timeStart: "",
+      timeEnd: "",
+      booked: false,
+    },
+  ];
 
-        <div className="mt">
+  return (
+    <div className="min-h-screen bg-lightblue px-4 pt-6">
+      <Topbar />
+
+      <div className="flex items-center mt-12">
+        <BackButton title="Hotels" />
+      </div>
+
+      <div className="mt-2">
+        <button 
+          onClick={handleOpenDatePopup}
+          className="border-2 border-black rounded-full px-3 py-1 flex items-center shadow-md hover:shadow-lg transition text-sm">
+          <span className="mr-1 text-black">📅</span>
+          <span className="text-black">Select Dates for Stay</span>
+        </button>
+      </div>
+
+      <div className="mt">
         <SearchBar />
-        </div>
+      </div>
 
-        <div className="mt-6 overflow-y-auto max-h-[60vh] bg-white rounded-lg shadow-md p-4">
+      <div style={{ padding: "20px" }}>
         {hotels.map((hotel, index) => (
           <div
             key={index}
-            className="bg-lightblue mb-4 p-4 rounded-lg shadow flex flex-col"
+            onClick={() => handleHotelClick(hotel)}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#e5f2ff",
+              borderRadius: "15px",
+              marginBottom: "20px",
+              padding: "15px",
+              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+              color: "black",
+              cursor: "pointer",
+              position: "relative",
+            }}
           >
-            <div className="flex">
+            <div style={{ display: "flex", alignItems: "center" }}>
               <img
-                src={hotel.imgSrc}
-                alt={hotel.name}
-                className="w-32 h-32 rounded-lg object-cover"
+                src={hotel.imageUrl}
+                alt={hotel.title}
+                style={{
+                  width: "180px",
+                  height: "180px",
+                  borderRadius: "5px",
+                  marginRight: "10px",
+                }}
               />
-              <div className="ml-auto bg-white px-3 rounded-lg shadow-md text-sm text-gray-700 flex items-center">
-                <span>{hotel.location}</span>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  backgroundColor: "#f7f7f7",
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  padding: "5px 10px",
+                  fontSize: "0.8rem",
+                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  maxWidth: "calc(100% - 220px)",
+                }}
+              >
+                <span style={{ fontSize: "1rem", color: "#4a90e2" }}>📍</span>
+                <span
+                  style={{
+                    overflowWrap: "break-word",
+                    wordBreak: "break-word",
+                    whiteSpace: "normal",
+                  }}
+                >
+                  {hotel.address}
+                </span>
               </div>
             </div>
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold text-gray-800">
-                {hotel.name}
+
+            <div style={{ marginTop: "10px", textAlign: "left" }}>
+              <h3
+                style={{
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                  marginBottom: "5px",
+                }}
+              >
+                {hotel.title}
               </h3>
-              <p className="text-sm text-gray-600">{hotel.description}</p>
+              <p style={{ color: "#5a5a5a", fontSize: "0.9rem" }}>
+                {hotel.description}
+              </p>
             </div>
           </div>
         ))}
       </div>
-        {showPopup && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-md">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">DATE SELECTION</h2>
 
-              <p className="text-gray-600 mb-6 text-center">Please select your dates of stay below.</p>
+      <PopupModal
+        isOpen={!!selectedHotel}
+        onClose={closeModal}
+        selectedHotel={selectedHotel}
+      />
 
-              <div className="flex justify-between mt-6">
-                <button
-                  onClick={handleClosePopup}
-                  className="bg-transparent text-gray-700 px-4 py-2 rounded-md border border-gray-400 hover:bg-gray-100 transition"
-                >
-                  Go Back
-                </button>
+      <DateSelectionPopup
+        isOpen={isDatePopupOpen}
+        onClose={handleCloseDatePopup}
+        onSelectDates={handleSelectDates}
+      />
 
-                <button
-                  onClick={() => {
-                    handleClosePopup();
-                  }}
-                  className="bg-darkblue text-white px-4 py-2 rounded-md border border-gray-400 hover:bg-gray-100 transition"
-                >
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-
-        <Navbar/>
-      </div>
-    );
+      <Navbar />
+    </div>
+  );
 }
