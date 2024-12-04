@@ -6,22 +6,27 @@ import DepartureDetailsModal from "../DepartureDatePopup";
 import SuccessPopup from "../SuccessPopup";
 import CloseButton from "../CloseButton";
 import { useRouter } from "next/navigation";
+import { useTrip } from "../../context/TripContext";
+import { useAccount } from "../../context/AccountContext";
 
 interface CreateAccountModalProps {
   onClose: () => void; // Function to close the entire modal flow
 }
 
 const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
+  const { createAccount } = useAccount();
+  const { addTrip } = useTrip();
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState<
-    "account" | "arrival" | "departure" | "success"
-  >("account");
+
+  const [currentStep, setCurrentStep] = useState<"account" | "arrival" | "departure" | "success">("account");
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [arrivalDate, setArrivalDate] = useState<Date | null>(null); // Arrival date state
+  const [departureDate, setDepartureDate] = useState<Date | null>(null); // Departure date state
   const [errorMessage, setErrorMessage] = useState("");
 
   const validateAccountDetails = () => {
@@ -58,7 +63,10 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
       <TravelDetailsModal
         onClose={onClose}
         onGoBack={() => setCurrentStep("account")}
-        onContinue={() => setCurrentStep("departure")}
+        onContinue={(date) => {
+          setArrivalDate(date); // Save arrival date
+          setCurrentStep("departure");
+        }}
       />
     );
   }
@@ -68,7 +76,10 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
       <DepartureDetailsModal
         onClose={onClose}
         onGoBack={() => setCurrentStep("arrival")}
-        onContinue={() => setCurrentStep("success")}
+        onContinue={(date) => {
+          setDepartureDate(date); // Save departure date
+          setCurrentStep("success");
+        }}
       />
     );
   }
@@ -79,7 +90,20 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
         title="Success!"
         subtitle="Your account was successfully created."
         buttonText="Get Started"
-        onGetStarted={() => router.push("/home")}
+        onGetStarted={() => {
+          createAccount({
+            firstName,
+            lastName,
+            email,
+            password,
+          });
+          addTrip({
+            name: "My Trip",
+            dates: `${arrivalDate?.toISOString().split("T")[0]} - ${departureDate?.toISOString().split("T")[0]}`,
+          });
+
+          router.push("/home");
+        }}
       />
     );
   }

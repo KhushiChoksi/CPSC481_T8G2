@@ -46,7 +46,7 @@ const WelcomeScreen: React.FC = () => {
         {/* Welcome Header */}
         <h1 className="text-3xl md:text-4xl font-bold text-black text-center mt-8 mb-8">
           Welcome!
-          <span className="block w-full h-1 bg-black mt-2"></span>
+          <span className="block w-full h-1 bg-black mt-0"></span>
         </h1>
 
         {/* Input Section */}
