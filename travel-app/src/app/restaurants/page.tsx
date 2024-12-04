@@ -40,16 +40,19 @@ const restaurants: Restaurant[] = [
     cuisine: "International",
     price: "$$",
     reservation: [],
-    timeOpen: "9am - 9pm",
+    timeOpen: "9am - 12am",
     booked: false,
     visitDate: "",
     timeStart: "",
     timeEnd: "",
     id: 1,
     menu: [
-      { name: "Caesar Salad", price: "$12.99" },
+      { name: "Spaghetti Portifino", price: "$20.99" },
       { name: "Grilled Salmon", price: "$25.99" },
-      { name: "Steak Sandwich", price: "$22.99" },
+      { name: "Steak Fries", price: "$22.99" },
+      { name: "Truffle Fries", price: "$12.99"},
+      { name: "Tuna stack", price: "$21.99"},
+      { name: "Teriyaki Chicken Bowl", price: "$23.99"}
     ],
 
   },
@@ -68,9 +71,10 @@ const restaurants: Restaurant[] = [
     timeEnd: "",
     id: 2,
     menu: [
-      { name: "Caesar Salad", price: "$12.99" },
-      { name: "Grilled Salmon", price: "$25.99" },
-      { name: "Steak Sandwich", price: "$22.99" },
+      { name: "Caesar Salad", price: "$5.99" },
+      { name: "Chicken Shwarama", price: "$10.99" },
+      { name: "The Med Bowl", price: "$15.99" },
+      { name: "Chicken on the rocks", price: "$12.99"}
     ],
   },
   {
@@ -88,9 +92,11 @@ const restaurants: Restaurant[] = [
     timeEnd: "",
     id: 3,
     menu: [
-      { name: "Caesar Salad", price: "$12.99" },
-      { name: "Grilled Salmon", price: "$25.99" },
-      { name: "Steak Sandwich", price: "$22.99" },
+      { name: "Premium Nigiri Set", price: "$50.99" },
+      { name: "Surf and Turf Roll", price: "$25.99" },
+      { name: "Rolls Royce", price: "$48.99" },
+      { name: "Truffle Fries", price: "$12.99"},
+      { name: "Premuim Sashimi Set", price: "$85.99"}
     ],
   },
   {
@@ -101,7 +107,7 @@ const restaurants: Restaurant[] = [
     cuisine: "Japanese",
     price: "$",
     reservation: ["Gluten Free"],
-    timeOpen: "9am - 9pm",
+    timeOpen: "10am - 12am",
     booked: false,
     visitDate: "",
     timeStart: "",
@@ -121,6 +127,7 @@ export default function RestaurantsPage() {
     price: [] as string[],
     reservation: [] as string[],
   });
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null); // For the selected restaurant
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false); // For popup visibility
   
@@ -143,6 +150,9 @@ export default function RestaurantsPage() {
     setSelectedRestaurant(restaurant); // Set the selected restaurant
     setIsMenuPopupOpen(true); // Open the popup
   };
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query.trim().toLowerCase());
+  };
 
   const closeMenuPopup = () => {
     setIsMenuPopupOpen(false); // Close the popup
@@ -157,12 +167,20 @@ export default function RestaurantsPage() {
     const matchesReservation =
       activeFilters.reservation.length === 0 ||
       activeFilters.reservation.some((r) => restaurant.reservation.includes(r));
+    const matchesSearch =
+      searchQuery === "" || restaurant.title.toLowerCase().includes(searchQuery);
 
-    return matchesCuisine && matchesPrice && matchesReservation;
+    return matchesCuisine && matchesPrice && matchesReservation && matchesSearch;
   });
 
   return (
     <div>
+      <div
+        style={{
+          filter: selectedRestaurant ? "blur(px)" : "none",
+          pointerEvents: selectedRestaurant ? "none" : "auto",
+        }}
+        ></div>
       <Topbar />
       <div style={{ marginTop: "75px", marginLeft: "20px" }}>
       <div className='mt-20 px-4'> <BackButton title='Restaurants'/> </div>
@@ -174,7 +192,7 @@ export default function RestaurantsPage() {
         onFilterReset={handleFilterReset}
       />
 
-      <SearchBar />
+      <SearchBar onSearchChange={handleSearchChange} />
 
       <div style={{ padding: "20px" }}>
         {filteredRestaurants.map((restaurant, index) => (
