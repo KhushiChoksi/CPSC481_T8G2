@@ -164,7 +164,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "1rem",
+    marginBottom: "0.6rem",
   },
   errorMessage: {
     color: "red",

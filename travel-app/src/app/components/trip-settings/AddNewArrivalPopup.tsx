@@ -169,7 +169,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "0rem",
+    marginBottom: "0.6rem",
   },
   errorMessage: {
     color: "red",
