@@ -4,56 +4,114 @@ import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import Topbar from "../components/Topbar";
-import { IoIosArrowBack } from "react-icons/io";
 import { FilterBar } from "../components/FilterBar";
 import BackButton from "../components/BackButton";
+import { timeEnd } from "console";
+import MenuPopup from "./components/MenuPopup";
+
+type MenuItem = {
+  name: string;
+  price: string;
+};
 
 type Restaurant = {
-  name: string;
+  id:number;
+  title: string;
   description: string;
   address: string;
   imageUrl: string;
   cuisine: string;
   price: string;
   reservation: string[];
+  booked: boolean;
+  menu: MenuItem[];
+  timeOpen: string;
+  visitDate: string;
+  timeStart:string;
+  timeEnd: string;
 };
 
 const restaurants: Restaurant[] = [
   {
-    name: "Cactus Club Cafe",
+    title: "Cactus Club Cafe",
     description: "Fine casual dining restaurant offering the best in global cuisine.",
     address: "101 3 Ave SW",
     imageUrl: "/images/cactus.jpg",
     cuisine: "International",
     price: "$$",
     reservation: [],
+    timeOpen: "9am - 9pm",
+    booked: false,
+    visitDate: "",
+    timeStart: "",
+    timeEnd: "",
+    id: 1,
+    menu: [
+      { name: "Caesar Salad", price: "$12.99" },
+      { name: "Grilled Salmon", price: "$25.99" },
+      { name: "Steak Sandwich", price: "$22.99" },
+    ],
+
   },
   {
-    name: "Osmows",
+    title: "Osmows",
     description: "A casual Mediterranean restaurant that offers a halal collection.",
     address: "890 32 Ave NW",
     imageUrl: "/images/osm.jpg",
     cuisine: "Mediterranean",
     price: "$",
     reservation: ["Halal"],
+    timeOpen: "9am - 9pm",
+    booked: false,
+    visitDate: "",
+    timeStart: "",
+    timeEnd: "",
+    id: 2,
+    menu: [
+      { name: "Caesar Salad", price: "$12.99" },
+      { name: "Grilled Salmon", price: "$25.99" },
+      { name: "Steak Sandwich", price: "$22.99" },
+    ],
   },
   {
-    name: "Ryuko",
+    title: "Ryuko",
     description: "Fine Dining Japanese kitchen and bar with a mix of tradition and modernity.",
     address: "45 12 Ave SW",
     imageUrl: "/images/ryuko.jpg",
     cuisine: "Japanese",
     price: "$$$",
     reservation: [],
+    timeOpen: "9am - 9pm",
+    booked: false,
+    visitDate: "",
+    timeStart: "",
+    timeEnd: "",
+    id: 3,
+    menu: [
+      { name: "Caesar Salad", price: "$12.99" },
+      { name: "Grilled Salmon", price: "$25.99" },
+      { name: "Steak Sandwich", price: "$22.99" },
+    ],
   },
   {
-    name: "Kinjo",
+    title: "Kinjo",
     description: "A casual restaurant where a lot of people can meet up. Offers gluten-free options.",
     address: "990 64 Ave NW",
     imageUrl: "/images/kinjo.jpg",
     cuisine: "Japanese",
     price: "$",
     reservation: ["Gluten Free"],
+    timeOpen: "9am - 9pm",
+    booked: false,
+    visitDate: "",
+    timeStart: "",
+    timeEnd: "",
+    id: 4,
+    menu: [
+      { name: "Caesar Salad", price: "$12.99" },
+      { name: "Grilled Salmon", price: "$25.99" },
+      { name: "Steak Sandwich", price: "$22.99" },
+    ],
   },
 ];
 
@@ -63,6 +121,9 @@ export default function RestaurantsPage() {
     price: [] as string[],
     reservation: [] as string[],
   });
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null); // For the selected restaurant
+  const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false); // For popup visibility
+  
 
   const handleFilterChange = (filterType: "cuisine" | "price" | "reservation", value: string) => {
     setActiveFilters((prev) => {
@@ -77,6 +138,15 @@ export default function RestaurantsPage() {
 
   const handleFilterReset = (filterType: "cuisine" | "price" | "reservation") => {
     setActiveFilters((prev) => ({ ...prev, [filterType]: [] }));
+  };
+  const handleMenuClick = (restaurant: Restaurant) => {
+    setSelectedRestaurant(restaurant); // Set the selected restaurant
+    setIsMenuPopupOpen(true); // Open the popup
+  };
+
+  const closeMenuPopup = () => {
+    setIsMenuPopupOpen(false); // Close the popup
+    setSelectedRestaurant(null); // Clear the selected restaurant
   };
 
   const filteredRestaurants = restaurants.filter((restaurant) => {
@@ -125,7 +195,7 @@ export default function RestaurantsPage() {
             <div style={{ position: "relative", flexShrink: "0" }}>
               <img
                 src={restaurant.imageUrl}
-                alt={restaurant.name}
+                alt={restaurant.title}
                 style={{
                   width: "150px",
                   height: "200px",
@@ -164,13 +234,14 @@ export default function RestaurantsPage() {
                     marginBottom: "5px",
                   }}
                 >
-                  {restaurant.name}
+                  {restaurant.title}
                 </h3>
                 <p style={{ color: "#5a5a5a", paddingRight: "10px" }}>
                   {restaurant.description}
                 </p>
               </div>
               <button
+                onClick={() => handleMenuClick(restaurant)}
                 style={{
                   alignSelf: "flex-end",
                   marginRight: "10px",
@@ -189,6 +260,11 @@ export default function RestaurantsPage() {
           </div>
         ))}
       </div>
+      <MenuPopup
+        isOpen={isMenuPopupOpen}
+        onClose={closeMenuPopup}
+        selectedRestaurant={selectedRestaurant}
+      />
 
       <Navbar />
     </div>
