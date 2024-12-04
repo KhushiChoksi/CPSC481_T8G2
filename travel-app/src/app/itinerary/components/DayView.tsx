@@ -14,6 +14,8 @@ import RemoveEventConfirmation from './RemoveEventConfirmation';
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
 import "../../globals.css";
 
+import eventsData from '../../data/events.json';
+
 interface Event {
   id: string;
   title: string;
@@ -22,11 +24,14 @@ interface Event {
   extendedProps: {
     address?: string;
   };
+  booked?: boolean;
 }
 
 const DayView = ({ isEditing }: { isEditing: boolean }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eventToDelete, setEventToDelete] = useState<Event | null >(null);
+  const [events, setEvents] = useState<Event[]>([]); // Initialize as empty array
+
 
   const [currentDate, setCurrentDate] = useState(new Date());     // initial date as today
   const calendarRef = useRef<Calendar | null>(null);
@@ -79,23 +84,55 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
   }, []);
   
 
+  // ------------------ IGNORE this code for now
+  // const [events, setEvents] = useState([
+  //   {
+  //     id: '1',
+  //     title: 'Calgary Tower',
+  //     start: '2024-12-01T09:00:00',
+  //     end: '2024-12-01T10:00:00',
+  //     extendedProps: {address: '101 9 Ave SW, Calgary, AB T2P 1J9'},
+  //   },
+  //   {
+  //     id: '2',
+  //     title: 'Kinjo Sushi',
+  //     start: '2024-12-01T12:00:00',
+  //     end: '2024-12-01T12:30:00',
+  //     extendedProps : {address: '300 8 Ave SW, Calgary, AB T2P 1C6'},
+  //   },
+  // ]);
+
+
+  // useEffect(() => {
+  //   // Load events and filter by `booked: true`
+  //   const filteredEvents = eventsData.filter((event) => event.booked);
+  //   setEvents(filteredEvents);
+  // }, []);
+  // ------------------ IGNORE this code for now
+
+  // fetch events from a static JSON file and filter based on booked status
+  const fetchAndFilterEvents = async () => {
+    try {
+      const response = await fetch('data/events.json');
+      const data = await response.json();
+      const filteredEvents = data.filter((event: Event) => event.booked);
+      setEvents(filteredEvents);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
+  useEffect(() => {
+    // Initial fetch of events data
+    fetchAndFilterEvents();
+
+    const intervalId = setInterval(fetchAndFilterEvents, 10000); // Poll every 10 seconds
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []); // Empty dependency array to run only once on mount
   
-  const [events, setEvents] = useState([
-    {
-      id: '1',
-      title: 'Calgary Tower',
-      start: '2024-12-01T09:00:00',
-      end: '2024-12-01T10:00:00',
-      extendedProps: {address: '101 9 Ave SW, Calgary, AB T2P 1J9'},
-    },
-    {
-      id: '2',
-      title: 'Kinjo Sushi',
-      start: '2024-12-01T12:00:00',
-      end: '2024-12-01T12:30:00',
-      extendedProps : {address: '300 8 Ave SW, Calgary, AB T2P 1C6'},
-    },
-  ]);
 
   const handleDeleteEvent = (eventId: string, eventTitle: string) => {
     // setEventToDelete({ id: eventId, title: eventTitle });
@@ -153,7 +190,17 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
         initialDate={currentDate}
         ref={calendarRef}        
 
-        events={events}
+        // events={events}
+        events={ events.map(({ id, title, start, end, extendedProps }) => ({
+            id,
+            title,
+            start: start || undefined,
+            end: end || undefined,
+            extendedProps: {
+              address: extendedProps?.address,
+            },
+          }))
+        }
         eventContent={(eventInfo) =>
           renderEventContent(eventInfo, isEditing, handleDeleteEvent)
         }
