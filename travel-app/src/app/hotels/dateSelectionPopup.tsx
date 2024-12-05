@@ -27,12 +27,19 @@ export default function DateSelectionPopup({
 
   const handleConfirm = () => {
     if (selectedDates[0] && selectedDates[1]) {
-      const startDate = selectedDates[0].toISOString().split("T")[0];
+      const adjustedStartDate = new Date(selectedDates[0]);
+      adjustedStartDate.setDate(adjustedStartDate.getDate() + 1);
+      const startDate = adjustedStartDate.toISOString().split("T")[0];
+  
       const endDate = selectedDates[1].toISOString().split("T")[0];
+  
       onSelectDates(startDate, endDate);
       onClose();
     }
   };
+  
+  
+  
 
   if (!isOpen) return null;
 
@@ -45,41 +52,50 @@ export default function DateSelectionPopup({
 
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="relative flex flex-col justify-between w-[96vw] h-[90vh] bg-[#A5B6C2] p-6 rounded-2xl border border-black">
+      <div className="relative flex flex-col justify-between w-[95%] h-[80%] bg-[#A5B6C2] p-6 rounded-2xl border border-black">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-black text-3xl hover:text-gray-600"
+          className="absolute top-4 right-4 text-black text-4xl hover:text-gray-600 cursor-pointer"
           aria-label="Close"
         >
-          &times;
+          ×
         </button>
 
         {/* Title */}
-        <div className="text-left mb-4">
-          <h2 className="text-med text-gray-600">Date Selection</h2>
-          <div className="text-lg font-bold mt-2 text-black">
-            <p>{formattedDates}</p>
-          </div>
+        <div className="text-center">
+          <h1 className="text-3xl text-black underline underline-offset-4 decoration-2 mb-4">
+            Date Selection
+          </h1>
+          <p className="text-lg text-black">
+            Select the dates for your stay below.
+          </p>
+        </div>
+
+        {/* Formatted Dates */}
+        <div className="text-center mt-2">
+          <p className="text-md font-semibold text-black">
+            {formattedDates}
+          </p>
         </div>
 
         {/* Calendar */}
-        <div className="flex justify-center items-center w-full max-w-lg border border-gray-300 rounded-lg bg-transparent p-4">
+        <div className="flex justify-center items-center w-full mt-4">
           <Calendar
             selectRange
             value={selectedDates}
             onChange={handleDateChange}
-            className="react-calendar"
+            className="react-calendar border border-black rounded-lg shadow-sm"
           />
         </div>
 
         {/* Confirm Button */}
-        <div className="mt-auto flex justify-center">
+        <div className="mt-6 flex justify-center">
           <button
             onClick={handleConfirm}
-            className="bg-[#003554] text-white px-8 py-4 text-lg rounded-lg hover:bg-[#002a42] border border-black"
+            className="bg-[#003554] text-white px-8 py-3 text-lg font-semibold rounded-lg hover:bg-[#002a42] transition duration-300 border border-black"
           >
-            Confirm
+            Confirm Dates
           </button>
         </div>
       </div>

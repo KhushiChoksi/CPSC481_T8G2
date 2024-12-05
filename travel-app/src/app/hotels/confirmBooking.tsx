@@ -37,8 +37,8 @@ export default function confirmBooking({
       <div
         className="shadow-lg flex flex-col justify-between relative"
         style={{
-          width: "96vw",
-          height: "90vh",
+          width: "95%",
+          height: "80%",
           backgroundColor: "#A5B6C2",
           padding: "25px",
           borderRadius: "20px",
@@ -97,7 +97,7 @@ export default function confirmBooking({
           </div>
         </div>
 
-        <div className="mt-auto flex justify-center pt-8">
+        <div className="mt-auto flex justify-end pt-8">
           <button
             onClick={handleConfirmBooking}
             className="bg-[#003554] text-white px-8 py-4 text-lg rounded-lg hover:bg-[#002a42]"

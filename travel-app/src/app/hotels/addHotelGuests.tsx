@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import ConfirmBooking from "./confirmBooking"; 
 
+
 type AddHotelGuestsProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -44,8 +45,8 @@ export default function AddHotelGuests({
         <div
           className="shadow-lg flex flex-col justify-between relative"
           style={{
-            width: "96vw",
-            height: "90vh",
+            width: "95%",
+            height: "80%",
             backgroundColor: "#A5B6C2",
             padding: "25px",
             borderRadius: "20px",

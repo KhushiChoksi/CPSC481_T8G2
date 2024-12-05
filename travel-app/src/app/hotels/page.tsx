@@ -11,7 +11,6 @@ export default function HotelsPage() {
   const [isDatePopupOpen, setIsDatePopupOpen] = useState(false);
   const [selectedDates, setSelectedDates] = useState<string>("");
   const [buttonColor, setButtonColor] = useState<string>("bg-[#ADD8E6]");
-  const [isBooked, setIsBookedState] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>(""); 
   const [showDateWarning, setShowDateWarning] = useState(false);
 
@@ -39,7 +38,6 @@ export default function HotelsPage() {
       visitdate: selectedDates,
     };
     setSelectedHotel(updatedHotel);
-    setIsBookedState(hotel.booked);
   };
 
   const closeModal = () => {
@@ -268,7 +266,12 @@ export default function HotelsPage() {
       </div>
 
 
-      <div style={{ padding: "20px" }}>
+      <div style={{
+          display: "flex",
+          flexDirection: "column", // Keeps the cards stacked vertically
+          alignItems: "center", // Centers cards horizontally
+          padding: "20px",
+        }}>
         {filteredHotels.map((hotel) => (
           <div
             key={hotel.id}
@@ -277,9 +280,11 @@ export default function HotelsPage() {
               display: "flex",
               flexDirection: "column",
               backgroundColor: "#e5f2ff",
+              width: "110%", 
+    
               borderRadius: "15px",
-              marginBottom: "20px",
-              padding: "15px",
+              marginBottom: "10px",
+              padding: "1rem",
               boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
               color: "black",
               cursor: "pointer",
@@ -396,7 +401,6 @@ export default function HotelsPage() {
         isOpen={!!selectedHotel}
         onClose={closeModal}
         selectedHotel={selectedHotel}
-        setIsBooked={setIsBookedState}
         onHotelBooked={handleHotelBooked}
         />
 

@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import AddHotelGuests from "./addHotelGuests";
-import { Dispatch, SetStateAction } from "react";
 
 
 type PopupModalProps = {
@@ -16,21 +15,18 @@ type PopupModalProps = {
     booked:boolean;
   } | null;
   onHotelBooked: () => void;
-  setIsBooked: Dispatch<SetStateAction<boolean>>; // Update type here
 };
 
 export default function PopupModal({
   isOpen,
   onClose,
   selectedHotel,
-  setIsBooked,
   onHotelBooked,
 }: PopupModalProps) {
   const [showGuestsPopup, setShowGuestsPopup] = useState(false); 
   const handleConfirm = () => {
     setShowGuestsPopup(true); // Open guests popup
     if (selectedHotel) {
-      setIsBooked(true);
       onHotelBooked();
     }
   };
@@ -52,8 +48,8 @@ export default function PopupModal({
         <div
           className="shadow-lg flex flex-col justify-between relative"
           style={{
-            width: "96vw",
-            height: "90vh",
+            width: "95%",
+            height: "80%",
             backgroundColor: "#A5B6C2",
             padding: "25px",
             borderRadius: "20px",
