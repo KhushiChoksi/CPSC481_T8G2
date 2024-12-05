@@ -1,6 +1,5 @@
 "use client";
 import Navbar from "../components/Navbar";
-import SearchBar from "../components/SearchBar";
 import Topbar from "../components/Topbar";
 import BackButton from "../components/BackButton";
 import { useState } from "react";
@@ -13,6 +12,9 @@ export default function HotelsPage() {
   const [selectedDates, setSelectedDates] = useState<string>("");
   const [buttonColor, setButtonColor] = useState<string>("bg-[#ADD8E6]");
   const [isBooked, setIsBookedState] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>(""); 
+  const [showDateWarning, setShowDateWarning] = useState(false);
+
 
   const handleHotelBooked = () => {
     if (selectedHotel) {
@@ -24,7 +26,14 @@ export default function HotelsPage() {
     }
   };
 
+  
+
   const handleHotelClick = (hotel: Hotel) => {
+    if (!selectedDates) {
+      setShowDateWarning(true); // Show warning
+      setTimeout(() => setShowDateWarning(false), 3000); // Hide warning after 3 seconds
+      return;
+    }
     const updatedHotel = {
       ...hotel,
       visitdate: selectedDates,
@@ -85,6 +94,8 @@ export default function HotelsPage() {
     timeStart: string;
     timeEnd: string;
     booked: boolean;
+    accessible: boolean;
+    pets: boolean; 
   };
 
   const [hotels, setHotels] = useState<Hotel[]>([
@@ -99,6 +110,8 @@ export default function HotelsPage() {
       timeStart: "",
       timeEnd: "",
       booked: false,
+      accessible: true,
+      pets: true,
     },
     {
       id: 2,
@@ -111,8 +124,69 @@ export default function HotelsPage() {
       timeStart: "",
       timeEnd: "",
       booked: false,
+      accessible: true,
+      pets: true,
+    },
+    {
+      id: 3,
+      title: "Fairfield by Marriott Calgary",
+      description:
+        "A modern hotel offering a fitness center and complimentary breakfast.",
+      address: "239 12th Ave SW, Calgary",
+      imageUrl: "/images/hotel3.jpg",
+      visitdate: "",
+      timeStart: "",
+      timeEnd: "",
+      booked: false,
+      accessible: false,
+      pets: true,
+    },
+    {
+      id: 4,
+      title: "The Westin Calgary",
+      description:
+        "Luxury accommodations in downtown Calgary with an on-site spa.",
+      address: "320 4th Ave SW, Calgary",
+      imageUrl: "/images/hotel4.jpg",
+      visitdate: "",
+      timeStart: "",
+      timeEnd: "",
+      booked: false,
+      accessible: true,
+      pets: false,
+    },
+    {
+      id: 5,
+      title: "Sandman Signature Airport Hotel",
+      description:
+        "Conveniently located near the airport, with spacious rooms and dining options.",
+      address: "25 Hopewell Way NE, Calgary",
+      imageUrl: "/images/hotel5.jpg",
+      visitdate: "",
+      timeStart: "",
+      timeEnd: "",
+      booked: false,
+      accessible: true,
+      pets: false,
+    },
+    {
+      id: 6,
+      title: "Hyatt Place",
+      description:
+        "Stylish and comfortable hotel in Calgary’s Beltline district.",
+      address: "1455 5th Street SW, Calgary",
+      imageUrl: "/images/hotel6.jpg",
+      visitdate: "",
+      timeStart: "",
+      timeEnd: "",
+      booked: false,
+      accessible: false,
+      pets: true,
     },
   ]);
+    const filteredHotels = hotels.filter((hotel) =>
+      hotel.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   return (
     <div className="min-h-screen bg-lightblue px-4 pt-6">
@@ -121,7 +195,7 @@ export default function HotelsPage() {
         <BackButton title="Hotels" />
       </div>
 
-      <div className="mt-2">
+      <div className="mt-2 relative">
         <button
           onClick={handleOpenDatePopup}
           className={`border-2 border-black rounded-full px-3 py-1 flex items-center shadow-md hover:shadow-lg transition text-sm ${buttonColor}`}
@@ -143,14 +217,59 @@ export default function HotelsPage() {
             </>
           )}
         </button>
+        {showDateWarning && (
+          <div
+            style={{
+              position: "absolute",
+              top: "100%",
+              left: "0",
+              marginTop: "5px",
+              padding: "5px 10px",
+              backgroundColor: "#e5f2ff",
+              color: "#003554", 
+              border: "1px solid #003554",
+              borderRadius: "5px",
+              fontSize: "0.85rem",
+              whiteSpace: "nowrap",
+              boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            Please select a date before booking.
+          </div>
+        )}
       </div>
 
-      <div className="mt">
-        <SearchBar />
+
+
+      {/* Custom Search Bar */}
+      <div style={{ padding: "20px", textAlign: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Search for hotels..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{
+              width: "90%",
+              padding: "10px",
+              fontSize: "16px",
+              borderRadius: "20px",
+              border: "2px solid #252F40",
+              color: "#000",
+            }}
+          />
+        </div>
       </div>
+
 
       <div style={{ padding: "20px" }}>
-        {hotels.map((hotel) => (
+        {filteredHotels.map((hotel) => (
           <div
             key={hotel.id}
             onClick={() => handleHotelClick(hotel)}
@@ -207,6 +326,44 @@ export default function HotelsPage() {
                 </span>
               </div>
             </div>
+            <div style={{ display: "flex", marginTop: "8px", gap: "10px" }}>
+            {hotel.accessible && (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img
+                  src="/images/accessibility.png"
+                  alt="Accessible"
+                  style={{ width: "24px", height: "24px", marginRight: "5px" }}
+                />
+                <span
+                  style={{
+                    fontSize: "1.4rem",
+                    fontWeight:"bold",
+                    color: "navy", // Dark navy blue color for the checkmark
+                  }}
+                >
+                  ✓
+                </span>
+              </div>
+            )}
+            {hotel.pets && (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img
+                  src="/images/paw.png"
+                  alt="Pets Allowed"
+                  style={{ width: "24px", height: "24px", marginRight: "5px" }}
+                />
+                <span
+                  style={{
+                    fontSize: "1.4rem",
+                    fontWeight:"bold",
+                    color: "navy", // Dark navy blue color for the checkmark
+                  }}
+                >
+                  ✓
+                </span>
+              </div>
+            )}
+          </div>
 
             <div style={{ marginTop: "10px", textAlign: "left" }}>
               <h3
