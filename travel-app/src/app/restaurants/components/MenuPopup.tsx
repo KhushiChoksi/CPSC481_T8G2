@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DateTimePopup from "./DateTimePopup";
 import CloseButton from "@/app/components/CloseButton";
-import BackButtonPopup from "@/app/components/BackButtonPopup";
+
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -37,8 +37,9 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
 }) => {
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Value>(new Date());
-  const [startTime, setStartTime] = useState<string | null>(null);
-  const [endTime, setEndTime] = useState<string | null>(null);
+  const [startTime] = useState<string | null>(null);
+  const [endTime] = useState<string | null>(null);
+ 
 
   const handleAddToSchedule = () => {
     if (selectedRestaurant && selectedDate instanceof Date && startTime && endTime) {
@@ -46,6 +47,7 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
       selectedRestaurant.visitDate = formattedDate;
       selectedRestaurant.timeStart = startTime;
       selectedRestaurant.timeEnd = endTime;
+      
       //selectedRestaurant.booked = true;
     }
     onClose(); // Close the modal

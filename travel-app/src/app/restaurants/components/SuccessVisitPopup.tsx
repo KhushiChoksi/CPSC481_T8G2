@@ -1,6 +1,6 @@
 import React from 'react';
 import CloseButton from '@/app/components/CloseButton';
-import BackButtonPopup from '@/app/components/BackButtonPopup';
+
 
 interface SuccessVisitPopupProps {
   isOpen: boolean;

@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; 
+ 
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import Topbar from "../components/Topbar";
 import { FilterBar } from "../components/FilterBar";
 import BackButton from "../components/BackButton";
-import { timeEnd } from "console";
+
 import MenuPopup from "./components/MenuPopup";
 
 type MenuItem = {
