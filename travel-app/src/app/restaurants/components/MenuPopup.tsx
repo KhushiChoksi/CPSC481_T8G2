@@ -1,7 +1,7 @@
-
 import React, { useState } from "react";
 import DateTimePopup from "./DateTimePopup";
 import CloseButton from "@/app/components/CloseButton";
+import BackButtonPopup from "@/app/components/BackButtonPopup";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -25,26 +25,29 @@ type Restaurant = {
 interface MenuPopupProps {
   isOpen: boolean;
   onClose: () => void;
+  //onGoBack: () => void;
   selectedRestaurant: Restaurant | null;
 }
 
 const MenuPopup: React.FC<MenuPopupProps> = ({
   isOpen,
   onClose,
+  //onGoBack,
   selectedRestaurant,
 }) => {
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Value>(new Date());
-  const [selectedTime, setSelectedTime] = useState<string | null>("12:00");
+  const [startTime, setStartTime] = useState<string | null>(null);
+  const [endTime, setEndTime] = useState<string | null>(null);
 
   const handleAddToSchedule = () => {
-    if (selectedRestaurant && selectedDate instanceof Date && selectedTime) {
-        const formattedDate = selectedDate.toLocaleDateString('en-CA');
-        selectedRestaurant.visitDate = formattedDate;
-        selectedRestaurant.timeStart = selectedTime;
-        selectedRestaurant.timeEnd = selectedTime; // Changed endTime to selectedTime
-        selectedRestaurant.booked = true;
-      }
+    if (selectedRestaurant && selectedDate instanceof Date && startTime && endTime) {
+      const formattedDate = selectedDate.toLocaleDateString("en-CA");
+      selectedRestaurant.visitDate = formattedDate;
+      selectedRestaurant.timeStart = startTime;
+      selectedRestaurant.timeEnd = endTime;
+      //selectedRestaurant.booked = true;
+    }
     onClose(); // Close the modal
   };
 
@@ -52,7 +55,6 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
 
   return (
     <>
-    
       {!showDateTimePicker ? (
         <div
           style={{
@@ -78,13 +80,28 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
               padding: "20px",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "flex-start", // Align content at the top
+              justifyContent: "flex-start",
               alignItems: "center",
               overflowY: "auto",
               boxSizing: "border-box",
-              gap: "1rem", // Add spacing between elements
+              gap: "1rem",
+              position: "relative", // Allows absolute positioning for buttons
             }}
           >
+            
+
+            {/* Close Button */}
+            <div
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                zIndex: 1100,
+              }}
+            >
+              <CloseButton onClick={onClose} ariaLabel="Close Menu Popup" />
+            </div>
+
             {/* Restaurant Menu */}
             <div style={{ color: "black", textAlign: "left", width: "100%", maxWidth: "400px" }}>
               <h3
@@ -132,33 +149,19 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
               <button
                 onClick={() => setShowDateTimePicker(true)}
                 style={{
-                  marginTop: "120px",
-                  padding: "15px 30px",
+                  marginTop: "210px",
+                  padding: "10px 145px",
                   backgroundColor: "#003554",
                   color: "#fff",
                   border: "none",
                   borderRadius: "8px",
                   fontSize: "1.2rem",
-                  fontWeight: "bold",
+                  //fontWeight: "bold",
                   cursor: "pointer",
                 }}
               >
                 Confirm
               </button>
-
-              <div
-                onClick={onClose}
-                style={{
-                  marginTop: "15px",
-                  textDecoration: "underline",
-                  color: "#003554",
-                  cursor: "pointer",
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                }}
-              >
-                Back
-              </div>
             </div>
           </div>
         </div>
@@ -170,7 +173,6 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
           selectedRestaurant={selectedRestaurant}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
-          
         />
       )}
     </>
@@ -178,4 +180,3 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
 };
 
 export default MenuPopup;
-

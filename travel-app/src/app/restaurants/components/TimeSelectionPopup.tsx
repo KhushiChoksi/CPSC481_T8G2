@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import SuccessVisitPopup from './SuccessVisitPopup';
+import CloseButton from '@/app/components/CloseButton';
+import BackButtonPopup from '@/app/components/BackButtonPopup';
 
 interface TimeSelectionPopupProps {
   isOpen: boolean;
@@ -7,12 +9,12 @@ interface TimeSelectionPopupProps {
   onBack: () => void;
   selectedRestaurant: {
     title: string;
-    
+    //address: string;
     timeOpen: string;
     visitDate: string;
     booked: boolean;
-    timeStart: string;
-    timeEnd: string;
+    timeStart: string | null;
+    timeEnd: string| null;
   };
   selectedDate: Date;
   startTime: string | null;
@@ -35,8 +37,8 @@ const parseTimeString = (timeString: string) => {
   return { startHour24, endHour24 };
 };
 
-const generateTimeOptions = (selectedSuggestion: { timeOpen: string }) => {
-  const { startHour24, endHour24 } = parseTimeString(selectedSuggestion.timeOpen);
+const generateTimeOptions = (selectedRestaurant: { timeOpen: string }) => {
+  const { startHour24, endHour24 } = parseTimeString(selectedRestaurant.timeOpen);
   const options = [];
 
   for (let hour = startHour24; hour <= endHour24; hour++) {
@@ -53,13 +55,6 @@ const generateTimeOptions = (selectedSuggestion: { timeOpen: string }) => {
   return options;
 };
 
-const convertToMinutes = (time: string) => {
-  const [timePart, period] = time.split(' ');
-  const [hour, minute] = timePart.split(':').map(Number);
-  const hour24 = period === 'PM' && hour !== 12 ? hour + 12 : hour === 12 && period === 'AM' ? 0 : hour;
-  return hour24 * 60 + minute;
-};
-
 export default function TimeSelectionPopup({
   isOpen,
   onClose,
@@ -73,20 +68,29 @@ export default function TimeSelectionPopup({
 }: TimeSelectionPopupProps) {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  const handleConfirmTimes = () => {
-    if (selectedRestaurant && startTime && endTime) {
-      selectedRestaurant.timeStart = startTime;
-      selectedRestaurant.timeEnd = endTime;
-      selectedRestaurant.booked = true;
-    }
-    setShowSuccessPopup(true);
+  const convertToMinutes = (time: string) => {
+    const [timePart, period] = time.split(' ');
+    const [hour, minute] = timePart.split(':').map(Number);
+    const hour24 = period === 'PM' && hour !== 12 ? hour + 12 : hour === 12 && period === 'AM' ? 0 : hour;
+    return hour24 * 60 + minute;
   };
 
-  const validateTimes = () => {
-    if (!startTime || !endTime) return false;
+  const validateTimes = useCallback(() => {
+    if (!startTime || !endTime) {
+      return false;
+    }
     const startTotalMinutes = convertToMinutes(startTime);
     const endTotalMinutes = convertToMinutes(endTime);
     return startTotalMinutes < endTotalMinutes;
+  }, [startTime, endTime]);
+
+  const handleConfirmTimes = () => {
+    if (validateTimes()) {
+      selectedRestaurant.timeStart = startTime;
+      selectedRestaurant.timeEnd = endTime;
+      selectedRestaurant.booked = true;
+      setShowSuccessPopup(true);
+    }
   };
 
   if (!isOpen) return null;
@@ -96,36 +100,60 @@ export default function TimeSelectionPopup({
       <div style={{
         position: "fixed",
         top: "0",
-        left: "0",
-        width: "100%",
-        height: "100%",
+        left: 0,
+        width: "100vw",
+        height: "100vh",
         display: "flex",
-        alignItems: "center",
         justifyContent: "center",
-        zIndex: 1000,
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backdropFilter: "blur(5px)",
+        zIndex: 1001,
       }}>
         <div style={{
+          width: "96vw",
+          height: "91vh",
           backgroundColor: "#A5B6C2",
-          borderRadius: "10px",
+          borderRadius: "20px",
+          border: "1px solid #000000",
           padding: "20px",
-          width: "95%",
-          height: "80%",
+          position: "relative",
           display: "flex",
           flexDirection: "column",
+          justifyContent: "space-between",
           alignItems: "center",
-          justifyContent: "center",
+          overflowY: "auto",
+          boxSizing: "border-box",
         }}>
+          <div style={{
+            position: "absolute",
+            top: "20px",
+            left: "25px",
+            zIndex: 1100,
+          }}>
+            <BackButtonPopup
+              onClick={onBack}
+              ariaLabel="Go Back from Add Visit"
+            />
+          </div>
+          <div style={{
+            position: "absolute",
+            top: "20px",
+            right: "25px",
+            zIndex: 1100,
+          }}>
+            <CloseButton onClick={onClose} ariaLabel="Close Manage Trips Popup" />
+          </div>
           <h2 style={{
             fontSize: "24px",
-            fontWeight: "bold",
             color: "#000",
-            marginBottom: "25px",
+            marginTop: "90px",
             textAlign: "center",
           }}>
             Select visit time for {selectedRestaurant.title}
           </h2>
 
-          <p style={{ color: "black", marginBottom: "20px" }}>
+          <p style={{ color: "black", marginBottom: "20px", marginTop: "-150px" }}>
             Location hours: {selectedRestaurant.timeOpen}
           </p>
 
@@ -140,7 +168,7 @@ export default function TimeSelectionPopup({
             color: "black",
           }}>
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-              <label style={{ color: "black", width: "100px" }}>Start Time:</label>
+              <label style={{ color: "black", width: "120px", fontWeight: "bold", }}>Start Time:</label>
               <select 
                 value={startTime || ''}
                 onChange={(e) => setStartTime(e.target.value)}
@@ -160,7 +188,7 @@ export default function TimeSelectionPopup({
               </select>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-              <label style={{ color: "black", width: "100px" }}>End Time:</label>
+              <label style={{ color: "black", width: "100px",fontWeight: "bold", }}>End Time:</label>
               <select 
                 value={endTime || ''}
                 onChange={(e) => setEndTime(e.target.value)}
@@ -181,6 +209,18 @@ export default function TimeSelectionPopup({
             </div>
           </div>
 
+          {/* Conditional Message */}
+          {!validateTimes() && (
+            <p style={{
+              color: "red",
+              fontSize: "16px",
+              textAlign: "center",
+              marginBottom: "20px"
+            }}>
+              Please select a valid start and end time pair to continue.
+            </p>
+          )}
+
           <div style={{
             display: "flex",
             flexDirection: "column",
@@ -192,30 +232,19 @@ export default function TimeSelectionPopup({
               onClick={handleConfirmTimes}
               disabled={!validateTimes()}
               style={{
+                width: "100%",
+                height: "3.1rem",
                 backgroundColor: validateTimes() ? "#003554" : "#cccccc",
                 color: "white",
-                padding: "15px 30px",
-                borderRadius: "8px",
-                fontWeight: "bold",
-                border: "none",
+                border: "1px solid #000000",
+                borderRadius: "5px",
+                fontSize: "1rem",
+                fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
                 cursor: validateTimes() ? "pointer" : "not-allowed",
+                marginTop: "2.2rem",
               }}
             >
-              Confirm Times
-            </button>
-            
-            <button
-              onClick={onBack}
-              style={{
-                color: "#003554",
-                fontWeight: "bold",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-            >
-              Back
+              Confirm
             </button>
           </div>
         </div>
