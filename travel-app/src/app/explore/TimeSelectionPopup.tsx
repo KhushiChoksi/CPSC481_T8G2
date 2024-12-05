@@ -153,7 +153,7 @@
               Select visit time for {selectedSuggestion.title}
             </h2>
 
-            <p style={{ color: "black", marginBottom: "20px", marginTop: "-150px" }}>
+            <p style={{ color: "black", marginBottom: "20px", marginTop: "-80px" }}>
               Location hours: {selectedSuggestion.timeOpen}
             </p>
 
@@ -215,7 +215,8 @@
                 color: "red",
                 fontSize: "16px",
                 textAlign: "center",
-                marginBottom: "20px"
+                marginBottom: "-90px",
+                marginTop: "100px"
               }}>
                 Please select a valid start and end time pair to continue.
               </p>

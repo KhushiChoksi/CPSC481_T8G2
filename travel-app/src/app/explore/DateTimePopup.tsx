@@ -37,8 +37,9 @@ export default function DateTimePopup({
   setSelectedDate,
 }: DateTimePopupProps) {
   const [showTimeSelection, setShowTimeSelection] = useState<boolean>(false);
-  const [startTime, setStartTime] = useState<string | null>('12:00');
-  const [endTime, setEndTime] = useState<string | null>('13:00');
+  // Initial state setup
+  const [startTime, setStartTime] = useState<string | null>(null);
+  const [endTime, setEndTime] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
