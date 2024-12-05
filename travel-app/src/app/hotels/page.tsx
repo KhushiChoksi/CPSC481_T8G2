@@ -292,16 +292,7 @@ export default function HotelsPage() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
-              <img
-                src={hotel.imageUrl}
-                alt={hotel.title}
-                style={{
-                  width: "180px",
-                  height: "180px",
-                  borderRadius: "5px",
-                  marginRight: "10px",
-                }}
-              />
+
               <div
                 style={{
                   position: "absolute",
@@ -331,44 +322,66 @@ export default function HotelsPage() {
                 </span>
               </div>
             </div>
-            <div style={{ display: "flex", marginTop: "8px", gap: "10px" }}>
-            {hotel.accessible && (
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <img
-                  src="/images/accessibility.png"
-                  alt="Accessible"
-                  style={{ width: "24px", height: "24px", marginRight: "5px" }}
-                />
-                <span
-                  style={{
-                    fontSize: "1.4rem",
-                    fontWeight:"bold",
-                    color: "navy", // Dark navy blue color for the checkmark
-                  }}
-                >
-                  ✓
-                </span>
-              </div>
-            )}
-            {hotel.pets && (
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <img
-                  src="/images/paw.png"
-                  alt="Pets Allowed"
-                  style={{ width: "24px", height: "24px", marginRight: "5px" }}
-                />
-                <span
-                  style={{
-                    fontSize: "1.4rem",
-                    fontWeight:"bold",
-                    color: "navy", // Dark navy blue color for the checkmark
-                  }}
-                >
-                  ✓
-                </span>
-              </div>
-            )}
-          </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+  <img
+    src={hotel.imageUrl}
+    alt={hotel.title}
+    style={{
+      width: "180px",
+      height: "180px",
+      borderRadius: "5px",
+      marginRight: "10px",
+    }}
+  />
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "flex-start", // Align left within the column
+      gap: "8px",
+    }}
+  >
+    {hotel.accessible && (
+      <div style={{ display: "flex", alignItems: "center", marginTop:"32px" }}>
+        <img
+          src="/images/accessibility.png"
+          alt="Accessible"
+          style={{ width: "24px", height: "24px", marginRight: "5px" }}
+        />
+        <span
+          style={{
+            fontSize: "1.4rem",
+            fontWeight: "bold",
+            color: "navy",
+          }}
+        >
+          ✓
+        </span>
+      </div>
+    )}
+    {hotel.pets && (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <img
+          src="/images/paw.png"
+          alt="Pets Allowed"
+          style={{ width: "24px", height: "24px", marginRight: "5px" }}
+        />
+        <span
+          style={{
+            fontSize: "1.4rem",
+            fontWeight: "bold",
+            color: "navy",
+          }}
+        >
+          ✓
+        </span>
+      </div>
+    )}
+  </div>
+</div>
+
+
 
             <div style={{ marginTop: "10px", textAlign: "left" }}>
               <h3
