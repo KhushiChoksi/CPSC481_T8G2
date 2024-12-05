@@ -9,7 +9,6 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 type Restaurant = {
   title: string;
-  description: string;
   
   timeOpen: string;
   visitDate: string;

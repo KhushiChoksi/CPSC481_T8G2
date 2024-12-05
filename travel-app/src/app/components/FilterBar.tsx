@@ -24,7 +24,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterCha
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "20px", padding: "10px 20px",  color: "#000", }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "7px", padding: "10px 20px",  color: "#000", }}>
       <span style={{ fontWeight: "bold" }}>Filters:</span>
 
       {Object.entries(filterOptions).map(([filterType, options]) => (
@@ -32,16 +32,14 @@ export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterCha
           <button
             onClick={() => toggleDropdown(filterType)}
             style={{
-              padding: "10px 20px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              backgroundColor: activeFilters[filterType as keyof typeof activeFilters].length > 0 ? "#ddd" : "#fff",
-              cursor: "pointer",
-              fontWeight: activeFilters[filterType as keyof typeof activeFilters].length > 0 ? "bold" : "normal",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: "10px",
+                marginRight: "10px",
+                padding: "5px 10px",
+                borderRadius: "5px",
+                borderWidth: "1px",
+                borderColor: activeFilters[filterType as keyof typeof activeFilters].length > 0 ? "#000" : "#bbb",
+                backgroundColor: activeFilters[filterType as keyof typeof activeFilters].length > 0 ? "#ddd" : "",
+                cursor: "pointer",
+                color: "black",
             }}
           >
             {filterType.charAt(0).toUpperCase() + filterType.slice(1)}

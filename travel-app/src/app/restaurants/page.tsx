@@ -180,10 +180,10 @@ export default function RestaurantsPage() {
           filter: selectedRestaurant ? "blur(px)" : "none",
           pointerEvents: selectedRestaurant ? "none" : "auto",
         }}
-        ></div>
+        >
       <Topbar />
       <div style={{ marginTop: "75px", marginLeft: "20px" }}>
-      <div className='mt-20 px-4'> <BackButton title='Restaurants'/> </div>
+      <div className='mt-20' style={{ paddingLeft: "1px", paddingRight: "16px" }}> <BackButton title='Restaurants'/> </div>
         </div>
 
       <FilterBar
@@ -199,71 +199,80 @@ export default function RestaurantsPage() {
           <div
             key={index}
             style={{
-              display: "flex",
-              flexDirection: "row",
-              backgroundColor: "#e5f2ff",
-              borderRadius: "15px",
-              marginBottom: "20px",
-              overflow: "hidden",
-              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-              position: "relative",
-              color: "black",
+                display: "flex",
+                flexDirection: "column",
+                backgroundColor: "#edf2ff",
+                borderRadius: "15px",
+                marginBottom: "20px",
+                padding: "15px",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+                color: "black",
+                cursor: "pointer",
+                position: "relative",
             }}
           >
-            <div style={{ position: "relative", flexShrink: "0" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <img
                 src={restaurant.imageUrl}
                 alt={restaurant.title}
                 style={{
-                  width: "150px",
-                  height: "200px",
-                  objectFit: "cover",
+                  width: "180px",
+                  height: "180px",
+                  borderRadius: "5px",
+                  marginRight: "10px",
                 }}
               />
               <div
                 style={{
-                  position: "absolute",
-                  bottom: "10px",
-                  left: "5px",
-                  right: "5px",
-                  backgroundColor: "#fff",
-                  padding: "5px 10px",
-                  borderRadius: "10px",
-                  fontSize: "0.8rem",
-                  textAlign: "center",
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    backgroundColor: "#f7f7f7",
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                    padding: "5px 10px",
+                    fontSize: "0.8rem",
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    maxWidth: "calc(100% - 220px)", // Ensures it fits within the box width minus image space
                 }}
               >
-                {restaurant.address}
+                <span style={{ fontSize: "1.2rem", color: "#4a90e2" }}>📍</span>
+                  <span
+                    style={{
+                      overflowWrap: "break-word",
+                      wordBreak: "break-word",
+                      whiteSpace: "normal", // Allow wrapping
+                    }}
+                  >
+                    {restaurant.address}
+                  </span>
               </div>
             </div>
-            <div
-              style={{
-                paddingLeft: "20px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <h3
-                  style={{
-                    fontSize: "1.5rem",
-                    fontWeight: "bold",
-                    marginBottom: "5px",
-                  }}
-                >
+            <div style={{ marginTop: "10px", textAlign: "left" }}>
+                <h3 style={{
+                  fontSize: "1.4rem",
+                  fontWeight: "bold",
+                  marginBottom: "5px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px"
+                }}>
                   {restaurant.title}
+                  {restaurant.booked && (
+                    <span style={{ color: "green", fontSize: "1.2rem" }}>✓</span>
+                  )}
                 </h3>
-                <p style={{ color: "#5a5a5a", paddingRight: "10px" }}>
-                  {restaurant.description}
-                </p>
-              </div>
-              <button
+                <button
                 onClick={() => handleMenuClick(restaurant)}
                 style={{
                   alignSelf: "flex-end",
-                  marginRight: "10px",
-                  marginBottom: "10px",
+                  marginLeft: "270px",
+                  position:"absolute",
+                  top:"190px",
+                  //marginBottom: "5px",
                   padding: "10px 20px",
                   borderRadius: "5px",
                   border: "1px solid #ccc",
@@ -274,9 +283,16 @@ export default function RestaurantsPage() {
               >
                 Menu
               </button>
+                <p style={{ color: "#5a5a5a", fontSize: "1rem" }}>
+                  {restaurant.description}
+                </p>
+              </div>
+              
+            
             </div>
-          </div>
+          
         ))}
+      </div>
       </div>
       <MenuPopup
         isOpen={isMenuPopupOpen}
