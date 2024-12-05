@@ -19,12 +19,11 @@ export default function SearchBar({ onSearchChange }: SearchBarProps) {
   };
 
   return (
-    <section style={{ padding: "20px", textAlign: "center" }}>
+    <section style={{ padding: "28px 20px", textAlign: "center" }}>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "10px",
         }}
       >
         <input
@@ -34,23 +33,16 @@ export default function SearchBar({ onSearchChange }: SearchBarProps) {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown} // Add event listener for Enter key
           style={{
-            width: "590%",
+            width: "100%", // Dynamically adapt width
+            maxWidth: "500px", // Limit max width
             padding: "10px",
             fontSize: "16px",
+            color: "#000000",
             borderRadius: "20px",
             border: "2px solid #252F40",
           }}
         />
       </div>
-      <style>
-        {`
-          @media (max-width: 600px) {
-            input {
-              width: 80%; /* Adjust width for smaller screens */
-            }
-          }
-        `}
-      </style>
     </section>
   );
 }
