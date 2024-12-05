@@ -43,13 +43,7 @@ export default function SearchBar({ onSearchChange }: SearchBarProps) {
         />
       </div>
       <style>
-        {`
-          @media (max-width: 600px) {
-            input {
-              width: 80%; /* Adjust width for smaller screens */
-            }
-          }
-        `}
+        
       </style>
     </section>
   );
