@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import AddHotelGuests from "./addHotelGuests";
+import { Dispatch, SetStateAction } from "react";
+
 
 type PopupModalProps = {
   isOpen: boolean;
@@ -10,18 +12,30 @@ type PopupModalProps = {
     address: string;
     timeStart: string;
     timeEnd: string;
+    visitdate:string;
+    booked:boolean;
   } | null;
+  onHotelBooked: () => void;
+  setIsBooked: Dispatch<SetStateAction<boolean>>; // Update type here
 };
 
 export default function PopupModal({
   isOpen,
   onClose,
   selectedHotel,
+  setIsBooked,
+  onHotelBooked,
 }: PopupModalProps) {
   const [showGuestsPopup, setShowGuestsPopup] = useState(false); 
   const handleConfirm = () => {
     setShowGuestsPopup(true); // Open guests popup
+    if (selectedHotel) {
+      setIsBooked(true);
+      onHotelBooked();
+    }
   };
+
+  
 
   const handleGuestsPopupClose = () => {
     setShowGuestsPopup(false); // Close guests popup
@@ -83,9 +97,9 @@ export default function PopupModal({
             <div>
               <p className="text-black font-bold text-3xl mb-2">Time of Stay:</p>
               <p className="text-gray-700 text-2xl">
-                {selectedHotel.timeStart && selectedHotel.timeEnd
-                  ? `${selectedHotel.timeStart} → ${selectedHotel.timeEnd}`
-                  : "Select dates later"}
+                {selectedHotel.visitdate
+                  ? `${selectedHotel.visitdate}`
+                  : "No Date Selected"}
               </p>
             </div>
           </div>

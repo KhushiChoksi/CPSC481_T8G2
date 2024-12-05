@@ -36,9 +36,16 @@ export default function DateSelectionPopup({
 
   if (!isOpen) return null;
 
+  const formatDisplayDate = (date: Date | null) =>
+    date ? date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "---";
+
+  const formattedDates = selectedDates[0] && selectedDates[1]
+    ? `${formatDisplayDate(selectedDates[0])} - ${formatDisplayDate(selectedDates[1])}`
+    : "---";
+
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="relative flex flex-col justify-between w-[96vw] h-[90vh] bg-[#A5B6C2] p-6 rounded-2xl border border-black date-popup">
+      <div className="relative flex flex-col justify-between w-[96vw] h-[90vh] bg-[#A5B6C2] p-6 rounded-2xl border border-black">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -49,8 +56,11 @@ export default function DateSelectionPopup({
         </button>
 
         {/* Title */}
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-black">Select Dates for Stay</h2>
+        <div className="text-left mb-4">
+          <h2 className="text-med text-gray-600">Date Selection</h2>
+          <div className="text-lg font-bold mt-2 text-black">
+            <p>{formattedDates}</p>
+          </div>
         </div>
 
         {/* Calendar */}
@@ -73,30 +83,6 @@ export default function DateSelectionPopup({
           </button>
         </div>
       </div>
-
-      {/* Scoped Styles */}
-      <style jsx>{`
-        .date-popup .react-calendar__navigation button {
-          background-color: var(--bg-lightblue);
-          color: black;
-          border: none;
-          border-radius: 4px;
-          padding: 5px 10px;
-          font-size: 16px;
-          transition: background-color 0.2s ease;
-        }
-
-        .date-popup .react-calendar__navigation button:hover {
-          background-color: var(--bg-darkblue);
-          color: white;
-        }
-
-        .date-popup .react-calendar__navigation button:disabled {
-          background-color: #ccc;
-          color: #666;
-          cursor: not-allowed;
-        }
-      `}</style>
     </div>
   );
 }

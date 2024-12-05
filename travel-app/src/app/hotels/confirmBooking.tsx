@@ -1,4 +1,6 @@
 "use client";
+
+
 type confirmBookingProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -7,6 +9,8 @@ type confirmBookingProps = {
     address: string;
     timeStart: string;
     timeEnd: string;
+    visitdate: string; 
+    booked: boolean;
   } | null;
   guests: number; 
   rooms: number; 
@@ -23,6 +27,11 @@ export default function confirmBooking({
     return null;
   }
 
+
+  const handleConfirmBooking = () => {
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
       <div
@@ -36,7 +45,6 @@ export default function confirmBooking({
           border: "1px solid #000000",
         }}
       >
-
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-black hover:text-gray-600"
@@ -51,11 +59,9 @@ export default function confirmBooking({
           &times;
         </button>
 
-
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-black">Confirm Your Booking</h2>
         </div>
-
 
         <div className="text-center mb-4 text-gray-600">
           <p className="text-lg">Booking Details:</p>
@@ -76,7 +82,7 @@ export default function confirmBooking({
           <div className="mb-4">
             <h3 className="text-2xl font-bold text-black">Time of Stay:</h3>
             <p className="text-lg text-black font-semibold">
-              {selectedHotel.timeStart} - {selectedHotel.timeEnd} 
+              {selectedHotel.visitdate ? selectedHotel.visitdate : "No dates selected"} 
             </p>
           </div>
 
@@ -93,7 +99,7 @@ export default function confirmBooking({
 
         <div className="mt-auto flex justify-center pt-8">
           <button
-            onClick={onClose}
+            onClick={handleConfirmBooking}
             className="bg-[#003554] text-white px-8 py-4 text-lg rounded-lg hover:bg-[#002a42]"
             style={{
               border: "1px solid #000000",

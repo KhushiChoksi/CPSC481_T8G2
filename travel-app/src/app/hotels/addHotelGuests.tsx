@@ -10,6 +10,8 @@ type AddHotelGuestsProps = {
       address: string;
       timeStart: string;
       timeEnd: string;
+      visitdate:string;
+      booked:boolean;
     } | null;
   };
 

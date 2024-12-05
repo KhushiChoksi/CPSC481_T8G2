@@ -5,34 +5,72 @@ import Topbar from "../components/Topbar";
 import BackButton from "../components/BackButton";
 import { useState } from "react";
 import PopupModal from "./addHotelPopup";
-import DateSelectionPopup from "./dateSelectionPopup"; 
-
-
+import DateSelectionPopup from "./dateSelectionPopup";
 
 export default function HotelsPage() {
-  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null); // Explicit type for selected Hotel
-  const [isDatePopupOpen, setIsDatePopupOpen] = useState(false); // State for date popup
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
+  const [isDatePopupOpen, setIsDatePopupOpen] = useState(false);
+  const [selectedDates, setSelectedDates] = useState<string>("");
+  const [buttonColor, setButtonColor] = useState<string>("bg-[#ADD8E6]");
+  const [isBooked, setIsBookedState] = useState(false);
+
+  const handleHotelBooked = () => {
+    if (selectedHotel) {
+      setHotels((prevHotels) =>
+        prevHotels.map((hotel) =>
+          hotel.id === selectedHotel.id ? { ...hotel, booked: true } : hotel
+        )
+      );
+    }
+  };
 
   const handleHotelClick = (hotel: Hotel) => {
-    setSelectedHotel(hotel); // Open with Selected Hotel
+    const updatedHotel = {
+      ...hotel,
+      visitdate: selectedDates,
+    };
+    setSelectedHotel(updatedHotel);
+    setIsBookedState(hotel.booked);
   };
 
   const closeModal = () => {
-    setSelectedHotel(null); // Close the modal
+    setSelectedHotel(null);
   };
+
+  const handleClearDates = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedDates("");
+    setButtonColor("bg-[#ADD8E6]");
+  };
+
   const handleOpenDatePopup = () => {
-    setIsDatePopupOpen(true); // Open date selection popup
+    setIsDatePopupOpen(true);
   };
 
   const handleCloseDatePopup = () => {
-    setIsDatePopupOpen(false); // Close date selection popup
+    setIsDatePopupOpen(false);
   };
 
   const handleSelectDates = (startDate: string, endDate: string) => {
+    const formattedStartDate = new Date(startDate).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+    const formattedEndDate = new Date(endDate).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+    const formattedDates = `${formattedStartDate} - ${formattedEndDate}`;
+
+    setSelectedDates(formattedDates);
+    setButtonColor("bg-[#7AC7E0]");
+
     if (selectedHotel) {
       setSelectedHotel({
         ...selectedHotel,
-        visitDate: `${startDate} to ${endDate}`, // Save visit date in selectedHotel
+        visitdate: formattedDates,
       });
     }
   };
@@ -43,13 +81,13 @@ export default function HotelsPage() {
     description: string;
     address: string;
     imageUrl: string;
-    visitDate: string;
+    visitdate: string;
     timeStart: string;
     timeEnd: string;
     booked: boolean;
   };
 
-  const hotels: Hotel[] = [
+  const [hotels, setHotels] = useState<Hotel[]>([
     {
       id: 1,
       title: "Comfort Inn & Suites",
@@ -57,7 +95,7 @@ export default function HotelsPage() {
         "With an indoor pool and hot tub, only 5 minutes' drive away from the airport.",
       address: "147 Freeport Crescent Northeast, Calgary",
       imageUrl: "/images/hotel1.jpg",
-      visitDate: "",
+      visitdate: "",
       timeStart: "",
       timeEnd: "",
       booked: false,
@@ -69,27 +107,41 @@ export default function HotelsPage() {
         "Featuring a rooftop hot tub, this hotel is close to downtown attractions.",
       address: "711 4th St. S.E., Calgary",
       imageUrl: "/images/hotel2.jpg",
-      visitDate: "",
+      visitdate: "",
       timeStart: "",
       timeEnd: "",
       booked: false,
     },
-  ];
+  ]);
 
   return (
     <div className="min-h-screen bg-lightblue px-4 pt-6">
       <Topbar />
-
       <div className="flex items-center mt-12">
         <BackButton title="Hotels" />
       </div>
 
       <div className="mt-2">
-        <button 
+        <button
           onClick={handleOpenDatePopup}
-          className="border-2 border-black rounded-full px-3 py-1 flex items-center shadow-md hover:shadow-lg transition text-sm">
-          <span className="mr-1 text-black">📅</span>
-          <span className="text-black">Select Dates for Stay</span>
+          className={`border-2 border-black rounded-full px-3 py-1 flex items-center shadow-md hover:shadow-lg transition text-sm ${buttonColor}`}
+        >
+          {selectedDates ? (
+            <div className="flex items-center">
+              <span className="text-black mr-1">{selectedDates}</span>
+              <span
+                onClick={handleClearDates}
+                className="text-black ml-2 font-bold cursor-pointer"
+              >
+                X
+              </span>
+            </div>
+          ) : (
+            <>
+              <span className="mr-1 text-black">📅</span>
+              <span className="text-black">Select Dates for Stay</span>
+            </>
+          )}
         </button>
       </div>
 
@@ -98,9 +150,9 @@ export default function HotelsPage() {
       </div>
 
       <div style={{ padding: "20px" }}>
-        {hotels.map((hotel, index) => (
+        {hotels.map((hotel) => (
           <div
-            key={index}
+            key={hotel.id}
             onClick={() => handleHotelClick(hotel)}
             style={{
               display: "flex",
@@ -162,9 +214,18 @@ export default function HotelsPage() {
                   fontSize: "1.2rem",
                   fontWeight: "bold",
                   marginBottom: "5px",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 {hotel.title}
+                {hotel.booked && (
+                  <span
+                    style={{ color: "green", fontSize: "1.2rem", marginLeft: "8px" }}
+                  >
+                    ✓
+                  </span>
+                )}
               </h3>
               <p style={{ color: "#5a5a5a", fontSize: "0.9rem" }}>
                 {hotel.description}
@@ -178,7 +239,9 @@ export default function HotelsPage() {
         isOpen={!!selectedHotel}
         onClose={closeModal}
         selectedHotel={selectedHotel}
-      />
+        setIsBooked={setIsBookedState}
+        onHotelBooked={handleHotelBooked}
+        />
 
       <DateSelectionPopup
         isOpen={isDatePopupOpen}
