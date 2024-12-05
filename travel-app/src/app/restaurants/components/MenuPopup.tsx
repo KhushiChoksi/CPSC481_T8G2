@@ -1,5 +1,7 @@
+
 import React, { useState } from "react";
 import DateTimePopup from "./DateTimePopup";
+import CloseButton from "@/app/components/CloseButton";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -50,41 +52,44 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
 
   return (
     <>
+    
       {!showDateTimePicker ? (
         <div
           style={{
             position: "fixed",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
-            zIndex: 1000,
+            alignItems: "center",
+            zIndex: "1002",
           }}
         >
           <div
             style={{
+              width: "96vw",
+              height: "91vh",
               backgroundColor: "#A5B6C2",
-              borderRadius: "10px",
+              borderRadius: "20px",
+              border: "1px solid #000000",
               padding: "20px",
-              width: "95%",
-              height: "80%",
-              maxWidth: "none",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
+              justifyContent: "flex-start", // Align content at the top
               alignItems: "center",
-              textAlign: "center",
-              overflow: "auto",
+              overflowY: "auto",
+              boxSizing: "border-box",
+              gap: "1rem", // Add spacing between elements
             }}
           >
             {/* Restaurant Menu */}
             <div style={{ color: "black", textAlign: "left", width: "100%", maxWidth: "400px" }}>
               <h3
                 style={{
+                  marginTop: "90px",
                   fontSize: "1.5rem",
                   fontWeight: "bold",
                   marginBottom: "20px",
@@ -127,6 +132,7 @@ const MenuPopup: React.FC<MenuPopupProps> = ({
               <button
                 onClick={() => setShowDateTimePicker(true)}
                 style={{
+                  marginTop: "120px",
                   padding: "15px 30px",
                   backgroundColor: "#003554",
                   color: "#fff",
