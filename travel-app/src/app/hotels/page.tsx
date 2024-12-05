@@ -188,7 +188,16 @@ export default function HotelsPage() {
 
   return (
     <div className="min-h-screen bg-lightblue px-4 pt-6">
-      <Topbar />
+      <div
+        className={`transition-all duration-300 ${
+          isDatePopupOpen || selectedHotel ? "z-0 opacity-50 pointer-events-none" : "z-50"
+        }`}
+      >
+        <Topbar />
+      </div>
+
+
+      
       <div className="flex items-center mt-12">
         <BackButton title="Hotels" />
       </div>

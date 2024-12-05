@@ -51,8 +51,8 @@ export default function DateSelectionPopup({
     : "---";
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="relative flex flex-col justify-between w-[95%] h-[80%] bg-[#A5B6C2] p-6 rounded-2xl border border-black">
+    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+      <div className="relative flex flex-col justify-between w-[95vw] h-[91vh] bg-[#A5B6C2] p-6 rounded-2xl border border-black">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -93,8 +93,8 @@ export default function DateSelectionPopup({
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleConfirm}
-            className="bg-[#003554] text-white px-8 py-3 text-lg font-semibold rounded-lg hover:bg-[#002a42] transition duration-300 border border-black"
-          >
+            className="bg-[#003554] text-white w-full py-3 text-lg font-semibold rounded-lg hover:bg-[#002a42] transition duration-300 border border-black"
+            >
             Confirm Dates
           </button>
         </div>
