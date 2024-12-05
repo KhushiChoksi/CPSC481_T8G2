@@ -256,8 +256,8 @@ export default function HotelsPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
-              width: "90%",
-              padding: "10px",
+              width: "100%",
+              padding: "6px",
               fontSize: "16px",
               borderRadius: "20px",
               border: "2px solid #252F40",
