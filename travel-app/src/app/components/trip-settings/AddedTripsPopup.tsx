@@ -199,8 +199,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     gap: "1rem",
   },
   manageButton: {
-    flex: 1,
-    maxWidth: "100%",
+    width: "100%",
     height: "3.1rem",
     backgroundColor: "#003554",
     color: "#FFFFFF",
@@ -209,6 +208,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     cursor: "pointer",
+    marginTop: "2.2rem",
   },
   text: {
     color: "#000000", // General text color

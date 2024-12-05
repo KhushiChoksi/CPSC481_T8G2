@@ -16,6 +16,7 @@ interface AccountContextType {
   updateEmail: (newEmail: string) => void;
   updatePassword: (currentPassword: string, newPassword: string) => boolean;
   resetPassword: (newPassword: string) => void; // Simplified resetPassword
+  createAccount:(newAccount: Account) => void;
 }
 
 // Create the context
@@ -49,8 +50,12 @@ export const AccountProvider: React.FC<{ children: ReactNode }> = ({ children })
     setAccount((prevAccount) => ({ ...prevAccount, password: newPassword }));
   };
 
+  const createAccount = (newAccount: Account) => {
+    setAccount(newAccount);
+  };
+
   return (
-    <AccountContext.Provider value={{ account, updateEmail, updatePassword, resetPassword }}>
+    <AccountContext.Provider value={{ account, updateEmail, updatePassword, resetPassword, createAccount }}>
       {children}
     </AccountContext.Provider>
   );

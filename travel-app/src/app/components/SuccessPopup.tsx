@@ -86,10 +86,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem", // Adjust for responsiveness
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "2rem", // Space between title and subtitle
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
@@ -101,7 +102,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   subtitle: {
     fontSize: "1.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "1rem",
@@ -109,6 +110,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   errorMessage: {
     fontSize: "1.1rem",
     color: "red",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     textAlign: "center",
     marginTop: "0.5rem",
   },

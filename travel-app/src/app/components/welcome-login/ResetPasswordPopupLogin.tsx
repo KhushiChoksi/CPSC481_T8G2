@@ -170,10 +170,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   inputGroup: {
     width: "100%",
-    marginBottom: "2rem", // Space below the input field
+    marginBottom: "-25rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
+    marginTop: "-20rem",
   },
   label: {
     fontSize: "1.2rem",

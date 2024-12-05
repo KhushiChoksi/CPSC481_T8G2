@@ -4,127 +4,227 @@ import React, { useState } from "react";
 import TravelDetailsModal from "../ArrivalDatePopup";
 import DepartureDetailsModal from "../DepartureDatePopup";
 import SuccessPopup from "../SuccessPopup";
-import CancelAccountPopup from "./CancelCreateAccountPopup"; // Ensure the path is correct
+import CloseButton from "../CloseButton";
 import { useRouter } from "next/navigation";
+import { useTrip } from "../../context/TripContext";
+import { useAccount } from "../../context/AccountContext";
 
 interface CreateAccountModalProps {
-  onClose: () => void; // Function to close the entire modal
+  onClose: () => void; // Function to close the entire modal flow
 }
 
 const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
+  const { createAccount } = useAccount();
+  const { trips, addTrip } = useTrip();
   const router = useRouter();
-  // State for tracking the current step
-  const [currentStep, setCurrentStep] = useState<
-    "account" | "arrival" | "departure" | "success" | "cancel"
-  >("account");
 
-  // Render the Arrival Date Modal
+  const [currentStep, setCurrentStep] = useState<"account" | "arrival" | "departure" | "success">("account");
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [arrivalDate, setArrivalDate] = useState<Date | null>(null); // Arrival date state
+  const [departureDate, setDepartureDate] = useState<Date | null>(null); // Departure date state
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const validateAccountDetails = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      setErrorMessage("All fields are required.");
+      return false;
+    }
+
+    if (!emailRegex.test(email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      return false;
+    }
+
+    setErrorMessage("");
+    return true;
+  };
+
+  const handleNextStep = (step: "arrival" | "departure" | "success") => {
+    if (currentStep === "account" && !validateAccountDetails()) {
+      return;
+    }
+    setCurrentStep(step);
+  };
+
   if (currentStep === "arrival") {
     return (
       <TravelDetailsModal
-        onClose={() => setCurrentStep("departure")} // Transition to Departure Date Modal
-        onGoBack={() => setCurrentStep("account")} // Navigate back to Create Account Modal
+        onClose={onClose}
+        onGoBack={() => setCurrentStep("account")}
+        onContinue={(date) => {
+          setArrivalDate(date); // Save arrival date
+          setCurrentStep("departure");
+        }}
       />
     );
   }
 
-  // Render the Departure Date Modal
   if (currentStep === "departure") {
+    if (!arrivalDate) {
+      setCurrentStep("arrival");
+      return null;
+    }
     return (
       <DepartureDetailsModal
-        onClose={() => setCurrentStep("success")} // Transition to Success Popup
-        onSkip={() => setCurrentStep("success")} // Skip to Success Popup
-        onGoBack={() => setCurrentStep("arrival")} // Navigate back to Arrival Date Modal
+        onClose={onClose}
+        onGoBack={() => setCurrentStep("arrival")}
+        onContinue={(date) => {
+          setDepartureDate(date); // Save departure date
+          setCurrentStep("success");
+        }}
+        arrivalDate={arrivalDate} // Pass the arrival date as a prop
       />
     );
   }
 
-  // Render the Success Popup
   if (currentStep === "success") {
     return (
       <SuccessPopup
         title="Success!"
         subtitle="Your account was successfully created."
         buttonText="Get Started"
-        onGetStarted={() => router.push("/home")} // Navigate to home on "Get Started"
+        onGetStarted={() => {
+          createAccount({
+            firstName,
+            lastName,
+            email,
+            password,
+          });
+  
+          const baseName = "My Trip";
+          const similarTrips = trips.filter((trip) => trip.name.startsWith(baseName));
+          const tripName = `${baseName}${similarTrips.length || ""}`;
+  
+          addTrip({
+            name: tripName,
+            dates: `${arrivalDate?.toISOString().split("T")[0]} - ${
+              departureDate ? departureDate.toISOString().split("T")[0] : ""
+            }`,
+          });
+  
+          router.push("/home");
+        }}
       />
     );
   }
 
-  // Render the Cancel Account Popup
-  if (currentStep === "cancel") {
-    return (
-      <CancelAccountPopup
-        onConfirm={onClose} // Confirm cancellation and close all modals
-        onCancel={() => setCurrentStep("account")} // Return to Create Account screen
-      />
-    );
-  }
-
-  // Default: Render the Create Account Modal
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modal}>
-        <h1 style={styles.modalTitle}>
-          Create Account<span style={styles.underline}></span>
-        </h1>
+    <>
+      {/* Blur Effect */}
+      <div style={styles.blurOverlay}></div>
 
-        {/* Input Fields */}
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter your first name:</label>
-          <input type="text" style={styles.input} />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter your last name:</label>
-          <input type="text" style={styles.input} />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter your e-mail:</label>
-          <input type="text" style={styles.input} />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter a password:</label>
-          <input type="password" style={styles.input} />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please confirm your password:</label>
-          <input type="password" style={styles.input} />
-        </div>
+      {/* Modal */}
+      <div style={styles.modalOverlay}>
+        <div style={styles.modal}>
+          <div style={styles.closeButtonContainer}>
+            <CloseButton onClick={onClose} ariaLabel="Close Create Account Popup" />
+          </div>
 
-        {/* Buttons */}
-        <div style={styles.modalButtonContainer}>
-          <button style={styles.cancelButton} onClick={() => setCurrentStep("cancel")}>
-            Cancel
-          </button>
-          <button
-            style={styles.continueButton}
-            onClick={() => setCurrentStep("arrival")} // Transition to Arrival Date Modal
-          >
-            Continue
-          </button>
+          <h1 style={styles.modalTitle}>
+            Create Account
+            <span style={styles.underline}></span>
+          </h1>
+
+          {/* Error Message */}
+          <div style={styles.errorMessageContainer}>
+            {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+          </div>
+
+          {/* Input Fields */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter your first name:</label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter your last name:</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter your e-mail:</label>
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter a password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={styles.input}
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please confirm your password:</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              style={styles.input}
+            />
+          </div>
+
+          <div style={styles.modalButtonContainer}>
+            <button style={styles.continueButton} onClick={() => handleNextStep("arrival")}>
+              Continue
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
+  blurOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dim background
+    backdropFilter: "blur(5px)", // Blur effect
+    zIndex: 1020, // Ensure blur is below modal but above everything else
+  },
   modalOverlay: {
     position: "fixed",
     top: 0,
     left: 0,
-    width: "100vw", // Full width of the viewport
-    height: "100vh", // Full height of the viewport
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    width: "100vw",
+    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxSizing: "border-box",
-    zIndex: "1002",
+    zIndex: 2000,
   },
   modal: {
-    width: "96vw", // Makes the modal width responsive
-    height: "91vh", // Adjusts height based on content
+    width: "96vw",
+    height: "91vh",
     backgroundColor: "#A5B6C2",
     borderRadius: "20px",
     border: "1px solid #000000",
@@ -133,77 +233,74 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    overflowY: "auto", // Adds scrolling for overflow content
+    overflowY: "auto",
     boxSizing: "border-box",
   },
+  closeButtonContainer: {
+    position: "absolute",
+    top: "50px",
+    right: "20px",
+    zIndex: 1100,
+  },
   modalTitle: {
-    fontSize: "2.5rem", // Scales for responsiveness
+    fontSize: "2.5rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
-    position: "relative",
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
     height: "3px",
     width: "100%",
     backgroundColor: "#000000",
-    margin: "0 auto",
     marginTop: "-10px",
+  },
+  errorMessageContainer: {
+    height: "2rem", // Reserve fixed space for error message
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "-2rem",
+    marginTop: "-1.5rem",
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "1rem",
+    textAlign: "center",
+    marginBottom: "0rem",
   },
   inputGroup: {
     width: "100%",
-    marginBottom: "1.5rem",
+    marginBottom: "0rem",
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start",
   },
   label: {
-    fontSize: "1rem", // Scales for smaller screens
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+    fontSize: "1rem",
     color: "#000000",
     marginBottom: "0.5rem",
   },
   input: {
     width: "100%",
-    height: "2.5rem", // Adjusts height for responsiveness
+    height: "2.5rem",
     borderRadius: "8px",
     border: "1px solid #000000",
     padding: "0 0.5rem",
-    fontSize: "1rem",
-    color: "#000000",
-    backgroundColor: "#FFFFFF",
   },
   modalButtonContainer: {
     width: "100%",
     display: "flex",
-    justifyContent: "space-between",
-    gap: "1rem", // Adds spacing between buttons
-    flexWrap: "wrap", // Allows buttons to stack on small screens
-  },
-  cancelButton: {
-    flex: "1",
-    maxWidth: "44%", // Ensures buttons resize on smaller screens
-    height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontSize: "1rem",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-    cursor: "pointer",
+    justifyContent: "center",
   },
   continueButton: {
-    flex: "1",
-    maxWidth: "44%",
+    width: "100%",
     height: "3.1rem",
     backgroundColor: "#003554",
     color: "#FFFFFF",
     border: "1px solid #000000",
     borderRadius: "5px",
     fontSize: "1rem",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-    cursor: "pointer",
   },
 };
 
