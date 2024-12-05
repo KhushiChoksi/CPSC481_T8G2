@@ -60,11 +60,10 @@ export default function confirmBooking({
         </button>
 
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-black">Confirm Your Booking</h2>
+          <h2 className="text-3xl font-bold text-black">Your Booking</h2>
         </div>
-
-        <div className="text-center mb-4 text-gray-600">
-          <p className="text-lg">Booking Details:</p>
+        <div className="text-left mb-4 text-black">
+          <p className="text-lg font-bold">Confirm your Booking and add it to your Itinerary:</p>
         </div>
 
         {/* Details */}
