@@ -15,7 +15,7 @@ interface CreateAccountModalProps {
 
 const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
   const { createAccount } = useAccount();
-  const { addTrip } = useTrip();
+  const { trips, addTrip } = useTrip();
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState<"account" | "arrival" | "departure" | "success">("account");
@@ -72,6 +72,10 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
   }
 
   if (currentStep === "departure") {
+    if (!arrivalDate) {
+      setCurrentStep("arrival");
+      return null;
+    }
     return (
       <DepartureDetailsModal
         onClose={onClose}
@@ -80,6 +84,7 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
           setDepartureDate(date); // Save departure date
           setCurrentStep("success");
         }}
+        arrivalDate={arrivalDate} // Pass the arrival date as a prop
       />
     );
   }
@@ -97,11 +102,18 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ onClose }) => {
             email,
             password,
           });
+  
+          const baseName = "My Trip";
+          const similarTrips = trips.filter((trip) => trip.name.startsWith(baseName));
+          const tripName = `${baseName}${similarTrips.length || ""}`;
+  
           addTrip({
-            name: "My Trip",
-            dates: `${arrivalDate?.toISOString().split("T")[0]} - ${departureDate?.toISOString().split("T")[0]}`,
+            name: tripName,
+            dates: `${arrivalDate?.toISOString().split("T")[0]} - ${
+              departureDate ? departureDate.toISOString().split("T")[0] : ""
+            }`,
           });
-
+  
           router.push("/home");
         }}
       />

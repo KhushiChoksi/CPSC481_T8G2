@@ -35,7 +35,7 @@ export const TripProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setTrips((prevTrips) => {
       const updatedTrips = prevTrips.filter((trip) => trip.name !== tripName);
       if (selectedTrip === tripName) {
-        setSelectedTrip(updatedTrips[0]?.name || ""); // Update selectedTrip if removed
+        setSelectedTrip(updatedTrips[0]?.name || "Add Here"); // Update selectedTrip if removed
       }
       return updatedTrips;
     });
