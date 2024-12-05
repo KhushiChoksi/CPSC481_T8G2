@@ -17,8 +17,8 @@ type Suggestion = {
   timeOpen: string;
   visitDate: string;
   booked: boolean;
-  timeStart: string;
-  timeEnd: string;
+  timeStart: string | null;
+  timeEnd: string | null;
 };
 
 // Suggestions data array with the correct type

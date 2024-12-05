@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import DateTimePopup from "./DateTimePopup";
 
+import CloseButton from "../components/CloseButton"; // Import CloseButton component
+import BackButtonPopup from "../components/BackButtonPopup"; // Import BackButtonPopup component
+
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
@@ -11,8 +14,8 @@ type Suggestion = {
   timeOpen: string;
   visitDate: string;
   booked: boolean;
-  timeStart: string;
-  timeEnd: string;
+  timeStart: string | null;
+  timeEnd: string | null;
 };
 interface PopupModalProps {
   isOpen: boolean;
@@ -27,100 +30,113 @@ const PopupModal: React.FC<PopupModalProps> = ({
 }) => {
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Value>(new Date());
-  const [selectedTime, setSelectedTime] = useState<string | null>('12:00');
+  const [startTime, setStartTime] = useState<string | null>(null);
+  const [endTime, setEndTime] = useState<string | null>(null);
 
   const handleAddToSchedule = () => {
-    if (selectedSuggestion && selectedDate instanceof Date && selectedTime) {
+    if (selectedSuggestion && selectedDate instanceof Date && startTime && endTime) {
       const formattedDate = selectedDate.toLocaleDateString('en-CA');
       selectedSuggestion.visitDate = formattedDate;
-      selectedSuggestion.timeStart = selectedTime;
-      selectedSuggestion.timeEnd = selectedTime; // Changed endTime to selectedTime
-      selectedSuggestion.booked = true;
+      selectedSuggestion.timeStart = startTime;
+      selectedSuggestion.timeEnd = endTime;
     }
     onClose();
   };
-
   if (!isOpen || !selectedSuggestion) return null;
 
   return (
     <>
       {!showDateTimePicker ? (
-        <div
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+        <div style={{
+          position: "fixed",
+          top: "0",
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backdropFilter: "blur(5px)",
+          zIndex: 1001,
+        }}>
+          <div style={{
+            width: "96vw",
+            height: "91vh",
+            backgroundColor: "#A5B6C2",
+            borderRadius: "20px",
+            border: "1px solid #000000",
+            padding: "20px",
+            position: "relative",
             display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
             alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "#A5B6C2",
-              borderRadius: "10px",
-              padding: "20px",
-              width: "95%",
-              height: "80%",
-              maxWidth: "none",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
+            overflowY: "auto",
+            boxSizing: "border-box",
+          }}>
+            <div style={{
+              position: "absolute",
+              top: "20px",
+              left: "25px",
+              zIndex: 1100,
+            }}>
+              <BackButtonPopup
+                onClick={onClose}
+                ariaLabel="Go Back from Add Visit"
+              />
+            </div>
+          {/* Close Button */}
+          <div style={{
+            position: "absolute",
+            top: "20px",
+            right: "25px",
+            zIndex: 1100,
+          }}>
+            <CloseButton onClick={onClose} ariaLabel="Close Manage Trips Popup" />
+          </div>
+          
+            <h1 style={{
+              fontSize: "2.5rem",
+              fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+              color: "#000000",
               textAlign: "center",
-              overflow: "auto",
-            }}
-          >
-            <div style={{color:'black'}}>
-            <h3
+              marginBottom: "1rem",
+              marginTop: "2.5rem",
+            }}>
+              {selectedSuggestion.title}
+              <span style={{
+                display: "block",
+                height: "3px",
+                width: "100%",
+                backgroundColor: "#000000",
+                marginTop: "-10px",
+              }}></span>
+            </h1>
+
+            <div style={{ color: 'black', flex: 1, marginTop: "2rem" }}>
+              <p style={{ marginBottom: "25px" }}>{selectedSuggestion.description}</p>
+              <p>{`Location: ${selectedSuggestion.address}`}</p>
+              <p>{`Time open: ${selectedSuggestion.timeOpen}`}</p>
+            </div>
+
+            <button
+              onClick={() => setShowDateTimePicker(true)}
               style={{
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                marginBottom: "10px",
+                width: "100%",
+                height: "3.1rem",
+                backgroundColor: "#003554",
+                color: "#FFFFFF",
+                border: "1px solid #000000",
+                borderRadius: "5px",
+                fontSize: "1rem",
+                fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+                cursor: "pointer",
+                marginTop: "2.2rem",
               }}
             >
-              {selectedSuggestion.title}
-            </h3>
-            <p style={{ marginBottom: "25px" }}>{`${selectedSuggestion.description}`}</p>
-            <p>{`Location: ${selectedSuggestion.address}`}</p>
-            <p>{`Time open: ${selectedSuggestion.timeOpen}`}</p>
-            
-            </div>
-            <div style={{ marginTop: "30px", textAlign: "center" }}>
-              <button
-                onClick={() => setShowDateTimePicker(true)}
-                style={{
-                  padding: "15px 30px",
-                  backgroundColor: "#003554",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "8px",
-                  fontSize: "1.2rem",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                }}
-              >
-                Confirm
-              </button>
-
-              <div
-                onClick={onClose}
-                style={{
-                  marginTop: "15px",
-                  textDecoration: "underline",
-                  color: "#003554",
-                  cursor: "pointer",
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                }}
-              >
-                Back
-              </div>
-            </div>
+              Confirm
+            </button>
           </div>
         </div>
       ) : (
@@ -136,5 +152,4 @@ const PopupModal: React.FC<PopupModalProps> = ({
     </>
   );
 };
-
 export default PopupModal;

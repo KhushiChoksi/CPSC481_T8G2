@@ -3,6 +3,8 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import 'react-time-picker/dist/TimePicker.css';
 import TimeSelectionPopup from './TimeSelectionPopup';
+import CloseButton from "../components/CloseButton"; // Import CloseButton component
+import BackButtonPopup from "../components/BackButtonPopup"; // Import BackButtonPopup component
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -13,8 +15,8 @@ type Suggestion = {
   timeOpen: string;
   visitDate: string;
   booked: boolean;
-  timeStart: string;
-  timeEnd: string;
+  timeStart: string | null;
+  timeEnd: string | null;
 };
 
 interface DateTimePopupProps {
@@ -34,100 +36,134 @@ export default function DateTimePopup({
   selectedDate,
   setSelectedDate,
 }: DateTimePopupProps) {
-  if (!isOpen) return null;
-
   const [showTimeSelection, setShowTimeSelection] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<string | null>('12:00');
   const [endTime, setEndTime] = useState<string | null>('13:00');
 
+  if (!isOpen) return null;
+
   return (
-    <div style={{
-      position: "fixed",
-      top: "0",
-      left: "0",
-      width: "100%",
-      height: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 1000,
-    }}>
-      <div style={{
-        backgroundColor: "#A5B6C2",
-        borderRadius: "10px",
-        padding: "20px",
-        width: "95%",
-        height: "80%",
-        alignItems: "center",
-        flexDirection: "column",
-        justifyContent: "center"
-      }}>
-        <div style={{ marginTop: "20px", marginLeft: "20px" }}>
-          <h2 style={{
-            fontSize: "24px",
-            fontWeight: "bold",
-            color: "#000",
-            marginBottom: "25px",
-            textAlign: "center",
-          }}>
-            When would you like to visit {selectedSuggestion.title}?
-          </h2>
+    <>
+      {!showTimeSelection ? (
+        <div style={{
+          position: "fixed",
+          top: "0",
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backdropFilter: "blur(5px)",
+          zIndex: 1001,
+        }}>
           <div style={{
-            marginBottom: "20px",
+            width: "96vw",
+            height: "91vh",
+            backgroundColor: "#A5B6C2",
+            borderRadius: "20px",
+            border: "1px solid #000000",
+            padding: "20px",
+            position: "relative",
             display: "flex",
-            justifyContent: "center",
+            flexDirection: "column",
+            justifyContent: "space-between",
             alignItems: "center",
-            width: "100%",
-            maxWidth: "350px",
-            border: "1px solid #ddd",
-            borderRadius: "8px",
+            overflowY: "auto",
+            boxSizing: "border-box",
           }}>
-            <Calendar
-              onChange={(value: Value) => setSelectedDate(value)}
-              value={selectedDate}
-            />
-          </div>
-          <div style={{
-            marginTop: "40px", 
-            display: "flex", 
-            flexDirection: "column", 
-            alignItems: "center",
-            width: "100%",
-            maxWidth: "350px",
-            gap: "15px"
-          }}>
-            <button
-              onClick={() => setShowTimeSelection(true)}
-              style={{
-                backgroundColor: "#003554",
-                color: "white",
-                padding: "15px 30px",
-                borderRadius: "8px",
-                fontWeight: "bold",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Confirm Date
-            </button>
-            <button
-              onClick={onBack}
-              style={{
-                color: "#003554",
-                fontWeight: "bold",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-            >
-              Back
-            </button>
+            {/* Back Button */}
+            <div style={{
+              position: "absolute",
+              top: "20px",
+              left: "25px",
+              zIndex: 1100,
+            }}>
+              <BackButtonPopup
+                onClick={onBack}
+                ariaLabel="Go Back from Date Selection"
+              />
+            </div>
+
+            {/* Close Button */}
+            <div style={{
+              position: "absolute",
+              top: "20px",
+              right: "25px",
+              zIndex: 1100,
+            }}>
+              <CloseButton onClick={onClose} ariaLabel="Close Date Selection Popup" />
+            </div>
+
+           
+            {/* <h1 style={{
+              fontSize: "2.5rem",
+              fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+              color: "#000000",
+              textAlign: "center",
+              marginBottom: "1rem",
+              marginTop: "2rem",
+            }}>
+              Add a Visit
+              <span style={{
+                display: "block",
+                height: "3px",
+                width: "100%",
+                backgroundColor: "#000000",
+                marginTop: "-10px",
+              }}></span>
+            </h1> */}
+
+            <h1 style={{
+              fontSize: "1.5rem",
+              fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+              color: "#000000",
+              textAlign: "center",
+              marginBottom: "30px",
+              marginTop: "5rem"
+            }}>
+              When would you like to visit {selectedSuggestion.title}?
+            </h1>
+
+            <div style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              marginBottom: "1rem",
+            }}>
+              <Calendar
+                onChange={(value: Value) => setSelectedDate(value)}
+                value={selectedDate}
+                showNeighboringMonth={false}
+              />
+            </div>
+
+            <div style={{
+              width: "100%",
+              marginTop: "auto",
+            }}>
+              <button
+                onClick={() => setShowTimeSelection(true)}
+                style={{
+                  width: "100%",
+                  height: "3.1rem",
+                  backgroundColor: "#003554",
+                  color: "#FFFFFF",
+                  border: "1px solid #000000",
+                  borderRadius: "5px",
+                  fontSize: "1rem",
+                  fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+                  cursor: "pointer",
+                }}
+              >
+                Confirm Date
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      {showTimeSelection && (
+      ) : (
         <TimeSelectionPopup
           isOpen={showTimeSelection}
           onClose={onClose}
@@ -140,6 +176,6 @@ export default function DateTimePopup({
           setEndTime={setEndTime}
         />
       )}
-    </div>
+    </>
   );
 }
