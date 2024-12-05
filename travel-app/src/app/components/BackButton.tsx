@@ -24,17 +24,17 @@ const BackButton: React.FC<BackButtonProps> = ({
 
   return (
     <div className="flex flex-row mt-2">
-      <button
-        type="button"
-        onClick={handleBackClick}
-        className="mr-2 pl-1 pr-2 border border-1 border-solid border-black cursor-pointer hover:bg-gray-200" // Added hover effect
-        aria-label={ariaLabel}
-        title={title}
-      >
-        <FaArrowLeft className="text-4xl text-black h-6 w-6" />
-      </button>
-      <h2 className="ml-2 text-2xl font-light text-black">{title}</h2>
-      </div>
+    <button
+      type="button"
+      onClick={handleBackClick}
+      className="mr-2 pl-1 pr-2 border border-1 border-solid border-black bg-white"
+      aria-label={ariaLabel}
+      title={title}
+    >
+      <FaArrowLeft className="text-4xl text-black h-6 w-6" />
+    </button>
+    <h2 className="ml-2 text-2xl text-black font-bold">{title}</h2>
+    </div>
   );
 };
 
