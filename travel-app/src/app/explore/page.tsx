@@ -147,11 +147,17 @@ export default function ExplorePage() {
         </div>
 
         {/* Filters */}
-        <div style={{ marginLeft: "20px", marginBottom: "10px" }}>
+        <div style={{ 
+          marginLeft: "20px", 
+          marginBottom: "10px",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "10px"
+        }}>
           <span
             style={{
               fontWeight: "bold",
-              marginRight: "10px",
               color: "black",
             }}
           >
@@ -162,7 +168,6 @@ export default function ExplorePage() {
               key={category}
               onClick={() => handleFilterClick(category)}
               style={{
-                marginRight: "10px",
                 padding: "5px 10px",
                 borderRadius: "5px",
                 borderWidth: "1px",
@@ -170,14 +175,18 @@ export default function ExplorePage() {
                 backgroundColor: activeFilter === category ? "#ddd" : "",
                 cursor: "pointer",
                 color: "black",
+                display: "flex",
+                alignItems: "center",
+                gap: "5px"
               }}
             >
               {category}
+              {activeFilter === category && (
+                <span style={{ marginLeft: "3px" }}>×</span>
+              )}
             </button>
           ))}
-        </div>
-
-        <SearchBar />
+        </div>        <SearchBar />
 
         {/* Explore options */}
         <div style={{ padding: "20px" }}>

@@ -30,15 +30,16 @@ const PopupModal: React.FC<PopupModalProps> = ({
 }) => {
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Value>(new Date());
-  const [startTime, setStartTime] = useState<string | null>(null);
-  const [endTime, setEndTime] = useState<string | null>(null);
+  // const [startTime, setStartTime] = useState<string | null>(null);
+  // const [endTime, setEndTime] = useState<string | null>(null);
 
   const handleAddToSchedule = () => {
-    if (selectedSuggestion && selectedDate instanceof Date && startTime && endTime) {
+    // if (selectedSuggestion && selectedDate instanceof Date && startTime && endTime) {
+    if (selectedSuggestion && selectedDate instanceof Date) {
       const formattedDate = selectedDate.toLocaleDateString('en-CA');
       selectedSuggestion.visitDate = formattedDate;
-      selectedSuggestion.timeStart = startTime;
-      selectedSuggestion.timeEnd = endTime;
+      // selectedSuggestion.timeStart = startTime;
+      // selectedSuggestion.timeEnd = endTime;
     }
     onClose();
   };
