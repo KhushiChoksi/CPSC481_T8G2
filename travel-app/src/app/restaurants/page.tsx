@@ -194,7 +194,7 @@ export default function RestaurantsPage() {
 
       <SearchBar onSearchChange={handleSearchChange} />
 
-      <div style={{ padding: "20px" }}>
+      <div style={{ padding: "20px", marginBottom: "120px" }}>
         {filteredRestaurants.map((restaurant, index) => (
           <div
             key={index}

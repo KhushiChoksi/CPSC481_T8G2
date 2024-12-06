@@ -130,8 +130,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   backButtonContainer: {
     position: "absolute",
-    top: "21px",
-    left: "34px",
+    top: "11px",
+    left: "30px",
     zIndex: 1100,
   },
   closeButtonContainer: {
@@ -169,7 +169,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "0rem",
+    marginBottom: "0.6rem",
   },
   errorMessage: {
     color: "red",

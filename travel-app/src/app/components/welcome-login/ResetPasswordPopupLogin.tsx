@@ -3,20 +3,17 @@
 import React, { useState } from "react";
 import SuccessPopup from "../SuccessPopup";
 import CloseButton from "../CloseButton";
-import BackButtonPopup from "../BackButtonPopup";
 import { useRouter } from "next/navigation";
 import { useAccount } from "../../context/AccountContext"; // Context to update password
 
-interface ResetPasswordPopupProps {
-  onClose: () => void; // Close all popups
-  onGoBack: () => void; // Go back to the previous popup
-  redirectTo: string; // Determines where to navigate after success
+interface ResetPasswordPopupLoginProps {
+  onClose?: () => void; // Close the popup (optional chaining for safety)
+  redirectTo?: string; // Determines where to navigate after success (optional)
 }
 
-const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
+const ResetPasswordPopupLogin: React.FC<ResetPasswordPopupLoginProps> = ({
   onClose,
-  onGoBack,
-  redirectTo,
+  redirectTo = "/", // Default redirect for login flow
 }) => {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,6 +40,12 @@ const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
     setStep("emailSent");
   };
 
+  // Handle "X" button functionality
+  const handleClose = () => {
+    onClose?.(); // Safely call onClose if it's defined
+  };
+
+  // If step is "emailSent", show success popup
   if (step === "emailSent") {
     return (
       <SuccessPopup
@@ -52,13 +55,14 @@ const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
         buttonText="Continue"
         onGetStarted={() => {
           resetPassword("password"); // Reset password to 'password'
-          onClose(); // Close the popup
-          router.push(redirectTo); // Navigate to the account settings page
+          onClose?.(); // Safely close the popup
+          router.push(redirectTo); // Navigate to the specified or default screen
         }}
       />
     );
   }
 
+  // Email input step
   return (
     <>
       {/* Blur Effect */}
@@ -67,17 +71,9 @@ const ResetPasswordPopup: React.FC<ResetPasswordPopupProps> = ({
       {/* Modal */}
       <div style={styles.modalOverlay}>
         <div style={styles.modal}>
-          {/* Back Button */}
-          <div style={styles.backButtonContainer}>
-            <BackButtonPopup
-              onClick={onGoBack}
-              ariaLabel="Go Back from Reset Password Popup"
-            />
-          </div>
-
           {/* Close Button */}
           <div style={styles.closeButtonContainer}>
-            <CloseButton onClick={onClose} ariaLabel="Close Reset Password Popup" />
+            <CloseButton onClick={handleClose} ariaLabel="Close Reset Password Popup" />
           </div>
 
           {/* Title */}
@@ -149,12 +145,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: "center",
     boxSizing: "border-box",
     position: "relative",
-  },
-  backButtonContainer: {
-    position: "absolute",
-    top: "10px",
-    left: "17px",
-    zIndex: 1100,
   },
   closeButtonContainer: {
     position: "absolute",
@@ -234,4 +224,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default ResetPasswordPopup;
+export default ResetPasswordPopupLogin;
