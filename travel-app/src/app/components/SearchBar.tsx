@@ -35,7 +35,7 @@ export default function SearchBar({ onSearchChange }: SearchBarProps) {
           style={{
             width: "100%", // Dynamically adapt width
             maxWidth: "500px", // Limit max width
-            padding: "10px",
+            padding: "8px",
             fontSize: "16px",
             color: "#000000",
             borderRadius: "20px",

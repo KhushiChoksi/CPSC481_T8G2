@@ -198,7 +198,7 @@ export default function HotelsPage() {
 
 
       
-      <div className="flex items-center mt-12">
+      <div className="flex items-center mt-12 mb-4">
         <BackButton title="Hotels" />
       </div>
 
@@ -254,7 +254,10 @@ export default function HotelsPage() {
           style={{
             display: "flex",
             justifyContent: "center",
-            marginTop: "20px",
+            justifySelf: "center",
+            marginTop: "15px",
+            width: "110%",
+    
           }}
         >
           <input
@@ -264,7 +267,7 @@ export default function HotelsPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               width: "100%",
-              padding: "6px",
+              padding: "8px",
               fontSize: "16px",
               borderRadius: "20px",
               border: "2px solid #252F40",
@@ -280,6 +283,7 @@ export default function HotelsPage() {
           flexDirection: "column", // Keeps the cards stacked vertically
           alignItems: "center", // Centers cards horizontally
           padding: "20px",
+          marginBottom: "120px",
         }}>
         {filteredHotels.map((hotel) => (
           <div
