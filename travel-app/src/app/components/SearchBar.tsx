@@ -43,6 +43,9 @@ export default function SearchBar({ onSearchChange }: SearchBarProps) {
           }}
         />
       </div>
+      <style>
+        
+      </style>
     </section>
   );
 }

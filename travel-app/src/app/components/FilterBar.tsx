@@ -4,10 +4,10 @@ type FilterBarProps = {
   activeFilters: {
     cuisine: string[];
     price: string[];
-    reservation: string[];
+    Diet: string[];
   };
-  onFilterChange: (filterType: "cuisine" | "price" | "reservation", value: string) => void;
-  onFilterReset: (filterType: "cuisine" | "price" | "reservation") => void;
+  onFilterChange: (filterType: "cuisine" | "price" | "Diet", value: string) => void;
+  onFilterReset: (filterType: "cuisine" | "price" | "Diet") => void;
 };
 
 export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterChange, onFilterReset }) => {
@@ -16,7 +16,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterCha
   const filterOptions = {
     cuisine: ["Japanese", "Mediterranean", "International"],
     price: ["$", "$$", "$$$"],
-    reservation: ["Halal", "Gluten Free"],
+    Diet: ["Halal", "Gluten Free"],
   };
 
   const toggleDropdown = (filterType: string) => {
@@ -37,7 +37,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterCha
                 borderRadius: "5px",
                 borderWidth: "1px",
                 borderColor: activeFilters[filterType as keyof typeof activeFilters].length > 0 ? "#000" : "#bbb",
-                backgroundColor: activeFilters[filterType as keyof typeof activeFilters].length > 0 ? "#ddd" : "",
+                backgroundColor:
+                activeDropdown === filterType
+                ? "#f0f8ff" 
+                : activeFilters[filterType as keyof typeof activeFilters].length > 0
+                ? "#ddd"
+                : "",
                 cursor: "pointer",
                 color: "black",
             }}
@@ -47,7 +52,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterCha
               <span
                 onClick={(e) => {
                   e.stopPropagation(); // Prevent dropdown toggle
-                  onFilterReset(filterType as "cuisine" | "price" | "reservation");
+                  onFilterReset(filterType as "cuisine" | "price" | "Diet");
                 }}
                 style={{
                   marginLeft: "10px",
@@ -80,7 +85,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterCha
                 <div
                   key={option}
                   onClick={() => {
-                    onFilterChange(filterType as "cuisine" | "price" | "reservation", option);
+                    onFilterChange(filterType as "cuisine" | "price" | "Diet", option);
                     setActiveDropdown(null); // Close dropdown
                   }}
                   style={{

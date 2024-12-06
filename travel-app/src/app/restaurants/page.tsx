@@ -22,7 +22,7 @@ type Restaurant = {
   imageUrl: string;
   cuisine: string;
   price: string;
-  reservation: string[];
+  Diet: string[];
   booked: boolean;
   menu: MenuItem[];
   timeOpen: string;
@@ -39,7 +39,7 @@ const restaurants: Restaurant[] = [
     imageUrl: "/images/cactus.jpg",
     cuisine: "International",
     price: "$$",
-    reservation: [],
+    Diet: [],
     timeOpen: "9am - 12am",
     booked: false,
     visitDate: "",
@@ -63,7 +63,7 @@ const restaurants: Restaurant[] = [
     imageUrl: "/images/osm.jpg",
     cuisine: "Mediterranean",
     price: "$",
-    reservation: ["Halal"],
+    Diet: ["Halal"],
     timeOpen: "9am - 9pm",
     booked: false,
     visitDate: "",
@@ -84,7 +84,7 @@ const restaurants: Restaurant[] = [
     imageUrl: "/images/ryuko.jpg",
     cuisine: "Japanese",
     price: "$$$",
-    reservation: [],
+    Diet: [],
     timeOpen: "9am - 9pm",
     booked: false,
     visitDate: "",
@@ -106,7 +106,7 @@ const restaurants: Restaurant[] = [
     imageUrl: "/images/kinjo.jpg",
     cuisine: "Japanese",
     price: "$",
-    reservation: ["Gluten Free"],
+    Diet: ["Gluten Free"],
     timeOpen: "10am - 12am",
     booked: false,
     visitDate: "",
@@ -125,14 +125,14 @@ export default function RestaurantsPage() {
   const [activeFilters, setActiveFilters] = useState({
     cuisine: [] as string[],
     price: [] as string[],
-    reservation: [] as string[],
+    Diet: [] as string[],
   });
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null); // For the selected restaurant
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false); // For popup visibility
   
 
-  const handleFilterChange = (filterType: "cuisine" | "price" | "reservation", value: string) => {
+  const handleFilterChange = (filterType: "cuisine" | "price" | "Diet", value: string) => {
     setActiveFilters((prev) => {
       const isActive = prev[filterType].includes(value);
       const updatedFilters = isActive
@@ -143,7 +143,7 @@ export default function RestaurantsPage() {
     });
   };
 
-  const handleFilterReset = (filterType: "cuisine" | "price" | "reservation") => {
+  const handleFilterReset = (filterType: "cuisine" | "price" | "Diet") => {
     setActiveFilters((prev) => ({ ...prev, [filterType]: [] }));
   };
   const handleMenuClick = (restaurant: Restaurant) => {
@@ -164,13 +164,13 @@ export default function RestaurantsPage() {
       activeFilters.cuisine.length === 0 || activeFilters.cuisine.includes(restaurant.cuisine);
     const matchesPrice =
       activeFilters.price.length === 0 || activeFilters.price.includes(restaurant.price);
-    const matchesReservation =
-      activeFilters.reservation.length === 0 ||
-      activeFilters.reservation.some((r) => restaurant.reservation.includes(r));
+    const matchesDiet =
+      activeFilters.Diet.length === 0 ||
+      activeFilters.Diet.some((r) => restaurant.Diet.includes(r));
     const matchesSearch =
       searchQuery === "" || restaurant.title.toLowerCase().includes(searchQuery);
 
-    return matchesCuisine && matchesPrice && matchesReservation && matchesSearch;
+    return matchesCuisine && matchesPrice && matchesDiet && matchesSearch;
   });
 
   return (
