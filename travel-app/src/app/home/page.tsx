@@ -1,14 +1,27 @@
+"use client";
+
+import React from "react";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 import Topbar from "../components/Topbar";
+import { useAccount } from "../context/AccountContext";
 
 export default function HomePage() {
+  const { account } = useAccount(); // Access the account details from the context
+
+  // Helper function to truncate text
+  const truncateText = (text: string) => {
+    return text.length > 30 ? `${text.slice(0, 27)}...` : text;
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen text-darkblue">
       <Topbar/>
       {/* Welcome Section */}
       <main className="mt-10 flex flex-col items-start w-full px-4 py-6 pt-10">
-        <h1 className="text-2xl font-bold text-black mb-2">Welcome, [user name]!</h1> 
+        <h1 className="text-2xl font-bold text-black mb-2">
+          Welcome, {truncateText(account.firstName)} {truncateText(account.lastName)}!
+        </h1>
 
         {/* Date Section */}
 

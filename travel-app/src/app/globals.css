@@ -7,6 +7,7 @@
   --foreground: #171717;
   --bg-lightblue: #e4eff6;
   --bg-darkblue: #65bfff;
+  --darkblue: #003554;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -74,3 +75,70 @@ body {
 .react-calendar__tile:hover {
   background: #dcdcdc; /* Light gray hover effect */
 }
+
+
+
+
+/* STYLING FOR ITINERARY CALENDAR */
+.fc {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 20px; 
+  background-color: rgb(255, 255, 255, 0.75);
+  width: 400px;
+}
+
+.fc-header-toolbar .fc-calendarIcon-button {
+  font-size: 25px;
+  color: black;
+  background-color: rgb(221, 221, 221);
+  padding: 0px;
+  min-height: 30px;
+  min-width: 45px;
+  border: 1px solid black;
+  border-radius: 18px;
+}
+
+.fc-header-toolbar .fc-toolbar-title {
+  font-size: 25px;
+  font-style: italic;
+  color: black; 
+}
+
+.fc-timegrid-slot-label {
+  color: black; 
+}
+
+.fc-col-header-cell-cushion {
+  color: rgb(12, 9, 9) !important;
+}
+
+.fc-timegrid-slot {
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px dashed rgba(11, 11, 11, 0);
+}
+
+.fc-timegrid-slot-lane {                          /* major lines (hourly) */
+  border-top: 1px dashed rgba(0, 0, 0, 0.4);
+}
+
+.fc-timegrid-slot-lane.fc-timegrid-slot-minor {   /* minor lines (sub-hourly) */
+  border-top: 1px dashed rgba(0, 0, 0, 0);
+}
+
+.fc-timegrid-slot-label {                         /* time column */
+  background-color: rgb(255, 255, 255, 0);
+  border: 1.5px solid rgba(0, 0, 0, 0.7);
+}
+
+/* https://stackoverflow.com/questions/7258655/can-the-default-timeslot-height-be-set-in-fullcalendar */
+.fc .fc-timegrid-slot {
+  height: 65px !important;
+  line-height: 0.2em !important;
+  border-bottom: 0 !important;
+}
+/* .fc .fc-timegrid-slot.fc-scrollgrid-shrink {
+  height: 1.5em !important;
+  line-height: 1.5em !important;
+  border-bottom: 0 !important;
+} */

@@ -7,6 +7,7 @@ interface SuccessPopupProps {
   subtitle: string; // Subtitle text for the popup
   buttonText: string; // Text for the button
   onGetStarted: () => void; // Callback for the button action
+  errorMessage?: string; // Optional red message to display
 }
 
 const SuccessPopup: React.FC<SuccessPopupProps> = ({
@@ -14,40 +15,60 @@ const SuccessPopup: React.FC<SuccessPopupProps> = ({
   subtitle,
   buttonText,
   onGetStarted,
+  errorMessage,
 }) => {
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modal}>
-        {/* Title */}
-        <h1 style={styles.modalTitle}>
-          {title}
-          <span style={styles.underline}></span>
-        </h1>
+    <>
+      {/* Blur Effect */}
+      <div style={styles.blurOverlay}></div>
 
-        {/* Subtitle */}
-        <h2 style={styles.subtitle}>{subtitle}</h2>
+      {/* Modal */}
+      <div style={styles.modalOverlay}>
+        <div style={styles.modal}>
+          {/* Title */}
+          <h1 style={styles.modalTitle}>
+            {title}
+            <span style={styles.underline}></span>
+          </h1>
 
-        {/* Button */}
-        <button style={styles.longButton} onClick={onGetStarted}>
-          {buttonText}
-        </button>
+          {/* Subtitle */}
+          <h2 style={styles.subtitle}>{subtitle}</h2>
+
+          {/* Error Message */}
+          {errorMessage && <p style={styles.errorMessage}>{errorMessage}</p>}
+
+          {/* Button */}
+          <button style={styles.longButton} onClick={onGetStarted}>
+            {buttonText}
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
+  blurOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dim background
+    backdropFilter: "blur(5px)",
+    zIndex: 1001, // Ensure blur is below modal
+  },
   modalOverlay: {
     position: "fixed",
     top: 0,
     left: 0,
     width: "100vw", // Full width of the viewport
     height: "100vh", // Full height of the viewport
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     boxSizing: "border-box",
+    zIndex: 1002,
   },
   modal: {
     width: "96vw", // Responsive width
@@ -65,10 +86,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   modalTitle: {
     fontSize: "2.5rem", // Adjust for responsiveness
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
     marginBottom: "2rem", // Space between title and subtitle
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
@@ -80,10 +102,17 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   subtitle: {
     fontSize: "1.5rem",
-    fontFamily: "Subtitle, sans-serif",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
-    marginBottom: "auto", // Push the button to the bottom
+    marginBottom: "1rem",
+  },
+  errorMessage: {
+    fontSize: "1.1rem",
+    color: "red",
+    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+    textAlign: "center",
+    marginTop: "0.5rem",
   },
   longButton: {
     width: "100%", // Full width for responsiveness

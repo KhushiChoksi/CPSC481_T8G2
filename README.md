@@ -29,5 +29,28 @@ npm install react-big-calendar
 </p>
 
 
+
+## full calendar installs
+<p>
+npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/timegrid
+
+npm install @fullcalendar/react@latest @fullcalendar/core@latest @fullcalendar/daygrid@latest @fullcalendar/timegrid@latest
+
+npm install --save \
+  @fullcalendar/core \
+  @fullcalendar/bootstrap5
+
+npm install --save bootstrap bootstrap-icons
+
+npm install --save \
+  @fullcalendar/core \
+  @fullcalendar/bootstrap
+
+npm install --save bootstrap@4 @fortawesome/fontawesome-free
+
+npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction
+</p>
+
+
 ### tailwind css documentation
 <p>https://tailwindcss.com/docs/installation</p>
