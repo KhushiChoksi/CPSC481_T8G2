@@ -226,14 +226,14 @@ export default function TimeSelectionPopup({
             flexDirection: "column",
             gap: "15px",
             width: "100%",
-            maxWidth: "300px",
+            //maxWidth: "300px",
           }}>
             <button
               onClick={handleConfirmTimes}
               disabled={!validateTimes()}
               style={{
                 width: "100%",
-                height: "3.1rem",
+                height: "3rem",
                 backgroundColor: validateTimes() ? "#003554" : "#cccccc",
                 color: "white",
                 border: "1px solid #000000",

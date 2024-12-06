@@ -118,11 +118,13 @@ export default function SuccessVisitPopup({
           <button
             onClick={onClose}
             style={{
+              //eight: "3.1rem",
               backgroundColor: "#003554",
               color: "white",
-              padding: "15px 30px",
+              padding: "13px 30px",
               borderRadius: "8px",
-              fontWeight: "bold",
+              // fontWeight: "bold",
+              fontSize: "1rem",
               border: "none",
               cursor: "pointer",
             }}

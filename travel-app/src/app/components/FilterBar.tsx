@@ -24,7 +24,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterCha
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "7px", padding: "10px 20px",  color: "#000", }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "7px", padding: "10px 20px",  color: "#000"}}>
       <span style={{ fontWeight: "bold" }}>Filters:</span>
 
       {Object.entries(filterOptions).map(([filterType, options]) => (
@@ -42,7 +42,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({ activeFilters, onFilterCha
                 ? "#f0f8ff" 
                 : activeFilters[filterType as keyof typeof activeFilters].length > 0
                 ? "#ddd"
-                : "",
+                : "rgba(0, 53, 84, 0.1)",
                 cursor: "pointer",
                 color: "black",
             }}
