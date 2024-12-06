@@ -8,6 +8,7 @@ import { FilterBar } from "../components/FilterBar";
 import BackButton from "../components/BackButton";
 
 import MenuPopup from "./components/MenuPopup";
+import { IoLocationSharp } from "react-icons/io5";
 
 type MenuItem = {
   name: string;
@@ -35,7 +36,7 @@ const restaurants: Restaurant[] = [
   {
     title: "Cactus Club Cafe",
     description: "Fine casual dining restaurant offering the best in global cuisine.",
-    address: "101 3 Ave SW",
+    address: "101 3 Ave SW, Calgary",
     imageUrl: "/images/cactus.jpg",
     cuisine: "International",
     price: "$$",
@@ -59,7 +60,7 @@ const restaurants: Restaurant[] = [
   {
     title: "Osmows",
     description: "A casual Mediterranean restaurant that offers a halal collection.",
-    address: "890 32 Ave NW",
+    address: "890 32 Ave NW, Calgary",
     imageUrl: "/images/osm.jpg",
     cuisine: "Mediterranean",
     price: "$",
@@ -80,7 +81,7 @@ const restaurants: Restaurant[] = [
   {
     title: "Ryuko",
     description: "Fine Dining Japanese kitchen and bar with a mix of tradition and modernity.",
-    address: "45 12 Ave SW",
+    address: "45 12 Ave SW, Calgary",
     imageUrl: "/images/ryuko.jpg",
     cuisine: "Japanese",
     price: "$$$",
@@ -102,7 +103,7 @@ const restaurants: Restaurant[] = [
   {
     title: "Kinjo",
     description: "A casual restaurant where a lot of people can meet up. Offers gluten-free options.",
-    address: "990 64 Ave NW",
+    address: "990 64 Ave NW, Calgary",
     imageUrl: "/images/kinjo.jpg",
     cuisine: "Japanese",
     price: "$",
@@ -203,12 +204,13 @@ export default function RestaurantsPage() {
                 flexDirection: "column",
                 backgroundColor: "#edf2ff",
                 borderRadius: "15px",
-                marginBottom: "20px",
+                marginBottom: "15px",
                 padding: "15px",
                 boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
                 color: "black",
                 cursor: "pointer",
                 position: "relative",
+                border: "1px solid black",
             }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -232,14 +234,15 @@ export default function RestaurantsPage() {
                     borderRadius: "8px",
                     padding: "5px 10px",
                     fontSize: "0.8rem",
-                    textAlign: "center",
+                    textAlign: "left",
                     display: "flex",
                     alignItems: "center",
                     gap: "5px",
                     maxWidth: "calc(100% - 220px)", // Ensures it fits within the box width minus image space
                 }}
               >
-                <span style={{ fontSize: "1.2rem", color: "#4a90e2" }}>📍</span>
+                {/* <span style={{ fontSize: "1.2rem", color: "#4a90e2" }}>📍</span> */}
+                <div style={{ marginRight:"1px", fontSize: "1rem", color: "black" }} > <IoLocationSharp/>  </div>
                   <span
                     style={{
                       overflowWrap: "break-word",
@@ -276,7 +279,7 @@ export default function RestaurantsPage() {
                   padding: "10px 20px",
                   borderRadius: "5px",
                   border: "1px solid #ccc",
-                  backgroundColor: "#007bff",
+                  backgroundColor: "#003554",
                   color: "#fff",
                   cursor: "pointer",
                 }}

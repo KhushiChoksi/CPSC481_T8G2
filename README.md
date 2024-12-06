@@ -20,7 +20,7 @@ Some example code is used for account and trip, located in TripContext and Accou
 Specific information that may be of use:
 If you do not wish to create an account, this information is hardcoded for example usage:
 
-user: example@ucalgary.ca
+user: example@ucalgary.ca <br>
 password: password
 
 </p>

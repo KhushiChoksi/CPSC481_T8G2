@@ -5,6 +5,8 @@ import BackButton from "../components/BackButton";
 import { useState } from "react";
 import PopupModal from "./addHotelPopup";
 import DateSelectionPopup from "./dateSelectionPopup";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { IoLocationSharp } from "react-icons/io5";
 
 export default function HotelsPage() {
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
@@ -102,7 +104,7 @@ export default function HotelsPage() {
       title: "Comfort Inn & Suites",
       description:
         "With an indoor pool and hot tub, only 5 minutes' drive away from the airport.",
-      address: "147 Freeport Crescent Northeast, Calgary",
+      address: "147 Freeport Crescent NE, Calgary",
       imageUrl: "/images/hotel1.jpg",
       visitdate: "",
       timeStart: "",
@@ -116,7 +118,7 @@ export default function HotelsPage() {
       title: "Hilton Garden Inn",
       description:
         "Featuring a rooftop hot tub, this hotel is close to downtown attractions.",
-      address: "711 4th St. S.E., Calgary",
+      address: "711 4th St. SE, Calgary",
       imageUrl: "/images/hotel2.jpg",
       visitdate: "",
       timeStart: "",
@@ -205,7 +207,7 @@ export default function HotelsPage() {
       <div className="mt-2 relative">
         <button
           onClick={handleOpenDatePopup}
-          className={`border-2 border-black rounded-full px-3 py-1 flex items-center shadow-md hover:shadow-lg transition text-sm ${buttonColor}`}
+          className={`bg-white ml-1 border-[1px] border-black rounded-full px-3 py-1 flex items-center shadow-md hover:shadow-lg transition text-sm ${buttonColor}`}
         >
           {selectedDates ? (
             <div className="flex items-center">
@@ -219,8 +221,9 @@ export default function HotelsPage() {
             </div>
           ) : (
             <>
-              <span className="mr-1 text-black">📅</span>
-              <span className="text-black">Select Dates for Stay</span>
+              {/* <span className="mr-1 text-black">📅 </span> */}
+              <div className="mr-2 text-[#003554] text-base"> <FaRegCalendarAlt/> </div>
+              <span className="text-[#003554] text-sm">Select Dates for Stay</span>
             </>
           )}
         </button>
@@ -230,15 +233,17 @@ export default function HotelsPage() {
               position: "absolute",
               top: "100%",
               left: "0",
-              marginTop: "5px",
+              marginTop: "0px",
+              marginLeft: "4px",
               padding: "5px 10px",
-              backgroundColor: "#e5f2ff",
-              color: "#003554", 
-              border: "1px solid #003554",
-              borderRadius: "5px",
-              fontSize: "0.85rem",
+              // backgroundColor: "rgba(255, 255, 255, 0.9)",
+              color: "red", 
+              // border: "1.5px solid black",
+              // borderRadius: "5px",
+              fontSize: "0.9rem",
               whiteSpace: "nowrap",
-              boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+              // boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+              fontWeight: "bold",
             }}
           >
             Please select a date before booking.
@@ -295,8 +300,9 @@ export default function HotelsPage() {
               backgroundColor: "#e5f2ff",
               width: "110%", 
     
+              border: "1px solid black",
               borderRadius: "15px",
-              marginBottom: "10px",
+              marginBottom: "15px",
               padding: "1rem",
               boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
               color: "black",
@@ -316,14 +322,15 @@ export default function HotelsPage() {
                   borderRadius: "8px",
                   padding: "5px 10px",
                   fontSize: "0.8rem",
-                  textAlign: "center",
+                  textAlign: "left",
                   display: "flex",
                   alignItems: "center",
                   gap: "5px",
                   maxWidth: "calc(100% - 220px)",
                 }}
               >
-                <span style={{ fontSize: "1rem", color: "#4a90e2" }}>📍</span>
+                {/* <span style={{ fontSize: "1rem", color: "#4a90e2" }}>📍</span> */}
+                <div style={{ marginRight:"1px", fontSize: "1rem", color: "black" }} > <IoLocationSharp/>  </div>
                 <span
                   style={{
                     overflowWrap: "break-word",
