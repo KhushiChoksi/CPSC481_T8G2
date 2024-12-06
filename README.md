@@ -1,15 +1,39 @@
 # CPSC481_T8G2
 
-
-### To run this:
+### Project contributors:
 <p>
-cd travel-app
+Muhammad Adil<br>
+Ahmed Iqbal<br>
+Khushi Choksi<br> 
+Mark Canuel<br>
+Syed Haider<br>
+</p>
 
-npm install (if you don't have Next.js)
+### Information:
+<p>
+The design is created to run on a iPhone 14 Pro Max, which has the dimensions 430 x 932. Any other size will not accurately display our design. 
+</p>
+
+
+### To run this, do the following commands in terminal:
+<p>
+cd travel-app     (navigate to the travel-app folder)
+
+npm install
 
 npm run dev
 </p>
 
+
+### Instructions for using the app, on a web browser:
+<p>
+First, run the code using the steps above, or use the deployed website link.<br>
+
+(If you are running the code locally, open the link "http://localhost:3000/" on your browser. This is where it should show up.)<br>
+
+Once the page displays (should be a login screen), right-click and select "Inspect".
+From there, click "Dimensions" and select "iPhone 14 Pro Max" for the size. 
+</p>
 
 
 
