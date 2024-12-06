@@ -1,6 +1,6 @@
 # CPSC481_T8G2
 
-### Project contributors:
+## Project contributors:
 <p>
 Muhammad Adil<br>
 Ahmed Iqbal<br>
@@ -9,13 +9,13 @@ Mark Canuel<br>
 Syed Haider<br>
 </p>
 
-### Information:
+## Information:
 <p>
 The design is created to run on a iPhone 14 Pro Max, which has the dimensions 430 x 932. Any other size will not accurately display our design. 
 </p>
 
 
-### To run this, do the following commands in terminal:
+## To run this, do the following commands in terminal:
 <p>
 cd travel-app     (navigate to the travel-app folder)
 
@@ -25,7 +25,7 @@ npm run dev
 </p>
 
 
-### Instructions for using the app, on a web browser:
+## Instructions for using the app, on a web browser:
 <p>
 First, run the code using the steps above, or use the deployed website link.<br>
 
@@ -37,6 +37,8 @@ From there, click "Dimensions" and select "iPhone 14 Pro Max" for the size.
 
 
 
+
+## Libraries / installs
 ### react-icons are installed into this project.
 <p>
 to access the library of icons, refer to this link: https://react-icons.github.io/react-icons/
@@ -54,7 +56,7 @@ npm install react-big-calendar
 
 
 
-## full calendar installs
+### full calendar installs
 <p>
 npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/timegrid
 
