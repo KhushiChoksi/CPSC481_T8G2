@@ -106,6 +106,7 @@ const suggestions: Suggestion[] = [
 export default function ExplorePage() {
   const [activeFilter, setActiveFilter] = useState<string>(""); // Type the filter state as a string
   const [selectedSuggestion, setSelectedSuggestion] = useState<Suggestion | null>(null); // Explicit type for selected suggestion
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleFilterClick = (category: string) => {
     setActiveFilter((prevFilter) => (prevFilter === category ? "" : category));
@@ -115,13 +116,27 @@ export default function ExplorePage() {
     setSelectedSuggestion(suggestion); // Open the modal with the selected suggestion
   };
 
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query.trim().toLowerCase());
+  };
+
   const closeModal = () => {
     setSelectedSuggestion(null); // Close the modal
   };
 
-  const filteredSuggestions = activeFilter
-    ? suggestions.filter((suggestion) => suggestion.category === activeFilter)
-    : suggestions;
+  // const filteredSuggestions = activeFilter
+  //   ? suggestions.filter((suggestion) => suggestion.category === activeFilter)
+  //   : suggestions;
+
+  const filteredSuggestions = suggestions.filter((suggestion) => {
+    const matchesFilter = activeFilter ? suggestion.category === activeFilter : true;
+    const matchesSearch = searchQuery
+      ? suggestion.title.toLowerCase().includes(searchQuery) ||
+        suggestion.description.toLowerCase().includes(searchQuery)
+      : true;
+
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <div>
@@ -186,7 +201,9 @@ export default function ExplorePage() {
               )}
             </button>
           ))}
-        </div>        <SearchBar />
+        </div>        
+        
+        <SearchBar onSearchChange={handleSearchChange} />
 
         {/* Explore options */}
         <div style={{ padding: "20px" }}>
