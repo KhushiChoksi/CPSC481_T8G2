@@ -72,9 +72,9 @@ body {
   border-radius: 50% !important;
 }
 
-.react-calendar__tile:hover {
-  background: #dcdcdc !important; /* Light gray hover effect */
-}
+/* .react-calendar__tile:hover {
+  background: #dcdcdc !important;
+} */
 
 
 
