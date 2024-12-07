@@ -197,7 +197,7 @@ export default function ExplorePage() {
           ))}
         </div>        
         
-        <SearchBar onSearchChange={handleSearchChange} />
+        <SearchBar onSearchChange={handleSearchChange} placeholderText="Search for a hotspot..." />
 
         {/* Explore options */}
         <div style={{ padding: "20px", marginBottom: "120px" }}>

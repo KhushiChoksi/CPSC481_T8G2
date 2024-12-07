@@ -193,7 +193,7 @@ export default function RestaurantsPage() {
         onFilterReset={handleFilterReset}
       />
 
-      <SearchBar onSearchChange={handleSearchChange} />
+      <SearchBar onSearchChange={handleSearchChange} placeholderText="Search for a restaurant..." />
 
       <div style={{ padding: "20px", marginBottom: "120px" }}>
         {filteredRestaurants.map((restaurant, index) => (

@@ -3,9 +3,10 @@ import React, { useState } from "react";
 
 interface SearchBarProps {
   onSearchChange: (query: string) => void;
+  placeholderText: string;
 }
 
-export default function SearchBar({ onSearchChange }: SearchBarProps) {
+export default function SearchBar({ onSearchChange, placeholderText }: SearchBarProps) {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +29,7 @@ export default function SearchBar({ onSearchChange }: SearchBarProps) {
       >
         <input
           type="text"
-          placeholder="Search for a restaurant..."
+          placeholder={placeholderText}
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown} // Add event listener for Enter key
