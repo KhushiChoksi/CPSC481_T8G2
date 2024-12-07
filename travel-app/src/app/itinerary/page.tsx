@@ -21,7 +21,7 @@ export default function ItineraryPage() {
     <div className="flex flex-col min-h-screen">
       <Topbar />
       <div className="flex flex-col items-start w-full">
-        <div className='mt-20 px-4'> <BackButton title='Itinerary Page'/> </div>
+        <div className='mt-20 px-4'> <BackButton title='Itinerary'/> </div>
         <main className="flex flex-col items-center w-full px-4">
 
           {/* Calendar */}
