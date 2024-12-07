@@ -1,10 +1,12 @@
 "use client";
 
 import Navbar from "../components/Navbar";
-
+import SearchBar from "../components/SearchBar";
 import Topbar from "../components/Topbar";
+import BackButton from "../components/BackButton";
 import { useState } from "react";
 import PopupModal from "./addVisitPopup";
+import { IoLocationSharp } from "react-icons/io5";
 
 // Define the type for a suggestion object
 type Suggestion = {
@@ -27,7 +29,7 @@ const suggestions: Suggestion[] = [
     id: 12,
     title: "Calgary Tower",
     description: "The Calgary Tower is a 190.8-metre free standing observation tower.",
-    address: "101 9 Ave SW",
+    address: "101 9 Ave SW, Calgary",
     imageUrl: "/images/Calgary_Tower.jpg",
     category: "Sights",
     timeOpen: "9 a.m. - 9 p.m.",
@@ -40,7 +42,7 @@ const suggestions: Suggestion[] = [
     id: 13,
     title: "Bowness Park",
     description: "Bowness Park is a scenic Calgary park with seasonal boating and skating.",
-    address: "8900 48 Ave NW",
+    address: "8900 48 Ave NW, Calgary",
     imageUrl: "/images/Bowness_Park.jpg",
     category: "Parks",
     timeOpen: "5 a.m. - 11 p.m.",
@@ -53,7 +55,7 @@ const suggestions: Suggestion[] = [
     id: 14,
     title: "Peace Bridge",
     description: "Peace Bridge is a bridge across the Bow River. The bridge was designed by Spanish architect Santiago Calatrava",
-    address: "916 Memorial Dr NW",
+    address: "916 Memorial Dr NW, Calgary",
     imageUrl: "/images/peace_bridge.jpg",
     category: "Sights",
     timeOpen: "Open 24/7",
@@ -66,7 +68,7 @@ const suggestions: Suggestion[] = [
     id: 15,
     title: "Calgary Zoo",
     description: "Home to a wide array of animals and habitats, including a prominent penguin facility.",
-    address: "1300 Zoo Rd NE",
+    address: "1300 Zoo Rd NE, Calgary",
     imageUrl: "/images/calgary_zoo.jpg",
     category: "Museums",
     timeOpen: "9 a.m. - 5 p.m.",
@@ -79,7 +81,7 @@ const suggestions: Suggestion[] = [
     id: 16,
     title: "Glenbow Museum",
     description: "Explore art and history with a vast collection of cultural artifacts and international exhibitions",
-    address: "130 9 Ave SE",
+    address: "130 9 Ave SE, Calgary",
     imageUrl: "/images/glenbow_museum.jpg",
     category: "Museums",
     timeOpen: "10 a.m. - 5 p.m.",
@@ -92,7 +94,7 @@ const suggestions: Suggestion[] = [
     id: 17,
     title: "Prince's Island Park",
     description: "A green oasis in downtown Calgary offering trails, wetlands, and spaces for outdoor events",
-    address: "698 Eau Claire Ave SW",
+    address: "698 Eau Claire Ave SW, Calgary",
     imageUrl: "/images/prince_park.jpg",
     category: "Parks",
     timeOpen: "5 a.m. - 11 p.m.",
@@ -148,23 +150,15 @@ export default function ExplorePage() {
         }}
       >
         <Topbar />
-        <div style={{ marginTop: "75px", marginLeft: "20px" }}>
-          <h2
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              color: "#000",
-              marginBottom: "10px",
-            }}
-          >
-            Explore:
-          </h2>
+        <div style={{ marginTop: "80px", marginLeft: "20px", marginBottom: "6px" }}>
+          <BackButton title="Explore"/>
         </div>
 
         {/* Filters */}
         <div style={{ 
           marginLeft: "20px", 
           marginBottom: "10px",
+          marginTop: "10px",
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
@@ -187,17 +181,17 @@ export default function ExplorePage() {
                 borderRadius: "5px",
                 borderWidth: "1px",
                 borderColor: activeFilter === category ? "#000" : "#bbb",
-                backgroundColor: activeFilter === category ? "#ddd" : "",
+                backgroundColor: activeFilter === category ? "#ddd" : "rgba(0, 53, 84, 0.1)",
                 cursor: "pointer",
                 color: "black",
                 display: "flex",
                 alignItems: "center",
-                gap: "5px"
+                gap: "7px"
               }}
             >
               {category}
               {activeFilter === category && (
-                <span style={{ marginLeft: "3px" }}>×</span>
+                <span style={{ marginLeft: "3px", color: "red" }}>×</span>
               )}
             </button>
           ))}
@@ -206,7 +200,7 @@ export default function ExplorePage() {
         <SearchBar onSearchChange={handleSearchChange} />
 
         {/* Explore options */}
-        <div style={{ padding: "20px" }}>
+        <div style={{ padding: "20px", marginBottom: "120px" }}>
           {filteredSuggestions.map((suggestion, index) => (
             <div
               key={index}
@@ -222,6 +216,7 @@ export default function ExplorePage() {
                 color: "black",
                 cursor: "pointer",
                 position: "relative",
+                border: "1px solid black"
               }}
             >
               <div style={{ display: "flex", alignItems: "center" }}>
@@ -245,14 +240,15 @@ export default function ExplorePage() {
                     borderRadius: "8px",
                     padding: "5px 10px",
                     fontSize: "0.8rem",
-                    textAlign: "center",
+                    textAlign: "left",
                     display: "flex",
                     alignItems: "center",
                     gap: "5px",
                     maxWidth: "calc(100% - 220px)", // Ensures it fits within the box width minus image space
                   }}
                 >
-                  <span style={{ fontSize: "1.2rem", color: "#4a90e2" }}>📍</span>
+                  {/* <span style={{ fontSize: "1.2rem", color: "#4a90e2" }}>📍</span> */}
+                  <div style={{ marginRight:"1px", fontSize: "1rem", color: "black" }} > <IoLocationSharp/>  </div>
                   <span
                     style={{
                       overflowWrap: "break-word",
