@@ -25,8 +25,8 @@ const AccountContext = createContext<AccountContextType | undefined>(undefined);
 // Create a provider component
 export const AccountProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [account, setAccount] = useState<Account>({
-    firstName: "Emily",
-    lastName: "Smith",
+    firstName: "John",
+    lastName: "Doe",
     email: "example@ucalgary.ca",
     password: "password", // Default password for this example
   });
