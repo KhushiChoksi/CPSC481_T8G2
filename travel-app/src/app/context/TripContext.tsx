@@ -15,6 +15,7 @@ interface TripContextType {
   setSelectedTrip: (trip: string) => void;
   setTrips: React.Dispatch<React.SetStateAction<Trip[]>>;
   removeTrip: (tripName: string) => void;
+  addTrip: (newTrip: Trip) => void;
 }
 
 // Create the context
@@ -34,15 +35,19 @@ export const TripProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setTrips((prevTrips) => {
       const updatedTrips = prevTrips.filter((trip) => trip.name !== tripName);
       if (selectedTrip === tripName) {
-        setSelectedTrip(updatedTrips[0]?.name || ""); // Update selectedTrip if removed
+        setSelectedTrip(updatedTrips[0]?.name || "Add Here"); // Update selectedTrip if removed
       }
       return updatedTrips;
     });
   };
 
+  const addTrip = (newTrip: Trip) => {
+    setTrips((prevTrips) => [...prevTrips, newTrip]);
+  };
+
   return (
     <TripContext.Provider
-      value={{ trips, selectedTrip, setSelectedTrip, setTrips, removeTrip }}
+      value={{ trips, selectedTrip, setSelectedTrip, setTrips, removeTrip, addTrip}}
     >
       {children}
     </TripContext.Provider>

@@ -1,24 +1,29 @@
 "use client";
 
 import React, { useState } from "react";
-import ResetPasswordPopup from "./ResetPasswordPopup"; // Import ResetPasswordPopup
+import CloseButton from "../CloseButton";
+import ResetPasswordPopup from "./ResetPasswordPopup";
+import { useAccount } from "../../context/AccountContext";
 
 interface UpdatePasswordPopupProps {
-  onCancel: () => void;
-  onComplete: () => void;
+  onClose: () => void; // Close all popups
+  onGoBack: () => void; // Go back to the previous popup
+  onComplete: () => void; // Callback after password update flow
 }
 
 const UpdatePasswordPopup: React.FC<UpdatePasswordPopupProps> = ({
-  onCancel,
+  onClose,
   onComplete,
 }) => {
+  const { updatePassword } = useAccount(); // Use the context function
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [showResetPasswordPopup, setShowResetPasswordPopup] = useState(false); // Toggle ResetPasswordPopup
+  const [showResetPasswordPopup, setShowResetPasswordPopup] = useState(false);
 
   const handleConfirm = () => {
+    // Front-end validation
     if (!currentPassword || !newPassword || !confirmNewPassword) {
       setErrorMessage("All fields are required.");
       return;
@@ -28,104 +33,128 @@ const UpdatePasswordPopup: React.FC<UpdatePasswordPopupProps> = ({
       return;
     }
 
+    // Use the context to validate and update the password
+    const isSuccess = updatePassword(currentPassword, newPassword);
+    if (!isSuccess) {
+      setErrorMessage("Current password is incorrect.");
+      return;
+    }
+
+    // Close popup and let the main page handle success messages
     setErrorMessage("");
-    onComplete(); // Close UpdatePasswordPopup
+    onComplete(); // Notify parent component of successful update
   };
 
   if (showResetPasswordPopup) {
     return (
       <ResetPasswordPopup
-        onCancel={() => setShowResetPasswordPopup(false)} // Close ResetPasswordPopup
-        onComplete={() => {
-          setShowResetPasswordPopup(false); // Close ResetPasswordPopup
-        }}
-        redirectTo="/account-settings" // Redirect to Account Settings
+        onClose={onClose}
+        onGoBack={() => setShowResetPasswordPopup(false)}
+        redirectTo="/account-settings"
       />
     );
   }
 
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modal}>
-        <h1 style={styles.modalTitle}>
-          Update Password<span style={styles.underline}></span>
-        </h1>
+    <>
+      {/* Blur Effect */}
+      <div style={styles.blurOverlay}></div>
 
-        {/* Current Password */}
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter your current password:</label>
-          <input
-            type="password"
-            style={styles.input}
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            placeholder="Enter current password"
-          />
-        </div>
+      {/* Modal */}
+      <div style={styles.modalOverlay}>
+        <div style={styles.modal}>
+          {/* Close Button */}
+          <div style={styles.closeButtonContainer}>
+            <CloseButton onClick={onClose} ariaLabel="Close Update Password Popup" />
+          </div>
 
-        {/* Forgot Password */}
-        <button
-          style={styles.forgotPasswordButton}
-          onClick={() => setShowResetPasswordPopup(true)} // Open ResetPasswordPopup
-        >
-          Forgot Password?
-        </button>
+          {/* Title */}
+          <h1 style={styles.modalTitle}>
+            Update Password<span style={styles.underline}></span>
+          </h1>
 
-        {/* New Password */}
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please enter your new password:</label>
-          <input
-            type="password"
-            style={styles.input}
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="Enter new password"
-          />
-        </div>
+          {/* Current Password */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter your current password:</label>
+            <input
+              type="password"
+              style={styles.input}
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Enter current password"
+            />
+          </div>
 
-        {/* Confirm New Password */}
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Please confirm your new password:</label>
-          <input
-            type="password"
-            style={styles.input}
-            value={confirmNewPassword}
-            onChange={(e) => setConfirmNewPassword(e.target.value)}
-            placeholder="Confirm new password"
-          />
-        </div>
-
-        {/* Error Message */}
-        {errorMessage && (
-          <div style={styles.errorMessage}>{errorMessage}</div>
-        )}
-
-        {/* Buttons */}
-        <div style={styles.modalButtonContainer}>
-          <button style={styles.longCancelButton} onClick={onCancel}>
-            Cancel Password Update
+          {/* Forgot Password */}
+          <button
+            style={styles.forgotPasswordButton}
+            onClick={() => setShowResetPasswordPopup(true)}
+          >
+            Forgot Password?
           </button>
-          <button style={styles.longConfirmButton} onClick={handleConfirm}>
-            Confirm Password Update
-          </button>
+
+          {/* New Password */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please enter your new password:</label>
+            <input
+              type="password"
+              style={styles.input}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter new password"
+            />
+          </div>
+
+          {/* Confirm New Password */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Please confirm your new password:</label>
+            <input
+              type="password"
+              style={styles.input}
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+              placeholder="Confirm new password"
+            />
+          </div>
+
+          {/* Error Message */}
+          <div style={styles.errorContainer}>
+            {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+          </div>
+
+          {/* Confirm Button */}
+          <div style={styles.modalButtonContainer}>
+            <button style={styles.longConfirmButton} onClick={handleConfirm}>
+              Confirm Password Update
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
+  blurOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dim background
+    backdropFilter: "blur(5px)",
+    zIndex: 1020, // Ensure blur is below modal but above everything else
+  },
   modalOverlay: {
     position: "fixed",
     top: 0,
     left: 0,
     width: "100vw",
     height: "100vh",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 1000,
+    zIndex: 2000,
   },
   modal: {
     width: "96vw",
@@ -139,12 +168,21 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "space-between",
     alignItems: "center",
     boxSizing: "border-box",
+    position: "relative",
+  },
+  closeButtonContainer: {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    zIndex: 1100,
   },
   modalTitle: {
-    fontSize: "2.49rem",
+    fontSize: "2.5rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
     color: "#000000",
     textAlign: "center",
+    marginBottom: "1.5rem",
+    marginTop: "2.5rem",
   },
   underline: {
     display: "block",
@@ -152,6 +190,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: "100%",
     backgroundColor: "#000000",
     margin: "0 auto",
+    marginTop: "-10px",
   },
   inputGroup: {
     width: "100%",
@@ -186,27 +225,24 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginBottom: "1.5rem",
     textAlign: "center",
   },
+  errorContainer: {
+    width: "100%",
+    height: "0.5rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "1rem",
+  },
   errorMessage: {
     color: "red",
     fontSize: "1rem",
     fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-    textAlign: "center",
-    marginBottom: "1rem",
   },
   modalButtonContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: "3rem",
+    gap: "1.5rem",
     width: "100%",
-  },
-  longCancelButton: {
-    width: "100%",
-    height: "3.1rem",
-    backgroundColor: "#FFFFFF",
-    color: "#003554",
-    border: "1px solid #000000",
-    borderRadius: "5px",
-    fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
   },
   longConfirmButton: {
     width: "100%",

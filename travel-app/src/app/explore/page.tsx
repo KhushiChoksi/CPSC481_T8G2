@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "../components/Navbar";
-import SearchBar from "../components/SearchBar";
+
 import Topbar from "../components/Topbar";
 import { useState } from "react";
 import PopupModal from "./addVisitPopup";
