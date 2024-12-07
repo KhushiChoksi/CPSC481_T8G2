@@ -106,7 +106,7 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
     },
     {
       id: '3',
-      title: 'Osmows',
+      title: 'Cactus Club Cafe',
       start: '2024-12-10T12:30:00',
       end: '2024-12-10T13:30:00',
       extendedProps : {address: '890 32 Ave NW, Calgary'},
