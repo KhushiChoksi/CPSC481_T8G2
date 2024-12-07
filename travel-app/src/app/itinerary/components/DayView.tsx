@@ -105,7 +105,7 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
       extendedProps : {address: '130 9 Ave SE, Calgary'},
     },
     {
-      id: '3',
+      id: '4',
       title: 'Cactus Club Cafe',
       start: '2024-12-10T12:30:00',
       end: '2024-12-10T13:30:00',
