@@ -104,7 +104,7 @@ const restaurants: Restaurant[] = [
     title: "Kinjo",
     description: "A casual restaurant where a lot of people can meet up. Offers gluten-free options.",
     address: "990 64 Ave NW, Calgary",
-    imageUrl: "/images/kinjo.jpg",
+    imageUrl: "/images/Kinjo.jpg",
     cuisine: "Japanese",
     price: "$",
     Diet: ["Gluten Free"],
