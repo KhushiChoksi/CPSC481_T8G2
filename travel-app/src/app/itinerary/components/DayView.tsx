@@ -86,14 +86,28 @@ const DayView = ({ isEditing }: { isEditing: boolean }) => {
       title: 'Calgary Tower',
       start: '2024-12-01T09:00:00',
       end: '2024-12-01T10:00:00',
-      extendedProps: {address: '101 9 Ave SW, Calgary, AB T2P 1J9'},
+      extendedProps: {address: '101 9 Ave SW, Calgary'},
     },
     {
       id: '2',
       title: 'Kinjo Sushi',
       start: '2024-12-01T12:00:00',
       end: '2024-12-01T12:30:00',
-      extendedProps : {address: '300 8 Ave SW, Calgary, AB T2P 1C6'},
+      extendedProps : {address: '990 64 Ave NW, Calgary'},
+    },
+    {
+      id: '3',
+      title: 'Glenbow Musuem',
+      start: '2024-12-10T10:00:00',
+      end: '2024-12-10T11:30:00',
+      extendedProps : {address: '130 9 Ave SE, Calgary'},
+    },
+    {
+      id: '3',
+      title: 'Osmows',
+      start: '2024-12-10T12:30:00',
+      end: '2024-12-10T13:30:00',
+      extendedProps : {address: '890 32 Ave NW, Calgary'},
     },
   ]);
 
