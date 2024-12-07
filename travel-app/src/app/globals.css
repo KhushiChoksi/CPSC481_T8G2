@@ -27,53 +27,53 @@ body {
 }
 
 .react-calendar {
-  background-color: transparent; /* Matches the modal background or removes background */
-  border: none; /* Removes border to integrate with modal */
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 18px; /* Adjust readability */
-  width: 100%; /* Full width inside container */
-  color: black; /* Default text color */
+  background-color: transparent !important; /* Matches the modal background or removes background */
+  border: none !important; /* Removes border to integrate with modal */
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+  font-size: 18px !important; /* Adjust readability */
+  width: 100% !important; /* Full width inside container */
+  color: black !important; /* Default text color */
 }
 
 .react-calendar__month-view {
-  display: grid;
-  grid-template-rows: auto 1fr; /* First row for weekdays, then dates */
+  display: grid !important;
+  grid-template-rows: auto 1fr !important; /* First row for weekdays, then dates */
 }
 
 .react-calendar__month-view__weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 7 columns for weekdays */
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 5px; /* Space between weekdays and numbers */
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important; /* 7 columns for weekdays */
+  text-align: center !important;
+  font-weight: bold !important;
+  margin-bottom: 5px !important; /* Space between weekdays and numbers */
 }
 
 .react-calendar__month-view__days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
-  grid-auto-rows: auto; /* Rows adjust automatically */
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important; /* 7 columns for days */
+  grid-auto-rows: auto !important; /* Rows adjust automatically */
 }
 
 .react-calendar__tile {
-  color: black; /* Makes all numbers black */
-  text-align: center;
-  padding: 10px; /* Balance padding */
-  background: none;
-  border-radius: 50%; /* Round tiles */
-  width: 100%; /* Ensure tiles fill the grid cell */
-  height: auto; /* Maintain aspect ratio */
+  color: black !important; /* Makes all numbers black */
+  text-align: center !important;
+  padding: 10px !important; /* Balance padding */
+  background: none !important;
+  border-radius: 50% !important; /* Round tiles */
+  width: 100% !important; /* Ensure tiles fill the grid cell */
+  height: auto !important; /* Maintain aspect ratio */
 }
 
 .react-calendar__tile--active,
 .react-calender__tile--focused {
   background: #003554 !important; /* Navy blue for selected date */
   color: white !important;
-  border: 1px solid black;
-  border-radius: 50%;
+  border: 1px solid black !important;
+  border-radius: 50% !important;
 }
 
 .react-calendar__tile:hover {
-  background: #dcdcdc; /* Light gray hover effect */
+  background: #dcdcdc !important; /* Light gray hover effect */
 }
 
 
