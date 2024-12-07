@@ -13,6 +13,8 @@ import RemoveEventConfirmation from './RemoveEventConfirmation';
 
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
 import "../../globals.css";
+import 'react-calendar/dist/Calendar.css';
+
 
 interface Event {
   id: string;
