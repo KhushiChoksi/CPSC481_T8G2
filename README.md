@@ -77,6 +77,7 @@ to access the library of icons, refer to this link: https://react-icons.github.i
 ### full calendar installs
 
 <p>
+ 
 `npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/timegrid`
 
 `npm install @fullcalendar/react@latest @fullcalendar/core@latest @fullcalendar/daygrid@latest @fullcalendar/timegrid@latest`
