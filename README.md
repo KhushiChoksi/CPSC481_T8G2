@@ -52,7 +52,7 @@ Once you have verified all of that, run the following commands in the terminal.
 
 <br/><br/>
 ## Libraries / installs
-These are just the libraries that we have used in our application. Sometimes `npm run dev` will not work. If this problem occurs, please try installing these libraries first then running the code.
+These are just the libraries that we have used in our application. `npm run dev` may not work the first time you use it. If this problem occurs, please try installing these libraries first then running the code.
 ### react-icons are installed into this project.
 
 <p>
