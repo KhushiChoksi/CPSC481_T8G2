@@ -129,7 +129,7 @@ export default function SuccessVisitPopup({
               cursor: "pointer",
             }}
           >
-            Confirm
+            Return to page
           </button>
         </div>
       </div>

@@ -216,7 +216,7 @@ export default function HotelsPage() {
                 onClick={handleClearDates}
                 className="text-black ml-2 font-bold cursor-pointer"
               >
-                X
+                <div style={{color:'red'}}>X</div>
               </span>
             </div>
           ) : (

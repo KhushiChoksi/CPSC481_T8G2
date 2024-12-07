@@ -210,7 +210,7 @@ export default function ExplorePage() {
                 flexDirection: "column",
                 backgroundColor: "#edf2ff",
                 borderRadius: "15px",
-                marginBottom: "20px",
+                marginBottom: "15px",
                 padding: "15px",
                 boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
                 color: "black",

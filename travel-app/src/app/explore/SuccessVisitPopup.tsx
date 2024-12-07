@@ -123,12 +123,12 @@ export default function SuccessVisitPopup({
               color: "white",
               padding: "15px 30px",
               borderRadius: "8px",
-              fontWeight: "bold",
+              // fontWeight: "bold",
               border: "none",
               cursor: "pointer",
             }}
           >
-            Confirm
+            Return to page
           </button>
         </div>
       </div>

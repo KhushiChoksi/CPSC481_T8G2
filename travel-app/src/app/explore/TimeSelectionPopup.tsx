@@ -227,7 +227,7 @@
               flexDirection: "column",
               gap: "15px",
               width: "100%",
-              maxWidth: "300px",
+              //maxWidth: "300px",
             }}>
               <button
                 onClick={handleConfirmTimes}
