@@ -37,7 +37,7 @@ npm run dev
 
 ## Instructions for using the app, on a web browser
 <p>
-First, run the code using the steps above, or use the deployed website link (https://travel-buddy-sandy.vercel.app/itinerary).<br>
+First, run the code using the steps above, or use the deployed website link (https://travel-buddy-sandy.vercel.app).<br>
 
 (If you are running the code locally, open the link "http://localhost:3000/" on your browser. This is where it should show up.)<br>
 
