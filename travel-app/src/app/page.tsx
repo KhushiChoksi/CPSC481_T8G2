@@ -96,7 +96,7 @@ const WelcomeScreen: React.FC = () => {
             className="w-full h-12 bg-darkblue text-white rounded-md border border-black text-base md:text-lg"
             onClick={() => setShowResetPopup(true)}
           >
-            Reset Password
+            Forgot password?
           </button>
           <button
             className="w-full h-12 bg-darkblue text-white rounded-md border border-black text-base md:text-lg"
