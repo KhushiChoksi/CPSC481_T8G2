@@ -49,7 +49,7 @@ body {
 }
 
 .react-calendar__month-view__days {
-  display: grid !important;
+  display: grid;
   grid-template-columns: repeat(7, 1fr) !important; /* 7 columns for days */
   grid-auto-rows: auto !important; /* Rows adjust automatically */
 }
@@ -76,14 +76,11 @@ body {
   background: #dcdcdc !important;
 } */
 
-
-
-
 /* STYLING FOR ITINERARY CALENDAR */
 .fc {
   border: 1px solid black;
   border-radius: 8px;
-  padding: 20px; 
+  padding: 20px;
   background-color: rgb(255, 255, 255, 0.75);
   width: 400px;
 }
@@ -102,11 +99,11 @@ body {
 .fc-header-toolbar .fc-toolbar-title {
   font-size: 25px;
   font-style: italic;
-  color: black; 
+  color: black;
 }
 
 .fc-timegrid-slot-label {
-  color: black; 
+  color: black;
 }
 
 .fc-col-header-cell-cushion {
@@ -118,15 +115,18 @@ body {
   border: 1px dashed rgba(11, 11, 11, 0);
 }
 
-.fc-timegrid-slot-lane {                          /* major lines (hourly) */
+.fc-timegrid-slot-lane {
+  /* major lines (hourly) */
   border-top: 1px dashed rgba(0, 0, 0, 0.4);
 }
 
-.fc-timegrid-slot-lane.fc-timegrid-slot-minor {   /* minor lines (sub-hourly) */
+.fc-timegrid-slot-lane.fc-timegrid-slot-minor {
+  /* minor lines (sub-hourly) */
   border-top: 1px dashed rgba(0, 0, 0, 0);
 }
 
-.fc-timegrid-slot-label {                         /* time column */
+.fc-timegrid-slot-label {
+  /* time column */
   background-color: rgb(255, 255, 255, 0);
   border: 1.5px solid rgba(0, 0, 0, 0.7);
 }
