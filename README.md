@@ -43,10 +43,18 @@ Once you have verified all of that, run the following commands in the terminal.
 
 <br/><br/>
 ## How to navigate through the application design
-(will be updated later)
 
-
-
+1. Enter the email and password for the account you wish to use. (If you do not have an account, you can create one by clicking "Create Account" on the welcome-login screen.)
+2. For new accounts you will need to enter your trip details. Arrival date is a mandatory field.
+3. Once complete you will be redirected to the home page.
+4. You can choose which trip you will be updating the itinnerary for by clicking on the trip name on the top center of the screen.
+5. Once you have the right trip to work on, you can proceed by using the navigation bar on bottom of the screen to switch between different pages. (Each page has an icon and label to let you know what page you are on.)
+6. To explore sights and places to visit in Calgary, you can go to the explore page.
+7. To add hotel reservations, you got to the hotel page and after selecting the dates of your stay, you will be able to add a hotel from the list.
+8. Resturant reservations can be made on the resturant page.
+9. All additionals and plans can be viewed on the itinerary page. You can also add your custom plans here as well as delete any previously made plans.
+10. For changes to your account, you can open your profile using the icon on the top right of the screen.
+11. To add or manage your trips, you can open these settings by clicking on the trip dropdown on the top center of the screen.
 
 
 
