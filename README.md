@@ -49,15 +49,14 @@ If the third command does not work, please refer to the "Libraries/installs" sec
 
 1. Enter the email and password for the account you wish to use. You can also create one by clicking the "Create Account" button. You may also just use the example account that we have hardcoded to log in (see the "Information" section).
 2. For new accounts you will need to enter your trip details. The arrival date is a mandatory field. The departure date is optional, to consider for users who have recently moved to the city.
-3. Once complete you will be directed to the home page.
-4. You can choose which trip you will be updating the itinerary for by clicking on the trip name at the top center of the screen.
+3. Once completed, you will be directed to the home page.
+4. You can choose which trip you will be updating the itinerary for by clicking on the trip name at the top center of the screen. You can also use this screen to add or manage your trips. 
 5. Once you have the right trip to work on, you can proceed by using the navigation bar at the bottom of the screen to switch between different pages. (Each page has an icon and label to let you know what page you are on.)
 6. To explore sights and places to visit in Calgary, you can go to the explore page. You can filter sights and places by category here, or search for one.
 7. To add hotel reservations, you go to the hotel page and after selecting the dates of your stay, you will be able to add a hotel from the list.
 8. Restaurant reservations can be made on the restaurant page. You can filter restaurants by categories, or search for one. 
 9. All added plans can be viewed on the itinerary page. You can edit your itinerary by clicking the "Edit" button below it, which will allow you to remove events from the itinerary.
-10. For changes to your account, you can open your profile using the icon on the top right of the screen.
-11. To add or manage your trips, you can open these settings by clicking on the trip dropdown at the top center of the screen.
+10. To make changes to your account, you can open your profile using the icon on the top right of the screen.
 
 
 
